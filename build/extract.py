@@ -27,7 +27,9 @@ REMOVE_SELECTORS = ("div.rev_slider_wrapper, div.rev_slider, div.tp-banner-conta
                     "div.fusion-sharing-box, div.fusion-social-links, "
                     "div.fusion-breadcrumbs")
 IMG_EXT = re.compile(r"\.(jpg|jpeg|png|gif|webp|svg)$", re.I)
-FILE_EXT = re.compile(r"\.(jpg|jpeg|png|gif|webp|svg|pdf|docx?|zip|mp3|m4a|wav|ogg)$", re.I)
+FILE_EXT = re.compile(r"\.(jpg|jpeg|png|gif|webp|svg|pdf|docx?|zip)$", re.I)
+# audio recordings are too large to re-host (100s of MB) -> link to the original
+AUDIO_EXT = re.compile(r"\.(mp3|m4a|wav|ogg)$", re.I)
 SLUG_RE = re.compile(r"[A-Za-z0-9āīūṛṝḷḹṃḥṅñṭḍṇśṣ_-]+$")
 
 
@@ -55,8 +57,14 @@ def rewrite_link(href, ctx):
     site = ctx["site"]; pmap = ctx["pmap"]
     if href.startswith(("mailto:", "tel:", "#", "javascript")):
         return href
-    # absolute URL pointing at the mirror's OWN host -> treat as internal
     host = os.path.basename(ctx["base_dir"])
+    dec0 = unquote(href)
+    # large talk recordings: keep pointing at the original hosted file
+    if AUDIO_EXT.search(dec0.split("?")[0]):
+        m = re.search(r"(wp-content/.*)$", dec0)
+        path = m.group(1) if m else dec0.lstrip("./")
+        return f"https://{host}/{path}"
+    # absolute URL pointing at the mirror's OWN host -> treat as internal
     href = re.sub(rf"^https?://{re.escape(host)}/?", "/", href)
     dec = unquote(href)
     # WordPress permalink alias ?p=NN -> clean slug

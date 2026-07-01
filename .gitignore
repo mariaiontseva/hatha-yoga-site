@@ -3,3 +3,9 @@
 node_modules/
 .vscode/
 Thumbs.db
+
+# large talk recordings — linked to original host, never committed
+*.m4a
+*.mp3
+*.wav
+*.ogg
