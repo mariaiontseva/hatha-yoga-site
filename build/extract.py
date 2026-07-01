@@ -10,7 +10,7 @@ attributes are stripped. Image/href srcs are rewritten via `rewrite_asset`,
 which also records every referenced local image in `assets_used`.
 """
 import os, re
-from bs4 import BeautifulSoup, NavigableString, Tag
+from bs4 import BeautifulSoup, NavigableString, Tag, Comment
 
 KEEP_TAGS = {"h1","h2","h3","h4","h5","h6","p","ul","ol","li","strong","em","b","i",
              "a","img","figure","figcaption","blockquote","table","thead","tbody",
@@ -86,7 +86,20 @@ def _resolve_local(src, base_dir):
     return None
 
 
+# widget containers to remove wholesale (slider, search, social, share bars)
+REMOVE_SELECTORS = ("div.rev_slider_wrapper, div.rev_slider, div.tp-banner-container, "
+                    "ul.rev-slidebg, div.forcefullwidth_wrapper_tp_banner, "
+                    "div.fusion-sharing-box, div.fusion-social-links, "
+                    "div.avia_textblock ~ div.hr, div.fusion-breadcrumbs")
+
+
 def _prune(node, base_dir, assets_used):
+    # strip HTML comments (e.g. "START REVOLUTION SLIDER ...")
+    for c in node.find_all(string=lambda s: isinstance(s, Comment)):
+        c.extract()
+    # remove known widget containers wholesale
+    for w in node.select(REMOVE_SELECTORS):
+        w.decompose()
     for el in list(node.descendants):
         if isinstance(el, Tag) and el.name in DROP_TAGS:
             el.decompose()
@@ -110,6 +123,10 @@ def _collapse(html):
     for p in s.find_all(["p","li","span"]):
         if not p.get_text(strip=True) and not p.find("img"):
             p.decompose()
+    # drop now-empty lists
+    for lst in s.find_all(["ul","ol"]):
+        if not lst.find("li"):
+            lst.decompose()
     body = s.body or s
     return "".join(str(c) for c in body.contents).strip()
 
