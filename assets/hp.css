@@ -1,0 +1,8 @@
+/* ============================================================
+   HP-only overrides — Haṭhapradīpikā Online
+   Loaded AFTER site.css, only on hp/ pages (<body class="site-hp">).
+   Put HP-specific look here (accent colour, header treatment, etc.);
+   the shared type system in site.css stays untouched.
+   Example:
+     .site-hp { --accent:#8a5a2b; --accent-deep:#6d4520; }
+   ============================================================ */

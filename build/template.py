@@ -65,8 +65,9 @@ def render_page(title, content_html, site, active="", root="../../"):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title} — {site_title}</title>
 <link rel="stylesheet" href="{root}assets/site.css">
+<link rel="stylesheet" href="{root}assets/{site}.css">
 </head>
-<body>
+<body class="site-{site}">
 <header class="site-header"><div class="site-header-inner">
   <a class="site-title" href="{root}{site}/">{site_title}</a>
   <nav class="site-nav">

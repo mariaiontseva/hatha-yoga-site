@@ -1,0 +1,8 @@
+/* ============================================================
+   HYP-only overrides — The Haṭha Yoga Project
+   Loaded AFTER site.css, only on hyp/ pages (<body class="site-hyp">).
+   Put HYP-specific look here (accent colour, header treatment, etc.);
+   the shared type system in site.css stays untouched.
+   Example:
+     .site-hyp { --accent:#3a6b5f; --accent-deep:#2c5249; }
+   ============================================================ */
