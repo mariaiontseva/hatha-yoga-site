@@ -93,6 +93,7 @@ def book(content_html):
         img["class"] = img.get("class", []) + ["book-cover"]
     # give the stacked top headings a real hierarchy: title / byline / lead
     hcount = 0
+    lead_el = None
     for el in [c for c in root.children if isinstance(c, Tag)]:
         if el.name == "p":
             break                                   # reached the body copy
@@ -111,17 +112,18 @@ def book(content_html):
                 st = el.find("strong")
                 if st:
                     st.unwrap()
+                lead_el = el
             hcount += 1
     order = None
     for a in root.find_all("a"):
         if a.get_text(strip=True).upper() in ("ORDER", "ORDER NOW", "BUY"):
             a["class"] = a.get("class", []) + ["btn"]
             order = a
-    # group cover + order button into a floated aside at the top-left
+    # float just the cover top-left; put the ORDER button under the lead line
     if img is not None:
         aside = soup.new_tag("div", **{"class": "book-aside"})
         img.insert_before(aside)
         aside.append(img)
-        if order is not None:
-            aside.append(order)
+    if order is not None and lead_el is not None:
+        lead_el.insert_after(order)
     return "".join(str(c) for c in root.contents).strip()
