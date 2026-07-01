@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Light on Haṭha Yoga — Two Editions</title>
+<style>
+  :root{
+    --ink:#0f1722;          /* deep indigo ink ground */
+    --ink-2:#16202e;
+    --leaf:#ece1c6;         /* palm-leaf cream */
+    --leaf-soft:#cdc3a8;
+    --haldi:#d39a3c;        /* turmeric / ochre accent */
+    --haldi-deep:#b9742a;
+    --line:rgba(236,225,198,.16);
+    --gate:#ece1c6;
+    --gate-ink:#16202e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:
+      radial-gradient(120% 120% at 50% -10%, #1d293a 0, var(--ink) 55%),
+      var(--ink);
+    color:var(--leaf);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100%;
+    display:flex;flex-direction:column;
+    line-height:1.5;
+  }
+  .wrap{
+    width:100%;max-width:1080px;margin:0 auto;padding:clamp(28px,5vw,64px) clamp(20px,4vw,40px);
+    flex:1;display:flex;flex-direction:column;
+  }
+  /* ---- eyebrow ---- */
+  .eyebrow{
+    font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;
+    text-transform:uppercase;letter-spacing:.34em;font-size:11px;font-weight:600;
+    color:var(--leaf-soft);opacity:.8;
+  }
+  .eyebrow b{color:var(--haldi);font-weight:600}
+
+  /* ---- hero śloka ---- */
+  .hero{margin-top:clamp(26px,5vw,52px);max-width:30ch}
+  .sloka{font-feature-settings:"liga";}
+  .sloka .dev{
+    font-size:clamp(28px,5.4vw,52px);line-height:1.28;font-weight:400;
+    color:var(--leaf);letter-spacing:.01em;
+    text-wrap:balance;
+  }
+  .sloka .dev .reveal{opacity:0;transform:translateY(.25em);display:inline-block}
+  .sloka .iast{
+    margin-top:18px;font-style:italic;color:var(--leaf-soft);
+    font-size:clamp(14px,1.9vw,18px);line-height:1.7;max-width:42ch;
+  }
+  .gloss{
+    margin-top:18px;color:var(--leaf-soft);max-width:46ch;
+    font-size:clamp(14px,1.7vw,17px);
+  }
+  .gloss .accent{color:var(--haldi);font-style:italic}
+
+  /* ---- gates ---- */
+  .gates{
+    margin-top:clamp(40px,7vw,72px);
+    display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.4vw,28px);
+  }
+  .gate{
+    position:relative;display:flex;flex-direction:column;justify-content:space-between;
+    min-height:clamp(220px,34vw,300px);
+    padding:clamp(22px,3vw,34px);
+    background:var(--gate);color:var(--gate-ink);
+    text-decoration:none;border-radius:2px;
+    box-shadow:0 1px 0 rgba(0,0,0,.4),0 22px 50px -30px rgba(0,0,0,.9);
+    transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s,filter .5s;
+    overflow:hidden;
+  }
+  .gate::before{ /* manuscript gutter / binding edge */
+    content:"";position:absolute;left:0;top:0;bottom:0;width:6px;
+    background:linear-gradient(var(--haldi),var(--haldi-deep));
+  }
+  .gate .tag{
+    font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;
+    font-size:11px;letter-spacing:.3em;text-transform:uppercase;font-weight:700;
+    color:var(--haldi-deep);
+  }
+  .gate .code{
+    font-size:clamp(40px,7vw,68px);line-height:1;font-weight:400;letter-spacing:.02em;
+    margin-top:6px;
+  }
+  .gate .name{margin-top:10px;font-size:clamp(17px,2.2vw,21px);line-height:1.3}
+  .gate .desc{margin-top:8px;font-size:14px;line-height:1.5;color:#4a463d;max-width:32ch}
+  .gate .enter{
+    margin-top:22px;font-family:ui-sans-serif,Arial,sans-serif;font-size:13px;font-weight:600;
+    letter-spacing:.04em;display:inline-flex;align-items:center;gap:.5em;color:var(--gate-ink);
+  }
+  .gate .enter .arrow{transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+  .gate:hover{transform:translateY(-6px);box-shadow:0 1px 0 rgba(0,0,0,.4),0 34px 60px -28px rgba(0,0,0,.95)}
+  .gate:hover .enter .arrow{transform:translateX(5px)}
+  .gate:focus-visible{outline:3px solid var(--haldi);outline-offset:3px}
+
+  /* HYP pending state */
+  .gate.pending{background:#222b39;color:var(--leaf);
+    box-shadow:inset 0 0 0 1px var(--line);cursor:default}
+  .gate.pending::before{background:linear-gradient(rgba(211,154,60,.5),rgba(185,116,42,.4))}
+  .gate.pending .tag{color:var(--haldi)}
+  .gate.pending .desc{color:var(--leaf-soft)}
+  .gate.pending .enter{color:var(--leaf-soft)}
+  .gate.pending:hover{transform:none}
+  .gate.pending .status{
+    font-family:ui-sans-serif,Arial,sans-serif;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink);background:var(--haldi);
+    padding:3px 9px;border-radius:999px;font-weight:700;align-self:flex-start;
+  }
+
+  /* ---- footer ---- */
+  footer{
+    margin-top:clamp(34px,6vw,58px);padding-top:20px;border-top:1px solid var(--line);
+    font-family:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;
+    font-size:12.5px;color:var(--leaf-soft);display:flex;flex-wrap:wrap;gap:6px 18px;
+    justify-content:space-between;
+  }
+  footer .where{opacity:.75}
+
+  @media (max-width:640px){
+    .gates{grid-template-columns:1fr}
+    .hero{max-width:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sloka .dev .reveal{opacity:1!important;transform:none!important}
+    .gate{transition:none}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="eyebrow">Light on Haṭha Yoga &nbsp;·&nbsp; <b>Two digital editions</b></div>
+
+    <div class="hero">
+      <div class="sloka">
+        <div class="dev" lang="sa">
+          <span class="reveal">श्रीआदिनाथाय&nbsp;नमोऽस्तु&nbsp;तस्मै</span>
+        </div>
+        <div class="iast">
+          śrīādināthāya namo’stu tasmai / yenopadiṣṭā haṭhayogavidyā —
+        </div>
+        <div class="gloss">
+          Homage to the glorious Ādinātha, who taught the science of Haṭha yoga
+          <span class="accent">— a stairway for those who wish to climb to the lofty terrace above.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="gates">
+      <!-- HYP -->
+      <a class="gate pending" href="hyp/index.html" aria-label="Haṭha Yoga Project — content being migrated">
+        <div>
+          <div class="tag">Project archive</div>
+          <div class="code">HYP</div>
+          <div class="name">The Haṭha Yoga Project</div>
+          <div class="desc">Comparative study of the history and practice of physical yoga.</div>
+        </div>
+        <div>
+          <span class="status">Migrating</span>
+        </div>
+      </a>
+
+      <!-- HP -->
+      <a class="gate" href="hp/index.html" aria-label="Open the Haṭhapradīpikā critical edition reader">
+        <div>
+          <div class="tag">Critical edition</div>
+          <div class="code">HP</div>
+          <div class="name">Haṭhapradīpikā</div>
+          <div class="desc">Critical edition, translation &amp; philological commentary — 553 verses, fully readable.</div>
+        </div>
+        <div class="enter">Open the reader <span class="arrow">→</span></div>
+      </a>
+    </div>
+
+    <footer>
+      <span>Migrating to <b>yoga.ames.ox.ac.uk</b> · local working copy</span>
+      <span class="where">Choose an edition above</span>
+    </footer>
+
+  </div>
+
+<script>
+  // gentle line reveal on the maṅgala verse (respects reduced-motion via CSS)
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var el = document.querySelector('.sloka .dev .reveal');
+    if(!el) return;
+    if(reduce){ el.style.opacity=1; el.style.transform='none'; return; }
+    el.animate(
+      [{opacity:0, transform:'translateY(.25em)'},{opacity:1, transform:'none'}],
+      {duration:1100, delay:120, easing:'cubic-bezier(.2,.8,.2,1)', fill:'forwards'}
+    );
+  })();
+</script>
+</body>
+</html>
