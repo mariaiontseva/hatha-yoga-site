@@ -3,9 +3,12 @@
 Auto-discovers pages: MIRROR/index.html (home) + every MIRROR/<slug>/index.html,
 skipping permalink aliases (?p=) and nggallery slideshow helpers.
 """
-import os, glob, shutil, sys
+import os, glob, json, shutil, sys
+from urllib.parse import unquote
 sys.path.insert(0, os.path.dirname(__file__))
 import extract, template
+
+PMAP = json.load(open(os.path.join(os.path.dirname(__file__), "pmap_hyp.json")))
 
 MIRROR = "/Users/mariaiontseva/hyp-site/hyp.soas.ac.uk"
 OUT = "/Users/mariaiontseva/hatha-yoga-local/hyp"
@@ -35,28 +38,44 @@ def discover():
     return pages
 
 
+def _emit(slug, src, active, root, all_used):
+    title, html, used = extract.extract_content(src, "fusion", site="hyp", pmap=PMAP)
+    if len(html) < 20:
+        print("  skip (empty)", slug); return False
+    all_used |= used
+    page = template.render_page(title, html, site="hyp", active=active, root=root)
+    dest = OUT if slug == "index" else os.path.join(OUT, slug)
+    os.makedirs(dest, exist_ok=True)
+    open(os.path.join(dest, "index.html"), "w", encoding="utf-8").write(page)
+    print(f"  hyp/{'(home)' if slug=='index' else slug}  ({len(html)} chars, {len(used)} imgs)")
+    return True
+
+
 def build():
     os.makedirs(IMG, exist_ok=True)
     all_used = set()
+    built = set()
     n = 0
     for slug, src, active in discover():
         if not os.path.isfile(src):
             print("  MISSING", src); continue
-        title, html, used = extract.extract_content(src, "fusion")
-        if len(html) < 20:          # genuinely empty page — skip
-            print("  skip (empty)", slug); continue
-        all_used |= used
-        page = template.render_page(title, html, site="hyp", active=active, root="../../")
-        dest = OUT if slug == "index" else os.path.join(OUT, slug)
-        os.makedirs(dest, exist_ok=True)
-        open(os.path.join(dest, "index.html"), "w", encoding="utf-8").write(page)
-        n += 1
-        print(f"  hyp/{'(home)' if slug=='index' else slug}  ({len(html)} chars, {len(used)} imgs)")
+        root = "../" if slug == "index" else "../../"
+        if _emit(slug, src, active, root, all_used):
+            n += 1; built.add(slug)
+    # fill pages that exist ONLY as ?p=NN alias files (pretty permalink not mirrored)
+    for nn, slug in PMAP.items():
+        if not slug or slug in built:
+            continue
+        alias = os.path.join(MIRROR, f"index.html?p={nn}.html")
+        if os.path.isfile(alias) and _emit(slug, alias, "", "../../", all_used):
+            n += 1; built.add(slug)
+            print(f"    (from alias p={nn})")
     for p in all_used:
+        clean = unquote(os.path.basename(p)).split("?")[0]
         try:
-            shutil.copy2(p, os.path.join(IMG, os.path.basename(p)))
+            shutil.copy2(p, os.path.join(IMG, clean))
         except Exception as e:
-            print("  img fail", os.path.basename(p), e)
+            print("  img fail", clean, e)
     print(f"built {n} pages, copied {len(all_used)} images -> hyp/assets/img/")
 
 

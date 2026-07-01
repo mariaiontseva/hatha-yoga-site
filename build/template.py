@@ -54,6 +54,10 @@ def render_page(title, content_html, site, active="", root="../../"):
     site_title = TITLES[site]
     nav = _nav(site, active, root)
     footer = FOOTERS[site].format(root=root)
+    # substitute content placeholders per page depth
+    content_html = (content_html
+                    .replace("{{IMG}}", f"{root}{site}/assets/img")
+                    .replace("{{ROOT}}", root))
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
