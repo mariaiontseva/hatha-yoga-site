@@ -112,7 +112,16 @@ def book(content_html):
                 if st:
                     st.unwrap()
             hcount += 1
+    order = None
     for a in root.find_all("a"):
         if a.get_text(strip=True).upper() in ("ORDER", "ORDER NOW", "BUY"):
             a["class"] = a.get("class", []) + ["btn"]
+            order = a
+    # group cover + order button into a floated aside at the top-left
+    if img is not None:
+        aside = soup.new_tag("div", **{"class": "book-aside"})
+        img.insert_before(aside)
+        aside.append(img)
+        if order is not None:
+            aside.append(order)
     return "".join(str(c) for c in root.contents).strip()
