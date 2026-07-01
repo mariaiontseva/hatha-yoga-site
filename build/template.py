@@ -14,12 +14,12 @@ NAVS = {
         ("Home",          "hyp/"),
         ("Team",          "hyp/team/"),
         ("Publications",  "hyp/publications/"),
-        ("Roots of Yoga", "hyp/roots-of-yoga/"),
+        ("Events",        "hyp/events/"),
         ("Resources",     "hyp/resources/"),
         ("Libraries",     "hyp/libraries/"),
-        ("Events",        "hyp/events/"),
         ("Blog",          "hyp/blog/"),
         ("Gallery",       "hyp/gallery/"),
+        ("Roots of Yoga", "hyp/roots-of-yoga/"),
     ],
     "hp": [
         ("Home",            "hp/"),
@@ -68,12 +68,17 @@ def render_page(title, content_html, site, active="", root="../../"):
 <link rel="stylesheet" href="{root}assets/{site}.css">
 </head>
 <body class="site-{site}">
-<header class="site-header"><div class="site-header-inner">
-  <a class="site-title" href="{root}{site}/">{site_title}</a>
-  <nav class="site-nav">
+<header class="site-header">
+  <div class="site-topbar"><div class="site-topbar-inner">
+    <a class="site-over" href="{root}">Light on Haṭha Yoga</a>
+  </div></div>
+  <div class="site-header-inner">
+    <a class="site-title" href="{root}{site}/">{site_title}</a>
+    <nav class="site-nav">
       {nav}
-  </nav>
-</div></header>
+    </nav>
+  </div>
+</header>
 
 <main class="site-main narrow">
 {content_html}

@@ -2,7 +2,7 @@
 import os, json, shutil, sys
 from urllib.parse import unquote
 sys.path.insert(0, os.path.dirname(__file__))
-import extract, template
+import extract, template, teams, gallery
 
 PMAP = json.load(open(os.path.join(os.path.dirname(__file__), "pmap_hp.json")))
 
@@ -32,6 +32,10 @@ def build():
         if not os.path.isfile(src):
             print("  MISSING", src); continue
         title, html, used = extract.extract_content(src, "enfold", site="hp", pmap=PMAP)
+        if out_slug == "team":
+            html = teams.restructure(html, "hp")
+        else:
+            html = gallery.wrap(html)
         all_used |= used
         root = "../" if out_slug == "" else "../../"
         page = template.render_page(title, html, site="hp", active=active, root=root)

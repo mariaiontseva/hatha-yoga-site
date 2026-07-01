@@ -3,10 +3,10 @@
 Auto-discovers pages: MIRROR/index.html (home) + every MIRROR/<slug>/index.html,
 skipping permalink aliases (?p=) and nggallery slideshow helpers.
 """
-import os, glob, json, shutil, sys
+import os, re, glob, json, shutil, sys
 from urllib.parse import unquote
 sys.path.insert(0, os.path.dirname(__file__))
-import extract, template
+import extract, template, teams, pubs, gallery, libraries, blog
 
 PMAP = json.load(open(os.path.join(os.path.dirname(__file__), "pmap_hyp.json")))
 
@@ -24,7 +24,7 @@ TOP_LEVEL = ["dabhoi", "hampi", "kadri", "panhale-kaji"]  # field sites as <slug
 
 
 def discover():
-    pages = [("index", os.path.join(MIRROR, "index.html"), "")]  # home
+    pages = [("index", os.path.join(MIRROR, "index.html"), "hyp/")]  # home
     for d in sorted(glob.glob(os.path.join(MIRROR, "*", "index.html"))):
         slug = os.path.basename(os.path.dirname(d))
         if "?p=" in d or "nggallery" in slug or slug in SKIP:
@@ -38,10 +38,50 @@ def discover():
     return pages
 
 
+def _hero(src, all_used):
+    """Rebuild the home Revolution Slider as a clean CSS crossfade hero."""
+    from bs4 import BeautifulSoup
+    s = BeautifulSoup(open(src, encoding="utf-8", errors="replace").read(), "lxml")
+    sl = s.select_one("div.rev_slider_wrapper, .rev_slider")
+    if not sl:
+        return ""
+    base = extract._mirror_root(src)
+    imgs = []
+    for img in sl.find_all("img"):
+        for attr in ("src", "data-lazyload", "data-lazy", "data-src"):
+            v = img.get(attr)
+            if v and re.search(r"\.(jpg|jpeg|png)", v, re.I):
+                loc = extract._resolve_local(v, base)
+                if loc:
+                    all_used.add(loc)
+                    imgs.append(unquote(os.path.basename(v.split("?")[0])))
+                break
+    if not imgs:
+        return ""
+    tags = "".join(f'<img src="{{{{IMG}}}}/{fn}" alt="" loading="lazy">' for fn in imgs)
+    return f'<div class="hero" data-count="{len(imgs)}">{tags}</div>'
+
+
 def _emit(slug, src, active, root, all_used):
     title, html, used = extract.extract_content(src, "fusion", site="hyp", pmap=PMAP)
     if len(html) < 20:
         print("  skip (empty)", slug); return False
+    if slug == "team":
+        html = teams.restructure(html, "hyp")
+    if slug == "publications":
+        html = pubs.restructure(html)
+    if slug == "libraries":
+        html = libraries.restructure(html)
+    if slug == "blog":
+        html = blog.build(src, "hyp", PMAP, used)
+    if slug == "gallery":
+        html = gallery.index(html)
+    elif slug == "roots-of-yoga":
+        html = gallery.book(html)
+    elif slug not in ("team", "blog"):
+        html = gallery.wrap(html)
+    if slug == "index":
+        html = _hero(src, used) + html
     all_used |= used
     page = template.render_page(title, html, site="hyp", active=active, root=root)
     dest = OUT if slug == "index" else os.path.join(OUT, slug)

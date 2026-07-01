@@ -57,6 +57,11 @@ def rewrite_link(href, ctx):
     site = ctx["site"]; pmap = ctx["pmap"]
     if href.startswith(("mailto:", "tel:", "#", "javascript")):
         return href
+    # repair malformed double-scheme hrefs, e.g. "http://: http://real.pdf"
+    if href.count("http") > 1:
+        m = re.search(r"(https?://[^\s:][^\s]*)\s*$", href)
+        if m:
+            href = m.group(1)
     host = os.path.basename(ctx["base_dir"])
     dec0 = unquote(href)
     # large talk recordings: keep pointing at the original hosted file
@@ -75,15 +80,15 @@ def rewrite_link(href, ctx):
     # the HP digital reader
     if re.search(r"/reader/?", dec) or "digital-edition" in dec:
         return "{{ROOT}}hp/reader/"
-    # a file/asset link (image, pdf, audio) -> copy + link, or drop if missing
-    if FILE_EXT.search(dec.split("?")[0]):
-        return rewrite_asset(href, ctx)  # may be None -> link unwrapped
+    # external absolute to another host -> leave as-is (incl. external PDFs)
+    if href.startswith(("http://", "https://")):
+        return href
     # nggallery slideshow helpers -> the gallery page
     if "nggallery" in dec:
         return "{{ROOT}}" + site + "/gallery/"
-    # external absolute to another host -> leave as-is
-    if href.startswith(("http://", "https://")):
-        return href
+    # a relative file/asset link -> copy + link, or drop if missing
+    if FILE_EXT.search(dec.split("?")[0]):
+        return rewrite_asset(href, ctx)  # may be None -> link unwrapped
     # relative internal link to a sibling mirror page -> map by slug
     base = dec.split("#")[0].split("?")[0].strip("/")
     seg = base.split("/")[-1].replace("index.html", "")

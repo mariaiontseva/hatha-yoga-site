@@ -7,28 +7,29 @@
 <meta name="description" content="Two connected resources on premodern physical yoga: the Haṭha Yoga Project and the critical edition of the Haṭhapradīpikā.">
 <link rel="stylesheet" href="assets/site.css">
 <style>
-  .landing{max-width:1120px;margin:0 auto;padding:clamp(28px,6vw,72px) var(--gutter);
+  body{border-top:4px solid var(--oxblue)}
+  .landing{max-width:var(--wrap);margin:0 auto;padding:clamp(28px,6vw,72px) var(--gutter);
     min-height:100vh;display:flex;flex-direction:column;justify-content:center}
-  .landing-head{max-width:44ch;margin-bottom:clamp(28px,5vw,52px)}
-  .landing-head h1{font-size:clamp(2rem,4.5vw,3.4rem);line-height:1.08;margin:0 0 .5rem}
-  .landing-head p{color:var(--ink-soft);font-size:clamp(1.05rem,1.5vw,1.25rem);max-width:46ch}
+  .landing-head{max-width:46ch;margin-bottom:clamp(28px,5vw,52px)}
+  .landing-head h1{font-size:clamp(2.1rem,4.5vw,3.4rem);line-height:1.06;margin:0 0 .5rem;
+    letter-spacing:-.02em}
+  .landing-head p{color:var(--ink-soft);font-size:clamp(1.05rem,1.5vw,1.2rem);max-width:46ch}
   .tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2.5vw,28px)}
   @media (max-width:720px){.tiles{grid-template-columns:1fr}}
   .tile{position:relative;display:block;text-decoration:none;color:inherit;
-    border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:var(--paper-2);
-    transition:border-color .2s ease}
-  .tile:hover{border-color:var(--accent)}
-  .tile-img{aspect-ratio:16/10;overflow:hidden;background:#0c0b0a}
-  .tile-img img{width:100%;height:100%;object-fit:cover;display:block;
-    transition:transform .5s ease;opacity:.92}
-  .tile:hover .tile-img img{transform:scale(1.04);opacity:1}
-  .tile-body{padding:1.15rem clamp(1.1rem,2vw,1.5rem) 1.4rem}
-  .tile .eyebrow{margin-bottom:.35rem}
-  .tile h2{font-size:clamp(1.35rem,2.2vw,1.7rem);margin:0 0 .35rem;line-height:1.15}
-  .tile p{margin:0;color:var(--ink-soft);font-size:.98rem;max-width:none}
-  .tile .go{display:inline-block;margin-top:.9rem;font-family:var(--font-sans);
-    font-weight:600;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
-    color:var(--accent)}
+    border:1px solid var(--rule);overflow:hidden;background:var(--paper);
+    transition:border-color .2s ease, box-shadow .2s ease}
+  .tile:hover{border-color:var(--oxblue);box-shadow:0 6px 22px -14px rgba(0,33,71,.5)}
+  .tile-img{aspect-ratio:16/10;overflow:hidden;background:var(--paper-2);border-bottom:1px solid var(--rule)}
+  .tile-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+  .tile:hover .tile-img img{transform:scale(1.03)}
+  .tile-body{padding:1.2rem clamp(1.1rem,2vw,1.5rem) 1.45rem}
+  .tile .eyebrow{margin-bottom:.4rem}
+  .tile h2{font-size:clamp(1.3rem,2.2vw,1.65rem);margin:0 0 .4rem;line-height:1.15;color:var(--oxblue)}
+  .tile p{margin:0;color:var(--ink-soft);font-size:.97rem;max-width:none}
+  .tile .go{display:inline-block;margin-top:1rem;font-family:var(--font-sans);
+    font-weight:600;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--oxblue)}
   .landing-foot{margin-top:clamp(28px,5vw,52px);font-family:var(--font-sans);
     font-size:.82rem;color:var(--ink-soft)}
 </style>
