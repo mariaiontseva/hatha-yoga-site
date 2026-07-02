@@ -7,13 +7,13 @@
 <meta name="description" content="Two connected resources on premodern physical yoga: the Haṭha Yoga Project and the critical edition of the Haṭhapradīpikā.">
 <link rel="stylesheet" href="assets/site.css">
 <style>
-  body{border-top:3px solid var(--oxblue)}
-  .l-mast{border-bottom:1px solid var(--rule)}
-  .l-mast-inner{max-width:var(--wrap);margin:0 auto;padding:.85rem var(--gutter);
+  .l-mast{background:var(--oxblue)}
+  .l-mast-inner{max-width:var(--wrap);margin:0 auto;padding:.7rem var(--gutter);
     display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-  .l-mark{font-family:var(--font-serif);font-weight:700;font-size:1rem;color:var(--ink);
+  .l-mark{font-family:var(--font-serif);font-weight:700;font-size:1.05rem;color:#fff;
     letter-spacing:-.01em}
-  .l-affil{font-family:var(--font-sans);font-size:.78rem;color:var(--ink-soft);letter-spacing:.01em}
+  .l-affil{font-family:var(--font-sans);font-size:.75rem;font-weight:500;letter-spacing:.06em;
+    text-transform:uppercase;color:rgba(255,255,255,.78)}
 
   .landing{max-width:var(--wrap);margin:0 auto;padding:clamp(44px,8vw,96px) var(--gutter);
     display:flex;flex-direction:column;justify-content:center;min-height:calc(100vh - 190px)}
@@ -25,13 +25,16 @@
 
   .tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(20px,2.6vw,32px)}
   @media (max-width:720px){.tiles{grid-template-columns:1fr}}
-  .tile{display:flex;flex-direction:column;text-decoration:none;color:inherit;
+  .tile{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;
     border:1px solid var(--rule);overflow:hidden;background:var(--paper);
-    transition:border-color .2s ease, box-shadow .25s ease}
-  .tile:hover{border-color:var(--oxblue);box-shadow:0 12px 34px -20px rgba(0,33,71,.5)}
+    transition:border-color .25s ease}
+  .tile::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;z-index:2;
+    background:var(--oxblue);transform:scaleX(0);transform-origin:left;
+    transition:transform .35s cubic-bezier(.4,0,.2,1)}
+  .tile:hover{border-color:var(--oxblue)}
+  .tile:hover::before{transform:scaleX(1)}
   .tile-img{aspect-ratio:16/9;overflow:hidden;background:var(--paper-2)}
-  .tile-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
-  .tile:hover .tile-img img{transform:scale(1.04)}
+  .tile-img img{width:100%;height:100%;object-fit:cover;display:block}
   .tile-body{padding:1.5rem clamp(1.3rem,2vw,1.7rem) 1.6rem;flex:1;display:flex;flex-direction:column}
   .tile h2{font-family:var(--font-serif);font-weight:700;font-size:clamp(1.45rem,2.4vw,1.8rem);
     margin:0 0 .55rem;line-height:1.14;letter-spacing:-.012em;color:var(--ink)}
