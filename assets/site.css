@@ -202,6 +202,12 @@ a.btn:hover{background:var(--oxblue-hover);color:#fff}
   .member-photo{width:104px;height:132px}
 }
 
+/* ---- contact block ---- */
+.contact-lead{font-size:1.15rem;margin:1.4em 0 .6em}
+.contact-lead a{font-weight:400}
+.contact-affil{font-family:var(--font-sans);font-size:.8rem;font-weight:500;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin:0}
+
 /* ---- blog post list ---- */
 .post{display:flex;gap:1.6rem;padding:1.8rem 0;border-top:1px solid var(--rule);
   align-items:flex-start}
