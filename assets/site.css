@@ -126,6 +126,11 @@ code{font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:var(--pa
 .site-footer a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.4)}
 .site-footer a:hover{text-decoration-color:#fff}
 
+/* ---- digital-edition reader (header + full-height iframe) ---- */
+body.reader-page{height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.reader-page .site-header{position:static}
+.reader-frame{flex:1 1 auto;width:100%;border:0;display:block}
+
 /* ---- photo gallery grid ---- */
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(116px,1fr));
   gap:6px;margin:1.7em 0}
