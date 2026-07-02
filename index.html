@@ -7,89 +7,84 @@
 <meta name="description" content="Two connected resources on premodern physical yoga: the Haṭha Yoga Project and the critical edition of the Haṭhapradīpikā.">
 <link rel="stylesheet" href="assets/site.css">
 <style>
-  .l-top{background:var(--oxblue)}
-  .l-top-inner{max-width:var(--wrap);margin:0 auto;padding:.5rem var(--gutter);
-    display:flex;justify-content:flex-end}
-  .l-affil{font-family:var(--font-sans);font-size:.72rem;font-weight:500;letter-spacing:.09em;
-    text-transform:uppercase;color:rgba(255,255,255,.82)}
-  .landing{max-width:var(--wrap);margin:0 auto;padding:clamp(40px,7vw,84px) var(--gutter);
-    min-height:calc(100vh - 200px);display:flex;flex-direction:column;justify-content:center}
-  .landing-head{max-width:44ch;margin-bottom:clamp(30px,5vw,56px)}
-  .landing-head .eyebrow{margin-bottom:.7rem}
-  .landing-head h1{font-size:clamp(2.3rem,5vw,3.6rem);line-height:1.04;margin:0 0 .7rem;
-    letter-spacing:-.022em}
-  .landing-head p{color:var(--ink-soft);font-size:clamp(1.08rem,1.5vw,1.25rem);
-    line-height:1.5;max-width:44ch}
-  .tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(18px,2.5vw,30px)}
+  body{border-top:3px solid var(--oxblue)}
+  .l-mast{border-bottom:1px solid var(--rule)}
+  .l-mast-inner{max-width:var(--wrap);margin:0 auto;padding:.85rem var(--gutter);
+    display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  .l-mark{font-family:var(--font-serif);font-weight:700;font-size:1rem;color:var(--ink);
+    letter-spacing:-.01em}
+  .l-affil{font-family:var(--font-sans);font-size:.78rem;color:var(--ink-soft);letter-spacing:.01em}
+
+  .landing{max-width:var(--wrap);margin:0 auto;padding:clamp(44px,8vw,96px) var(--gutter);
+    display:flex;flex-direction:column;justify-content:center;min-height:calc(100vh - 190px)}
+  .landing-head{max-width:40ch;margin-bottom:clamp(34px,6vw,60px)}
+  .landing-head h1{font-family:var(--font-serif);font-weight:700;
+    font-size:clamp(2.4rem,5.5vw,3.8rem);line-height:1.03;margin:0 0 1rem;letter-spacing:-.025em}
+  .landing-head p{color:var(--ink-soft);font-family:var(--font-serif);
+    font-size:clamp(1.15rem,1.7vw,1.35rem);line-height:1.5;max-width:38ch}
+
+  .tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(20px,2.6vw,32px)}
   @media (max-width:720px){.tiles{grid-template-columns:1fr}}
-  .tile{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;
+  .tile{display:flex;flex-direction:column;text-decoration:none;color:inherit;
     border:1px solid var(--rule);overflow:hidden;background:var(--paper);
     transition:border-color .2s ease, box-shadow .25s ease}
-  .tile:hover{border-color:var(--oxblue);box-shadow:0 10px 30px -18px rgba(0,33,71,.55)}
-  .tile-img{aspect-ratio:16/9;overflow:hidden;background:var(--paper-2);
-    border-bottom:1px solid var(--rule)}
-  .tile-img img{width:100%;height:100%;object-fit:cover;display:block;
-    transition:transform .55s ease}
+  .tile:hover{border-color:var(--oxblue);box-shadow:0 12px 34px -20px rgba(0,33,71,.5)}
+  .tile-img{aspect-ratio:16/9;overflow:hidden;background:var(--paper-2)}
+  .tile-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
   .tile:hover .tile-img img{transform:scale(1.04)}
-  .tile-body{padding:1.35rem clamp(1.2rem,2vw,1.6rem) 1.5rem;flex:1;display:flex;
-    flex-direction:column}
-  .tile .eyebrow{margin-bottom:.5rem}
-  .tile h2{font-family:var(--font-serif);font-weight:700;
-    font-size:clamp(1.4rem,2.4vw,1.8rem);margin:0 0 .5rem;line-height:1.12;
-    letter-spacing:-.01em;color:var(--oxblue)}
-  .tile p{margin:0;color:var(--ink-soft);font-size:1rem;line-height:1.5;max-width:none}
-  .tile .go{display:inline-flex;align-items:center;gap:.45em;margin-top:1.1rem;
-    font-family:var(--font-sans);font-weight:700;font-size:.76rem;letter-spacing:.09em;
-    text-transform:uppercase;color:var(--oxblue)}
+  .tile-body{padding:1.5rem clamp(1.3rem,2vw,1.7rem) 1.6rem;flex:1;display:flex;flex-direction:column}
+  .tile h2{font-family:var(--font-serif);font-weight:700;font-size:clamp(1.45rem,2.4vw,1.8rem);
+    margin:0 0 .55rem;line-height:1.14;letter-spacing:-.012em;color:var(--ink)}
+  .tile p{margin:0;font-family:var(--font-serif);color:var(--ink-soft);
+    font-size:1.05rem;line-height:1.5;max-width:none}
+  .tile .go{display:inline-flex;align-items:center;gap:.5em;margin-top:1.15rem;
+    font-family:var(--font-sans);font-weight:600;font-size:.9rem;color:var(--oxblue)}
   .tile .go svg{transition:transform .25s ease}
   .tile:hover .go svg{transform:translateX(4px)}
-  .l-foot{background:var(--oxblue);font-family:var(--font-sans);font-size:.8rem;
-    color:rgba(255,255,255,.82)}
-  .l-foot-inner{max-width:var(--wrap);margin:0 auto;padding:1.5rem var(--gutter);
-    display:flex;gap:1.5rem;justify-content:space-between;flex-wrap:wrap}
+  .tile:hover h2{color:var(--oxblue)}
+
+  .l-foot{border-top:1px solid var(--rule);margin-top:clamp(40px,6vw,72px)}
+  .l-foot-inner{max-width:var(--wrap);margin:0 auto;padding:1.6rem var(--gutter);
+    display:flex;gap:1.2rem;justify-content:space-between;flex-wrap:wrap;
+    font-family:var(--font-sans);font-size:.8rem;color:var(--ink-soft)}
 </style>
 </head>
 <body>
-<header class="l-top"><div class="l-top-inner">
+<header class="l-mast"><div class="l-mast-inner">
+  <span class="l-mark">Light on Haṭha Yoga</span>
   <span class="l-affil">SOAS · University of Oxford · Universität Marburg</span>
 </div></header>
 
 <main class="landing">
   <div class="landing-head">
-    <p class="eyebrow">Premodern physical yoga · philology &amp; fieldwork</p>
     <h1>Light on Haṭha Yoga</h1>
-    <p>Two connected resources on the history and texts of haṭhayoga.
-    Choose your entrance.</p>
+    <p>Two connected resources on the history and texts of haṭhayoga.</p>
   </div>
 
   <div class="tiles">
     <a class="tile" href="hyp/">
-      <div class="tile-img"><img src="assets/img/tile-hyp.jpg" alt="Stone relief of a yogi in āsana, Haṭha Yoga Project"></div>
+      <div class="tile-img"><img src="assets/img/tile-hyp.jpg" alt="Stone relief of a yogi in āsana"></div>
       <div class="tile-body">
-        <p class="eyebrow">Research project</p>
         <h2>The Haṭha Yoga Project</h2>
-        <p>The history of physical yoga traced through philology and fieldwork —
-        team, publications, field sites and resources.</p>
-        <span class="go">Enter<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true"><path d="M11 1l4 4-4 4M15 5H0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p>The history of physical yoga traced through philology and fieldwork — team, publications, field sites and resources.</p>
+        <span class="go">Enter<svg width="17" height="10" viewBox="0 0 17 10" fill="none" aria-hidden="true"><path d="M12 1l4 4-4 4M16 5H0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </div>
     </a>
 
     <a class="tile" href="hp/">
       <div class="tile-img"><img src="assets/img/tile-hp.jpg" alt="Manuscript painting of scholars reading palm-leaf manuscripts"></div>
       <div class="tile-body">
-        <p class="eyebrow">Critical edition</p>
         <h2>Haṭhapradīpikā Online</h2>
-        <p>A critical edition and translation of the Haṭhapradīpikā, with an
-        interactive digital reader of the Sanskrit text.</p>
-        <span class="go">Enter<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true"><path d="M11 1l4 4-4 4M15 5H0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p>A critical edition and translation of the Haṭhapradīpikā, with an interactive digital reader of the Sanskrit text.</p>
+        <span class="go">Enter<svg width="17" height="10" viewBox="0 0 17 10" fill="none" aria-hidden="true"><path d="M12 1l4 4-4 4M16 5H0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </div>
     </a>
   </div>
-</main>
 
-<footer class="l-foot"><div class="l-foot-inner">
-  <span>The Haṭha Yoga Project · SOAS, University of London</span>
-  <span>Haṭhapradīpikā Online · Oxford &amp; Marburg</span>
-</div></footer>
+  <footer class="l-foot"><div class="l-foot-inner">
+    <span>The Haṭha Yoga Project · SOAS, University of London</span>
+    <span>Haṭhapradīpikā Online · Oxford &amp; Marburg</span>
+  </div></footer>
+</main>
 </body>
 </html>
