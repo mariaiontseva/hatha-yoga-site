@@ -64,6 +64,7 @@ def render_page(title, content_html, site, active="", root="../../"):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title} — {site_title}</title>
+<link rel="icon" type="image/svg+xml" href="{root}favicon.svg">
 <link rel="stylesheet" href="{root}assets/site.css">
 <link rel="stylesheet" href="{root}assets/{site}.css">
 </head>
