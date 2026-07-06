@@ -6,7 +6,7 @@ skipping permalink aliases (?p=) and nggallery slideshow helpers.
 import os, re, glob, json, shutil, sys
 from urllib.parse import unquote
 sys.path.insert(0, os.path.dirname(__file__))
-import extract, template, teams, pubs, gallery, libraries, blog, contact
+import extract, template, teams, pubs, gallery, libraries, blog, contact, homepage, events
 
 PMAP = json.load(open(os.path.join(os.path.dirname(__file__), "pmap_hyp.json")))
 
@@ -74,6 +74,8 @@ def _emit(slug, src, active, root, all_used):
         html = libraries.restructure(html)
     if slug == "contact":
         html = contact.restructure(html)
+    if slug == "events":
+        html = events.restructure(html)
     if slug == "blog":
         html = blog.build(src, "hyp", PMAP, used)
     if slug == "gallery":
@@ -83,6 +85,7 @@ def _emit(slug, src, active, root, all_used):
     elif slug not in ("team", "blog"):
         html = gallery.wrap(html)
     if slug == "index":
+        html = homepage.restructure(html)
         html = _hero(src, used) + html
     all_used |= used
     page = template.render_page(title, html, site="hyp", active=active, root=root)
