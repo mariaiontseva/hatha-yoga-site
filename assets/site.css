@@ -24,8 +24,10 @@
   --font-serif:"Noto Serif",Georgia,"Times New Roman",serif;
   --font-sans:"Roboto",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
 
-  --oxblue:#002147;        /* Oxford blue — the anchor */
+  --oxblue:#002147;        /* Oxford blue — the anchor (headers/nav/UI) */
   --oxblue-hover:#1a4a80;  /* lighter, for hover/active */
+  --link:#1657ac;          /* brighter blue for in-text links (reads vs black) */
+  --link-hover:#0d3d7a;
 
   --ink:#14181d;           /* cool near-black text */
   --ink-soft:#586471;      /* secondary text */
@@ -57,9 +59,9 @@ h1{font-size:clamp(1.9rem,3.4vw,2.7rem);letter-spacing:-.015em;margin-top:0}
 h2{font-size:clamp(1.4rem,2.2vw,1.85rem)}
 h3{font-size:1.2rem}
 p{margin:0 0 1em;max-width:var(--measure)}
-a{color:var(--oxblue);text-decoration:underline;text-decoration-thickness:.055em;
-  text-underline-offset:.16em;text-decoration-color:rgba(0,33,71,.32)}
-a:hover{color:var(--oxblue-hover);text-decoration-color:currentColor}
+a{color:var(--link);text-decoration:underline;text-decoration-thickness:.06em;
+  text-underline-offset:.16em;text-decoration-color:rgba(22,87,172,.45)}
+a:hover{color:var(--link-hover);text-decoration-color:currentColor}
 ul,ol{margin:0 0 1em 1.3em;max-width:var(--measure)}
 li{margin:.25em 0}
 strong,b{font-weight:700}
@@ -80,6 +82,7 @@ tr:last-child td,tr:last-child th{border-bottom:0}
   padding-right:1.6rem;padding-top:.75em;color:var(--ink-soft);
   font-family:var(--font-sans);font-size:.82rem;font-weight:500;letter-spacing:.02em}
 .pub-list td{padding-top:.7em;padding-bottom:.7em}
+.pub-list td i,.pub-list td em{font-weight:700}   /* work titles bold */
 /* person / section headers span to the left edge */
 .pub-list th.pub-head{color:var(--oxblue);font-family:var(--font-serif);
   font-size:1.2rem;font-weight:700;padding:1.4em 0 .35em;
