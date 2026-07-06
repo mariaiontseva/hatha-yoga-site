@@ -192,7 +192,7 @@ a.btn:hover{background:var(--oxblue-hover);color:#fff}
   border:1px solid var(--rule);background:var(--paper-2)}
 .member-body{flex:1 1 0;min-width:0}
 .member-body>*{max-width:none}
-.member-name{margin:0 0 .1rem;font-size:1.2rem;line-height:1.2}
+.member-name{margin:0 0 .1rem;font-size:1.2rem;line-height:1.2;text-transform:uppercase}
 .member-role{font-family:var(--font-sans);text-transform:uppercase;letter-spacing:.1em;
   font-size:.7rem;font-weight:700;color:var(--oxblue);margin:0 0 .75rem}
 .member-body p{margin:0 0 .7rem}
