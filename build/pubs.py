@@ -11,21 +11,34 @@ import jimpubs
 YEAR = re.compile(r"^\d{3,4}\b")
 
 
+def _insert_rows_after(head_row, rows_html):
+    frag = BeautifulSoup("<table>" + rows_html + "</table>", "lxml")
+    for r in reversed(frag.find_all("tr")):
+        head_row.insert_after(r)
+
+
 def restructure(content_html):
     soup = BeautifulSoup(content_html, "lxml")
-    # inject Jim's HYP publications (with links) above the 'previous publications'
-    # lists — nothing existing is removed
-    anchor = next((h for h in soup.find_all(["h1", "h2", "h3"])
-                   if "PREVIOUS PUBLICATIONS" in h.get_text(" ", strip=True).upper()), None)
-    jim = BeautifulSoup(jimpubs.block(), "lxml")
-    jim_nodes = list((jim.body or jim).contents)
-    if anchor:
-        for node in jim_nodes:
-            anchor.insert_before(node)
-    else:
-        root0 = soup.body or soup
-        for node in reversed(jim_nodes):
-            root0.insert(0, node)
+    # MERGE Jim's new HYP publications INTO his existing 'DR JAMES MALLINSON'
+    # table (newest first) — no separate/duplicate section, nothing removed
+    mtable = next((t for t in soup.find_all("table")
+                   if "DR JAMES MALLINSON" in t.get_text(" ", strip=True).upper()), None)
+    if mtable:
+        rows = mtable.find_all("tr")
+
+        def subhead(keyword):
+            for r in rows:
+                cells = r.find_all(["td", "th"])
+                if cells and cells[-1].get_text(strip=True).upper().startswith(keyword):
+                    return r
+            return None
+
+        bh = subhead("BOOKS")
+        ah = subhead("ARTICLES")
+        if bh:
+            _insert_rows_after(bh, jimpubs.book_rows())
+        if ah:
+            _insert_rows_after(ah, jimpubs.article_rows())
     for t in soup.find_all("table"):
         rows = t.find_all("tr")
         yearish = total = 0

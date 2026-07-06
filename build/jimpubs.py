@@ -61,13 +61,9 @@ def _rows(items):
     return "".join(out)
 
 
-def block():
-    return (
-        '<h2>Professor James Mallinson — Haṭha Yoga Project publications</h2>'
-        '<table class="pub-list">'
-        '<tr><th class="pub-head" colspan="2">Books</th></tr>'
-        + _rows(BOOKS) +
-        '<tr><th class="pub-head" colspan="2">Articles</th></tr>'
-        + _rows(ARTICLES) +
-        '</table>'
-    )
+def book_rows():
+    return _rows(BOOKS)
+
+
+def article_rows():
+    return _rows(ARTICLES)
