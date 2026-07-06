@@ -117,8 +117,14 @@ def _build_hp(soup, nodes):
             bio = []
             while j < n and not (isinstance(nodes[j], Tag) and nodes[j].name in HEADINGS):
                 bio.append(nodes[j]); j += 1
-            out.append(_card(soup, photo, _split_name_role(name)[0],
-                             role or _split_name_role(name)[1], bio))
+            mname = _split_name_role(name)[0]
+            mrole = role or _split_name_role(name)[1]
+            key = next((k for k in bios.OVERRIDES if k in mname.upper()), None)
+            if key:
+                ov = bios.OVERRIDES[key]
+                mrole = ov["role"]
+                bio = BeautifulSoup(ov["bio_html"], "lxml").find_all("p")
+            out.append(_card(soup, photo, mname, mrole, bio))
             i = j
         else:
             out.append(el); i += 1

@@ -6,12 +6,26 @@ tabular data — mark it `.pub-list` so CSS can render it as a clean bibliograph
 """
 import re
 from bs4 import BeautifulSoup
+import jimpubs
 
 YEAR = re.compile(r"^\d{3,4}\b")
 
 
 def restructure(content_html):
     soup = BeautifulSoup(content_html, "lxml")
+    # inject Jim's HYP publications (with links) above the 'previous publications'
+    # lists — nothing existing is removed
+    anchor = next((h for h in soup.find_all(["h1", "h2", "h3"])
+                   if "PREVIOUS PUBLICATIONS" in h.get_text(" ", strip=True).upper()), None)
+    jim = BeautifulSoup(jimpubs.block(), "lxml")
+    jim_nodes = list((jim.body or jim).contents)
+    if anchor:
+        for node in jim_nodes:
+            anchor.insert_before(node)
+    else:
+        root0 = soup.body or soup
+        for node in reversed(jim_nodes):
+            root0.insert(0, node)
     for t in soup.find_all("table"):
         rows = t.find_all("tr")
         yearish = total = 0
