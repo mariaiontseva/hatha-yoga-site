@@ -17,6 +17,7 @@ pass through untouched. HYP order is img→name→bio; HP order is name→role�
 """
 import re
 from bs4 import BeautifulSoup, NavigableString, Tag
+import bios
 
 HEADINGS = {"h1", "h2", "h3", "h4"}
 
@@ -83,6 +84,11 @@ def _build_hyp(soup, nodes):
                     name, role = _split_name_role(nn.get_text(" ", strip=True))
                     i += 1; continue
                 bio.append(nn); i += 1
+            key = next((k for k in bios.OVERRIDES if k in name.upper()), None)
+            if key:
+                ov = bios.OVERRIDES[key]
+                name, role = ov["name"], ov["role"]
+                bio = BeautifulSoup(ov["bio_html"], "lxml").find_all("p")
             out.append(_card(soup, photo, name, role, bio))
         else:
             out.append(el); i += 1
