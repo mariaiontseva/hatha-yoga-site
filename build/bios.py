@@ -46,7 +46,7 @@ at the Smithsonian Institute in Washington D.C.</p>
 
 OVERRIDES = {
     "JAMES MALLINSON": {
-        "name": "Professor James Mallinson",
+        "name": "PROFESSOR JAMES MALLINSON",
         "role": "Principal Investigator",
         "bio_html": MALLINSON_BIO,
     },
