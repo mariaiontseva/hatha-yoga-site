@@ -7,6 +7,7 @@ tabular data — mark it `.pub-list` so CSS can render it as a clean bibliograph
 import re
 from bs4 import BeautifulSoup
 import jimpubs
+import danielapubs
 
 YEAR = re.compile(r"^\d{3,4}\b")
 
@@ -39,6 +40,27 @@ def restructure(content_html):
             _insert_rows_after(bh, jimpubs.book_rows())
         if ah:
             _insert_rows_after(ah, jimpubs.article_rows())
+
+    # ADD Daniela Bevilacqua's publications as a NEW section — she has no
+    # existing PERSONAL bibliography table (her surname appears only as an
+    # author credit in the shared Monographs table, which must not count),
+    # so this is an addition, not a merge — placed right after the last
+    # personal table (Gupta's) in the team list.
+    def _is_personal_header_table(t, name):
+        first = t.find("tr")
+        if not first:
+            return False
+        cells = first.find_all(["td", "th"])
+        return (len(cells) >= 2 and cells[0].get_text(strip=True) == ""
+                and name in cells[-1].get_text(strip=True).upper())
+
+    if not any(_is_personal_header_table(t, "BEVILACQUA") for t in soup.find_all("table")):
+        gtable = next((t for t in soup.find_all("table")
+                      if _is_personal_header_table(t, "GUPTA")), None)
+        if gtable:
+            new_table = BeautifulSoup(danielapubs.section_html(), "lxml").find("table")
+            gtable.insert_after(new_table)
+
     for t in soup.find_all("table"):
         rows = t.find_all("tr")
         yearish = total = 0
