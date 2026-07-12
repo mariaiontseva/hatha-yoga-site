@@ -88,6 +88,9 @@ tr:last-child td,tr:last-child th{border-bottom:0}
   font-size:1.2rem;font-weight:700;padding:1.4em 0 .35em;
   border-bottom:1px solid var(--ink-soft)}
 .pub-list tr:first-child th.pub-head{padding-top:.2em}
+/* section sub-heading (BOOK / ARTICLES / …) — one shared style */
+.pub-list td.pub-sub{font-family:var(--font-sans);font-weight:700;font-size:.78rem;
+  letter-spacing:.06em;color:var(--ink);padding-top:1.4em}
 hr{border:0;border-top:1px solid var(--rule);margin:2.4em 0}
 code{font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:var(--paper-2);
   padding:.1em .35em;border-radius:3px}

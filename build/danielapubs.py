@@ -98,8 +98,8 @@ def _rows(items):
 
 
 def _subhead(label):
-    # match the other tables' convention: bold label in the citation column
-    return f"<tr><td></td><td><strong>{label}</strong></td></tr>"
+    # bare label — pubs.py detects it and applies the shared .pub-sub style
+    return f"<tr><td></td><td>{label}</td></tr>"
 
 
 def section_html():

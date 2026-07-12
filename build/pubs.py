@@ -74,16 +74,28 @@ def restructure(content_html):
                 yearish += 1
         if total and yearish / total >= 0.5:
             t["class"] = t.get("class", []) + ["pub-list"]
-            # header rows (empty first <th> + a name/section <th>) -> span to the
-            # left edge like the year column, instead of sitting in column 2
             for r in rows:
                 cells = r.find_all(["td", "th"])
-                if (len(cells) >= 2 and cells[0].name == "th"
-                        and cells[0].get_text(strip=True) == ""
-                        and cells[-1].name == "th" and cells[-1].get_text(strip=True)):
+                if len(cells) < 2:
+                    continue
+                c0 = cells[0].get_text(strip=True)
+                c1 = cells[-1].get_text(" ", strip=True)
+                # person header row (empty first <th> + a name <th>) -> span to
+                # the left edge like the year column, instead of sitting in col 2
+                if (cells[0].name == "th" and c0 == ""
+                        and cells[-1].name == "th" and c1):
                     for extra in cells[:-1]:
                         extra.decompose()
                     cells[-1]["colspan"] = str(len(cells))
                     cells[-1]["class"] = cells[-1].get("class", []) + ["pub-head"]
+                # section sub-heading (BOOK / ARTICLES / VOLUME …): empty year +
+                # a short all-caps label -> ONE shared style via .pub-sub (no
+                # reliance on inline <strong> scattered through the content)
+                elif (c0 == "" and c1 and len(c1) <= 44
+                        and c1 == c1.upper() and not YEAR.match(c1)):
+                    cells[-1]["class"] = cells[-1].get("class", []) + ["pub-sub"]
+                    st = cells[-1].find("strong")   # drop now-redundant inline bold
+                    if st:
+                        st.unwrap()
     root = soup.body or soup
     return "".join(str(c) for c in root.contents).strip()
