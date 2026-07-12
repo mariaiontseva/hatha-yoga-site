@@ -97,14 +97,20 @@ def _rows(items):
     return "".join(out)
 
 
+def _subhead(label):
+    # match the other tables' convention: bold label in the citation column
+    return f"<tr><td></td><td><strong>{label}</strong></td></tr>"
+
+
 def section_html():
     parts = ['<table><tr><th></th><th>DR DANIELA BEVILACQUA</th></tr>']
+    parts.append(_subhead("ARTICLES &amp; BOOK CHAPTERS"))
     parts.append(_rows(ARTICLES))
-    parts.append('<tr><td></td><td>BOOK</td></tr>')
+    parts.append(_subhead("BOOK"))
     parts.append(_rows(BOOK))
-    parts.append('<tr><td></td><td>VOLUME</td></tr>')
+    parts.append(_subhead("EDITED VOLUMES"))
     parts.append(_rows(VOLUME))
-    parts.append('<tr><td></td><td>ENCYCLOPEDIC ENTRY</td></tr>')
+    parts.append(_subhead("ENCYCLOPEDIC ENTRY"))
     parts.append(_rows(ENCYCLOPEDIC))
     parts.append('</table>')
     return "".join(parts)
