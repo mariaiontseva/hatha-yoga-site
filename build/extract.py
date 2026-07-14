@@ -53,10 +53,20 @@ def rewrite_asset(src, ctx):
     return "{{IMG}}/" + fname
 
 
+# updated links for people who changed affiliation
+URL_REMAP = {
+    "soas.academia.edu/DanielaBevilacqua": "iscte-iul.academia.edu/DanielaBevilacqua",
+    "soas.academia.edu/JamesMallinson": "oxford.academia.edu/JamesMallinson",
+}
+
+
 def rewrite_link(href, ctx):
     site = ctx["site"]; pmap = ctx["pmap"]
     if href.startswith(("mailto:", "tel:", "#", "javascript")):
         return href
+    for old, new in URL_REMAP.items():
+        if old in href:
+            href = href.replace(old, new)
     # repair malformed double-scheme hrefs, e.g. "http://: http://real.pdf"
     if href.count("http") > 1:
         m = re.search(r"(https?://[^\s:][^\s]*)\s*$", href)

@@ -13,7 +13,7 @@ YEAR = re.compile(r"^\d{3,4}\b")
 
 ACADEMIA = {
     "James Mallinson": "https://oxford.academia.edu/JamesMallinson",
-    "Daniela Bevilacqua": "https://soas.academia.edu/DanielaBevilacqua",
+    "Daniela Bevilacqua": "https://iscte-iul.academia.edu/DanielaBevilacqua",
 }
 
 
