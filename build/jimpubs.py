@@ -81,3 +81,13 @@ def book_rows():
 
 def article_rows():
     return _rows(ARTICLES)
+
+
+def section_html():
+    """Jim's HYP publications only, as a standalone pub-list section
+    (matching the other team members' tables)."""
+    return ("<table>"
+            "<tr><th></th><th>PROFESSOR JAMES MALLINSON</th></tr>"
+            "<tr><td></td><td>BOOKS</td></tr>" + _rows(BOOKS) +
+            "<tr><td></td><td>ARTICLES</td></tr>" + _rows(ARTICLES) +
+            "</table>")

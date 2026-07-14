@@ -11,35 +11,52 @@ import danielapubs
 
 YEAR = re.compile(r"^\d{3,4}\b")
 
+ACADEMIA = {
+    "James Mallinson": "https://soas.academia.edu/JamesMallinson",
+    "Daniela Bevilacqua": "https://soas.academia.edu/DanielaBevilacqua",
+}
 
-def _insert_rows_after(head_row, rows_html):
-    frag = BeautifulSoup("<table>" + rows_html + "</table>", "lxml")
-    for r in reversed(frag.find_all("tr")):
-        head_row.insert_after(r)
+
+def _academia_note(name):
+    url = ACADEMIA[name]
+    return (f'<p class="pub-academia">Other publications by {name} are available on '
+            f'<a href="{url}">academia.edu</a>.</p>')
+
+
+def _remove_proposed_outputs(soup):
+    """Per the PI: drop the 'Proposed Project Outputs' block (kept only to
+    fill the page early on) — everything from that heading up to the team
+    publications heading."""
+    root = soup.body or soup
+    kids = [c for c in root.children if getattr(c, "name", None)]
+    start = end = None
+    for i, el in enumerate(kids):
+        t = el.get_text(" ", strip=True).upper()
+        if el.name in ("h1", "h2", "h3"):
+            if start is None and "PROPOSED PROJECT OUTPUTS" in t:
+                start = i
+            elif start is not None and "PREVIOUS PUBLICATIONS" in t:
+                end = i
+                break
+    if start is not None:
+        for el in kids[start:(end if end is not None else len(kids))]:
+            el.decompose()
 
 
 def restructure(content_html):
     soup = BeautifulSoup(content_html, "lxml")
-    # MERGE Jim's new HYP publications INTO his existing 'DR JAMES MALLINSON'
-    # table (newest first) — no separate/duplicate section, nothing removed
+
+    _remove_proposed_outputs(soup)
+
+    # Jim: keep ONLY his HYP publications — replace the old bibliography table
+    # with a fresh HYP-only section + an academia.edu note.
     mtable = next((t for t in soup.find_all("table")
                    if "DR JAMES MALLINSON" in t.get_text(" ", strip=True).upper()), None)
     if mtable:
-        rows = mtable.find_all("tr")
-
-        def subhead(keyword):
-            for r in rows:
-                cells = r.find_all(["td", "th"])
-                if cells and cells[-1].get_text(strip=True).upper().startswith(keyword):
-                    return r
-            return None
-
-        bh = subhead("BOOKS")
-        ah = subhead("ARTICLES")
-        if bh:
-            _insert_rows_after(bh, jimpubs.book_rows())
-        if ah:
-            _insert_rows_after(ah, jimpubs.article_rows())
+        jim = BeautifulSoup(jimpubs.section_html(), "lxml").find("table")
+        note = BeautifulSoup(_academia_note("James Mallinson"), "lxml").find("p")
+        mtable.replace_with(jim)
+        jim.insert_after(note)
 
     # ADD Daniela Bevilacqua's publications as a NEW section — she has no
     # existing PERSONAL bibliography table (her surname appears only as an
@@ -59,7 +76,9 @@ def restructure(content_html):
                       if _is_personal_header_table(t, "GUPTA")), None)
         if gtable:
             new_table = BeautifulSoup(danielapubs.section_html(), "lxml").find("table")
+            dnote = BeautifulSoup(_academia_note("Daniela Bevilacqua"), "lxml").find("p")
             gtable.insert_after(new_table)
+            new_table.insert_after(dnote)
 
     for t in soup.find_all("table"):
         rows = t.find_all("tr")

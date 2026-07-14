@@ -91,6 +91,7 @@ tr:last-child td,tr:last-child th{border-bottom:0}
 /* section sub-heading (BOOK / ARTICLES / …) — one shared style:
    plain bold at body size, exactly what the old inline <strong> gave */
 .pub-list td.pub-sub{font-weight:700;color:var(--ink);padding-top:1.4em}
+.pub-academia{font-size:.92rem;color:var(--ink-soft);margin:.7em 0 2.4em}
 hr{border:0;border-top:1px solid var(--rule);margin:2.4em 0}
 code{font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:var(--paper-2);
   padding:.1em .35em;border-radius:3px}
