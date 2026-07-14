@@ -8,7 +8,7 @@ CLAY = "http://www.claysanskritlibrary.org"
 YOGAVIDYA = "http://yogavidya.com"
 BBC = "http://www.bbc.co.uk/programmes/b06b4qmq"
 SI = "http://www.si.edu/exhibitions/details/yoga-the-art-of-transformation-4911"
-ACADEMIA = "https://soas.academia.edu/JamesMallinson"
+ACADEMIA = "https://oxford.academia.edu/JamesMallinson"
 
 MALLINSON_BIO = f"""
 <p>James (Jim) Mallinson is the Boden Professor of Sanskrit at the University of
