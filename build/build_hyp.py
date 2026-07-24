@@ -87,9 +87,9 @@ def _emit(slug, src, active, root, all_used):
         html = ('<p class="crumb"><a href="{{ROOT}}hyp/gallery/">&#8592; Gallery</a></p>'
                 + html)
     if slug == "gallery":
-        # two sections: the field-site photo cards + the film(s)
-        html = ('<h2 class="galsec">Photographs</h2>'
-                + gallery.index(html) + films.section_html())
+        # two sections: film(s) first (short list), then the photo cards
+        html = (films.section_html()
+                + '<h2 class="galsec">Photographs</h2>' + gallery.index(html))
     elif slug == "roots-of-yoga":
         html = gallery.book(html)
     elif slug not in ("team", "blog"):
