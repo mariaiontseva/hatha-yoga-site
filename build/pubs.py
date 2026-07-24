@@ -8,12 +8,14 @@ import re
 from bs4 import BeautifulSoup
 import jimpubs
 import danielapubs
+import jasonpubs
 
 YEAR = re.compile(r"^\d{3,4}\b")
 
 ACADEMIA = {
     "James Mallinson": "https://oxford.academia.edu/JamesMallinson",
     "Daniela Bevilacqua": "https://iscte-iul.academia.edu/DanielaBevilacqua",
+    "Jason Birch": "https://soas.academia.edu/JasonBirch",
 }
 
 
@@ -60,6 +62,16 @@ def restructure(content_html):
 
     _remove_proposed_outputs(soup)
     _rename_heading(soup)
+
+    # Jason: replace his table with the rebuilt section — his 2016->now
+    # publications (PI request, July 2026) + the legacy pre-2016 rows.
+    jtable = next((t for t in soup.find_all("table")
+                   if "DR JASON BIRCH" in t.get_text(" ", strip=True).upper()), None)
+    if jtable:
+        jason = BeautifulSoup(jasonpubs.section_html(), "lxml").find("table")
+        jnote = BeautifulSoup(_academia_note("Jason Birch"), "lxml").find("p")
+        jtable.replace_with(jason)
+        jason.insert_after(jnote)
 
     # Jim: keep ONLY his HYP publications — replace the old bibliography table
     # with a fresh HYP-only section + an academia.edu note.
