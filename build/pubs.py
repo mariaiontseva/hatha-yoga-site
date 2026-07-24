@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 import jimpubs
 import danielapubs
 import jasonpubs
+import markpubs
 
 YEAR = re.compile(r"^\d{3,4}\b")
 
@@ -16,6 +17,7 @@ ACADEMIA = {
     "James Mallinson": "https://oxford.academia.edu/JamesMallinson",
     "Daniela Bevilacqua": "https://iscte-iul.academia.edu/DanielaBevilacqua",
     "Jason Birch": "https://soas.academia.edu/JasonBirch",
+    "Mark Singleton": "https://soas.academia.edu/MarkSingleton",
 }
 
 
@@ -72,6 +74,15 @@ def restructure(content_html):
         jnote = BeautifulSoup(_academia_note("Jason Birch"), "lxml").find("p")
         jtable.replace_with(jason)
         jason.insert_after(jnote)
+
+    # Mark: same treatment — project-era section replaces his old table.
+    stable = next((t for t in soup.find_all("table")
+                   if "DR MARK SINGLETON" in t.get_text(" ", strip=True).upper()), None)
+    if stable:
+        mark = BeautifulSoup(markpubs.section_html(), "lxml").find("table")
+        snote = BeautifulSoup(_academia_note("Mark Singleton"), "lxml").find("p")
+        stable.replace_with(mark)
+        mark.insert_after(snote)
 
     # Jim: keep ONLY his HYP publications — replace the old bibliography table
     # with a fresh HYP-only section + an academia.edu note.
