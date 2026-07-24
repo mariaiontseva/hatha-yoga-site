@@ -6,7 +6,7 @@ skipping permalink aliases (?p=) and nggallery slideshow helpers.
 import os, re, glob, json, shutil, sys
 from urllib.parse import unquote
 sys.path.insert(0, os.path.dirname(__file__))
-import extract, template, teams, pubs, gallery, libraries, blog, contact, homepage, events
+import extract, template, teams, pubs, gallery, libraries, blog, contact, homepage, events, films
 
 PMAP = json.load(open(os.path.join(os.path.dirname(__file__), "pmap_hyp.json")))
 
@@ -87,7 +87,9 @@ def _emit(slug, src, active, root, all_used):
         html = ('<p class="crumb"><a href="{{ROOT}}hyp/gallery/">&#8592; Gallery</a></p>'
                 + html)
     if slug == "gallery":
-        html = gallery.index(html)
+        # two sections: the field-site photo cards + the film(s)
+        html = ('<h2 class="galsec">Photographs</h2>'
+                + gallery.index(html) + films.section_html())
     elif slug == "roots-of-yoga":
         html = gallery.book(html)
     elif slug not in ("team", "blog"):
@@ -123,6 +125,15 @@ def build():
         if os.path.isfile(alias) and _emit(slug, alias, "", "../../", all_used):
             n += 1; built.add(slug)
             print(f"    (from alias p={nn})")
+    # released films get their own pages (no-op while every embed is None)
+    for slug, title, html in films.pages():
+        dest = os.path.join(OUT, "film", slug)
+        os.makedirs(dest, exist_ok=True)
+        page = template.render_page(title, html, site="hyp",
+                                    active="hyp/gallery/", root="../../../")
+        open(os.path.join(dest, "index.html"), "w", encoding="utf-8").write(page)
+        print(f"  hyp/film/{slug}")
+        n += 1
     for p in all_used:
         clean = unquote(os.path.basename(p)).split("?")[0]
         try:

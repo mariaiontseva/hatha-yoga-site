@@ -188,6 +188,19 @@ body.reader-page{height:100vh;display:flex;flex-direction:column;overflow:hidden
   .lb-bar{flex-direction:column;gap:.15rem;align-items:flex-start}
 }
 
+/* ---- gallery: section headings + film cards (build/films.py) ---- */
+.galsec{margin:1.6em 0 0}
+.galcard-play{display:flex;align-items:center;justify-content:center;position:relative;
+  background:var(--oxblue);color:#fff}
+.galcard-play svg{width:54px;height:54px;opacity:.92}
+.galcard-soon{cursor:default}
+.soon-badge{position:absolute;top:.65rem;right:.65rem;font-family:var(--font-sans);
+  font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:#fff;border:1px solid rgba(255,255,255,.65);padding:.28em .65em;
+  border-radius:2px;background:rgba(0,13,35,.35)}
+.filmwrap{position:relative;aspect-ratio:16/9;margin:1.5em 0;background:var(--paper-2)}
+.filmwrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
 /* ---- field-site pages: breadcrumb back to the gallery ---- */
 .crumb{font-family:var(--font-sans);font-size:.85rem;letter-spacing:.04em;
   text-transform:uppercase;margin:0 0 1.2rem}
