@@ -22,6 +22,9 @@ SKIP = {"index"}  # home handled separately; "roots-of-yoga.html" dup ignored vi
 
 TOP_LEVEL = ["dabhoi", "hampi", "kadri", "panhale-kaji"]  # field sites as <slug>.html
 
+# field-site photo pages: highlight Gallery in the nav + breadcrumb back to it
+FIELD_SITES = {"dabhoi", "hampi", "kadri", "panhale-kaji", "shringeri"}
+
 
 def discover():
     pages = [("index", os.path.join(MIRROR, "index.html"), "hyp/")]  # home
@@ -30,11 +33,13 @@ def discover():
         if "?p=" in d or "nggallery" in slug or slug in SKIP:
             continue
         active = f"hyp/{slug}/" if slug in NAV_ACTIVE else ""
+        if slug in FIELD_SITES:
+            active = "hyp/gallery/"
         pages.append((slug, d, active))
     for slug in TOP_LEVEL:
         f = os.path.join(MIRROR, f"{slug}.html")
         if os.path.isfile(f):
-            pages.append((slug, f, ""))
+            pages.append((slug, f, "hyp/gallery/"))
     return pages
 
 
@@ -78,6 +83,9 @@ def _emit(slug, src, active, root, all_used):
         html = events.restructure(html)
     if slug == "blog":
         html = blog.build(src, "hyp", PMAP, used)
+    if slug in FIELD_SITES:
+        html = ('<p class="crumb"><a href="{{ROOT}}hyp/gallery/">&#8592; Gallery</a></p>'
+                + html)
     if slug == "gallery":
         html = gallery.index(html)
     elif slug == "roots-of-yoga":

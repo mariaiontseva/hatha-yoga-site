@@ -67,6 +67,7 @@ def render_page(title, content_html, site, active="", root="../../"):
 <link rel="icon" type="image/svg+xml" href="{root}favicon.svg">
 <link rel="stylesheet" href="{root}assets/site.css">
 <link rel="stylesheet" href="{root}assets/{site}.css">
+<script defer src="{root}assets/lightbox.js"></script>
 </head>
 <body class="site-{site}">
 <header class="site-header">
