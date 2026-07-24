@@ -1,13 +1,14 @@
 """Jason Birch's publications 2016 -> now (requested by the PI, July 2026:
 'scrape his publications from 2016 to now … and put them on the site then ask
-him to check').
+him to check').  Project-era only: the HYP began in 2016, so his pre-2016
+rows from the old site were dropped (MI, 24 Jul 2026) — the academia.edu
+note covers earlier work, same as Jim's section.
 
 academia.edu blocks automated fetching (HTTP 403), so this list was compiled
 24 Jul 2026 from open sources instead: theluminescent.org/p/publications.html
 (his own site), his SOAS staff profile, EFEO/IFP catalogues and journal DOIs.
 Titles link to academia.edu where the URL is known (house style), otherwise to
-the DOI / publisher page.  LEGACY holds his pre-2016 rows carried over from
-the old site (with the mangled Rājayoga link repaired).
+the DOI / publisher page.
 
 Each item = (year, url_or_None, title_html, rest_html).
 """
@@ -94,33 +95,6 @@ ARTICLES = [
      " (with Jacqueline Hargreaves), <i>Yoga Scotland Magazine</i>, Issue 50 (May)."),
 ]
 
-# pre-2016 rows carried over from the old site (Rājayoga link was mangled
-# WordPress output — de-linked; everything else kept verbatim)
-LEGACY = [
-    ("2015",
-     A + "12099338/The_Yogat%C4%81r%C4%81val%C4%AB_and_the_Hidden_History_of_Yoga",
-     "“The <i>Yogataravali</i> and the Hidden History of Yoga”",
-     ", <i>Namarupa Magazine</i>, Issue 20 (Spring 2015)"),
-    ("2013",
-     None,
-     "‘The <i>Amanaska</i>: King of All Yogas: A Critical Edition and Annotated "
-     "Translation with a Monographic Introduction.’",
-     " DPhil Thesis, Oxford."),
-    ("2013",
-     None,
-     "‘Rājayoga: The Reincarnations of the King of All Yogas’",
-     ", <i>The International Journal of Hindu Studies</i>, 17, 3: 401–444"),
-    ("2011",
-     A + "1539699/Meaning_of_ha%E1%B9%ADha_in_Early_Ha%E1%B9%ADhayoga",
-     "‘The Meaning of <i>haṭha</i> in Early <i>Haṭhayoga</i>’",
-     ", <i>The Journal of the American Oriental Society</i>, 131.4."),
-    ("2011",
-     None,
-     "“Universalist and Missionary Jainism: Jain Yoga of the Terāpanthī Tradition”",
-     " in <i>Yoga in Practice</i>, Ed David White, University of Chicago Press"),
-]
-
-
 def _rows(items):
     out = []
     for year, url, title, rest in items:
@@ -130,9 +104,11 @@ def _rows(items):
 
 
 def section_html():
-    """Jason's full section: new books + new-and-legacy articles."""
+    """Jason's section: project-era (2016->now) publications only — the HYP
+    began in 2016; earlier work is covered by the academia.edu note, matching
+    the treatment of Jim's section."""
     return ("<table>"
             "<tr><th></th><th>DR JASON BIRCH</th></tr>"
             "<tr><td></td><td>BOOKS</td></tr>" + _rows(BOOKS) +
-            "<tr><td></td><td>ARTICLES</td></tr>" + _rows(ARTICLES + LEGACY) +
+            "<tr><td></td><td>ARTICLES</td></tr>" + _rows(ARTICLES) +
             "</table>")
