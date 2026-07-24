@@ -43,10 +43,23 @@ def _remove_proposed_outputs(soup):
             el.decompose()
 
 
+def _rename_heading(soup):
+    """Per the PI (July 2026): the page heading is 'Project Publications'.
+    MUST run AFTER _remove_proposed_outputs — that function finds the end of
+    the block it deletes by matching the old text 'PREVIOUS PUBLICATIONS';
+    renaming first would silently break the deletion."""
+    for el in soup.find_all(["h1", "h2", "h3"]):
+        if "PREVIOUS PUBLICATIONS" in el.get_text(" ", strip=True).upper():
+            el.clear()
+            el.string = "Project Publications"
+            break
+
+
 def restructure(content_html):
     soup = BeautifulSoup(content_html, "lxml")
 
     _remove_proposed_outputs(soup)
+    _rename_heading(soup)
 
     # Jim: keep ONLY his HYP publications — replace the old bibliography table
     # with a fresh HYP-only section + an academia.edu note.
