@@ -99,7 +99,8 @@ OVERRIDES = {
     },
     "JASON BIRCH": {
         "name": "DR JASON BIRCH",
-        "role": "Post-Doctoral Researcher",
+        "role": "Post-Doctoral Researcher",       # his HYP role
+        "role_hp": "Senior Researcher",           # his Light on Haṭha role (JB, 25 Jul 2026)
         "bio_html": BIRCH_BIO,
         "photo": "jason-birch-2026.jpg",
     },

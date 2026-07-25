@@ -136,7 +136,9 @@ def _build_hp(soup, nodes):
             key = next((k for k in bios.OVERRIDES if k in mname.upper()), None)
             if key:
                 ov = bios.OVERRIDES[key]
-                mrole = ov["role"]
+                # roles differ per project: "role" is the HYP one, "role_hp"
+                # (optional) the Light on Haṭha one shown on the HP team page
+                mrole = ov.get("role_hp", ov["role"])
                 bio = BeautifulSoup(ov["bio_html"], "lxml").find_all("p")
                 photo = _override_photo(soup, photo, ov, mname)
             out.append(_card(soup, photo, mname, mrole, bio))
