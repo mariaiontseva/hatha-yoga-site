@@ -59,6 +59,14 @@ counterpart, Haṭhayoga (the yoga of force). His research has also identified a
 corpus of Sanskrit and vernacular texts that emerged during Haṭhayoga’s
 <i>floruit</i>, the period in which physical yoga flourished on the eve of
 colonialism.</p>
+<p>Among Birch’s major book publications on the history of yoga are <i>A Manual
+on the Practice of Haṭhayoga: An Edition and Translation of the Pune Manuscript
+of the Haṭhābhyāsapaddhati</i> (with Mark Singleton and James Mallinson),
+<i>Āsanas of the Yogacintāmaṇi: The Largest Premodern Compilation on Postural
+Practice</i>, and <i>The Amaraugha and Amaraughaprabodha of Gorakṣanātha: The
+Genesis of Haṭha and Rājayoga</i>. He is also a co-author of the
+<a href="{{ROOT}}hp/reader/">digital critical edition of the Haṭhapradīpikā</a>,
+one of the main outputs of the Light on Haṭha Project.</p>
 <p>His published work on the history of medicine includes the 2018 publication
 <i>Premodern Yoga Traditions and Ayurveda: Preliminary Remarks on Shared
 Terminology, Theory and Praxis</i>
@@ -72,14 +80,6 @@ chapter “Yoga and Ayurvedic Medicine” for the Comparative Guts project
 and website). He is a major contributor to the continuing work of editing and
 translating the Nepalese version of the <i>Suśrutasaṃhitā</i>, and is preparing
 a monograph on the concept of wellbeing (<i>svāsthya</i>) in early Ayurveda.</p>
-<p>Among Birch’s major book publications on the history of yoga are <i>A Manual
-on the Practice of Haṭhayoga: An Edition and Translation of the Pune Manuscript
-of the Haṭhābhyāsapaddhati</i> (with Mark Singleton and James Mallinson),
-<i>Āsanas of the Yogacintāmaṇi: The Largest Premodern Compilation on Postural
-Practice</i>, and <i>The Amaraugha and Amaraughaprabodha of Gorakṣanātha: The
-Genesis of Haṭha and Rājayoga</i>. He is also a co-author of the
-<a href="{{ROOT}}hp/reader/">digital critical edition of the Haṭhapradīpikā</a>,
-one of the main outputs of the Light on Haṭha Project.</p>
 <p>Jason Birch received his bachelor’s degree in Sanskrit and Hindi from the
 University of Sydney. He was awarded a Clarendon Scholarship to pursue doctoral
 studies at Balliol College, Oxford, under Alexis Sanderson. He completed his
