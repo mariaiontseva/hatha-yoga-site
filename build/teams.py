@@ -41,6 +41,19 @@ def _els(node):
     return out
 
 
+def _override_photo(soup, photo, ov, name):
+    """An override may supply its own photo (a filename that must exist in
+    BOTH <site>/assets/img dirs, since overrides apply to hyp and hp alike)."""
+    fn = ov.get("photo")
+    if not fn:
+        return photo
+    if photo is None:
+        photo = soup.new_tag("img", loading="lazy")
+    photo["src"] = "{{IMG}}/" + fn
+    photo["alt"] = name
+    return photo
+
+
 def _card(soup, photo, name, role, bio):
     art = soup.new_tag("article", **{"class": "member"})
     if photo is not None:
@@ -89,6 +102,7 @@ def _build_hyp(soup, nodes):
                 ov = bios.OVERRIDES[key]
                 name, role = ov["name"], ov["role"]
                 bio = BeautifulSoup(ov["bio_html"], "lxml").find_all("p")
+                photo = _override_photo(soup, photo, ov, name)
             out.append(_card(soup, photo, name, role, bio))
         else:
             out.append(el); i += 1
@@ -124,6 +138,7 @@ def _build_hp(soup, nodes):
                 ov = bios.OVERRIDES[key]
                 mrole = ov["role"]
                 bio = BeautifulSoup(ov["bio_html"], "lxml").find_all("p")
+                photo = _override_photo(soup, photo, ov, mname)
             out.append(_card(soup, photo, mname, mrole, bio))
             i = j
         else:

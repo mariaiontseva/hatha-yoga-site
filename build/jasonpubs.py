@@ -1,70 +1,52 @@
-"""Jason Birch's publications 2016 -> now (requested by the PI, July 2026:
-'scrape his publications from 2016 to now … and put them on the site then ask
-him to check').  Project-era only: the HYP began in 2016, so his pre-2016
-rows from the old site were dropped (MI, 24 Jul 2026) — the academia.edu
-note covers earlier work, same as Jim's section.
+"""Jason Birch's publications — as confirmed by Jason himself (email to Jim
+and Maria, 25 Jul 2026), which supersedes the list compiled from open sources
+on 24 Jul 2026.  Exactly his HYP books + 'peer-review articles during the
+Project', nothing else (MI, 25 Jul 2026).
 
-academia.edu blocks automated fetching (HTTP 403), so this list was compiled
-24 Jul 2026 from open sources instead: theluminescent.org/p/publications.html
-(his own site), his SOAS staff profile, EFEO/IFP catalogues and journal DOIs.
-Titles link to academia.edu where the URL is known (house style), otherwise to
-the DOI / publisher page.
+Choices fixed by that email + MI's direction:
+- book links go to hal.science (his preference; resolved via the HAL API,
+  since the links in his email arrived as bot-wall stubs);
+- the Amaraugha is dated 2023 per Jason — note that IFP/EFEO/HAL catalogue
+  it as 2024; his word was chosen deliberately;
+- article titles keep the published wording (his email paraphrases from
+  memory); the 2020 OUP chapter links to the DOI he supplied.
 
 Each item = (year, url_or_None, title_html, rest_html).
 """
 
-A = "https://www.academia.edu/"
-
 BOOKS = [
     ("2025",
-     A + "169067390/The_Ha%E1%B9%ADh%C4%81bhy%C4%81sapaddhati_edition_and_translation",
+     "https://hal.science/hal-05432677",
      "<i>A Manual on the Practice of Haṭhayoga: An Edition and Translation of "
      "the Pune Manuscript of the Haṭhābhyāsapaddhati</i>",
-     " (co-authored with James Mallinson and Mark Singleton). Pondicherry: IFP/EFEO."),
+     " (co-authored with Mark Singleton and James Mallinson). Collection "
+     "Indologie, Hatha Yoga Series. Pondicherry: Institut Français de Pondichéry."),
     ("2024",
-     "https://publications.efeo.fr/en/livres/1019_sanas-of-the-yogacint-ma-i",
+     "https://hal.science/hal-05306877",
      "<i>Āsanas of the Yogacintāmaṇi: The Largest Premodern Compilation on "
      "Postural Practice</i>",
-     ". Pondicherry: IFP/EFEO."),
-    ("2024",
-     "https://publications.efeo.fr/en/livres/1013_the-amaraugha-and-amaraughaprabodha-of-gorak-an-tha",
+     ". Collection Indologie 161, Hatha Yoga Series 4. Pondicherry: Institut "
+     "Français de Pondichéry."),
+    ("2023",
+     "https://hal.science/hal-05306873",
      "<i>The Amaraugha and Amaraughaprabodha of Gorakṣanātha: The Genesis of "
      "Haṭha and Rājayoga</i>",
-     ". Pondicherry: IFP/EFEO."),
-    ("2023",
-     "https://doi.org/10.11588/hasp.1203",
-     "<i>On the Plastic Surgery of the Ears and Nose: The Nepalese Version of "
-     "the Suśrutasaṃhitā</i>",
-     " (co-authored with Dominik Wujastyk et al.). Heidelberg: Heidelberg Asian "
-     "Studies Publishing."),
+     ". Collection Indologie 157, Hatha Yoga Series 3. Pondicherry: Institut "
+     "Français de Pondichéry."),
 ]
 
 ARTICLES = [
-    ("2023",
-     "https://doi.org/10.34000/JoYS.2023.V4.01",
-     "“Premodern Yogāsanas and Modern Postural Practice: Distinct Regional "
-     "Collections of Āsanas on the Eve of Colonialism”",
-     " (with Jacqueline Hargreaves), pp.31–82 in <i>Journal of Yoga Studies</i> 4."),
-    ("2022",
-     A + "78953966/The_Ocean_of_Yoga_An_Unpublished_Compendium_Called_the_Yog%C4%81r%E1%B9%87ava",
-     "“The Ocean of Yoga: An Unpublished Compendium Called the Yogārṇava”",
-     " (with S V B K V Gupta), pp.345–385 in <i>Journal of Indian Philosophy</i> 50, 3."),
-    ("2021",
-     None,
-     "“Cleaning the Body like a Conch: The Haṭhasaṅketacandrikā and "
-     "Śaṅkhaprakṣālana”",
-     ", <i>Academia Letters</i>, Article 144."),
     ("2020",
-     A + "44672605",
+     "https://doi.org/10.1093/oso/9780198733508.003.0009",
      "“The Quest for Liberation-in-Life: A Survey of Early Works on Haṭha- and "
      "Rājayoga”",
-     ", pp.200–242 in <i>Hindu Practice</i>, ed. Gavin Flood. Oxford: OUP."),
+     ", pp.200–242 in <i>The [Oxford] History of Hinduism: Hindu Practice</i>, "
+     "ed. Gavin Flood. Oxford: OUP."),
     ("2020",
      "https://doi.org/10.1163/9789004432802_021",
      "“Haṭhayoga’s Floruit on the Eve of Colonialism”",
-     ", pp.451–479 in <i>Śaivism and the Tantric Traditions: A Festschrift for "
-     "Alexis Sanderson</i>, eds. Dominic Goodall, Shaman Hatley &amp; Harunaga "
-     "Isaacson. Leiden: Brill."),
+     ", pp.451–479 in <i>Śaivism and the Tantric Traditions: Essays in Honour "
+     "of Alexis G.J.S. Sanderson</i>. Leiden: Brill."),
     ("2019",
      "https://doi.org/10.34000/JoYS.2019.V2.002",
      "“The Yoga of the Haṭhābhyāsapaddhati: Haṭhayoga on the Cusp of Modernity”",
@@ -85,15 +67,8 @@ ARTICLES = [
      ", pp.101–180 in <i>Yoga in Transformation: Historical and Contemporary "
      "Perspectives</i>, eds. Karl Baier, Philipp Maas &amp; Karin Preisendanz. "
      "Vienna: V&amp;R unipress."),
-    ("2016",
-     None,
-     "“The Yamas and Niyamas: Patanjali’s View”",
-     " (with Jacqueline Hargreaves), <i>Yoga Scotland Magazine</i>, Issue 29 (January)."),
-    ("2016",
-     None,
-     "“The Yamas and Niyamas: Medieval and Modern Views”",
-     " (with Jacqueline Hargreaves), <i>Yoga Scotland Magazine</i>, Issue 50 (May)."),
 ]
+
 
 def _rows(items):
     out = []
@@ -104,9 +79,7 @@ def _rows(items):
 
 
 def section_html():
-    """Jason's section: project-era (2016->now) publications only — the HYP
-    began in 2016; earlier work is covered by the academia.edu note, matching
-    the treatment of Jim's section."""
+    """Jason's section: exactly the list he confirmed, books then articles."""
     return ("<table>"
             "<tr><th></th><th>DR JASON BIRCH</th></tr>"
             "<tr><td></td><td>BOOKS</td></tr>" + _rows(BOOKS) +

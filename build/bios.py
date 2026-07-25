@@ -44,10 +44,63 @@ at the Smithsonian Institute in Washington D.C.</p>
 <a href="{ACADEMIA}">here</a>.</p>
 """
 
+# Jason Birch's bio, supplied by him 25 Jul 2026 ('Jason Birch Biography
+# July 2026.pages'); the photo (jason-birch-2026.jpg) arrived with the same
+# email and lives in BOTH <site>/assets/img dirs so the override works on
+# the HYP and HP team pages alike.
+BIRCH_BIO = """
+<p>Jason Birch (DPhil, Oxon) is an historian of South Asian traditions of yoga
+and medicine. He is a Senior Research Associate at the University of Alberta, a
+Research Associate at SOAS University of London, and an Honorary Associate of
+the University of Sydney. Through extensive fieldwork in India and the
+reconstruction of Sanskrit primary sources, Birch has revealed the early history
+of Rājayoga, the supreme yoga of meditation, as well as its physical
+counterpart, Haṭhayoga (the yoga of force). His research has also identified a
+corpus of Sanskrit and vernacular texts that emerged during Haṭhayoga’s
+<i>floruit</i>, the period in which physical yoga flourished on the eve of
+colonialism.</p>
+<p>His published work on the history of medicine includes the 2018 publication
+<i>Premodern Yoga Traditions and Ayurveda: Preliminary Remarks on Shared
+Terminology, Theory and Praxis</i>
+(DOI: <a href="https://doi.org/10.18732/hssa.v6i0.25">10.18732/hssa.v6i0.25</a>),
+and his co-authorship of the 2023 project book <i>On the Plastic Surgery of the
+Ears and Nose: The Nepalese Version of the Suśrutasaṃhitā</i>
+(DOI: <a href="https://doi.org/10.11588/hasp.1203">10.11588/hasp.1203</a>). In
+addition to other publications arising from the Suśruta Project, he wrote the
+chapter “Yoga and Ayurvedic Medicine” for the Comparative Guts project
+(book DOI: <a href="https://doi.org/10.38071/2024-00345-3">10.38071/2024-00345-3</a>,
+and website). He is a major contributor to the continuing work of editing and
+translating the Nepalese version of the <i>Suśrutasaṃhitā</i>, and is preparing
+a monograph on the concept of wellbeing (<i>svāsthya</i>) in early Ayurveda.</p>
+<p>Among Birch’s major book publications on the history of yoga are <i>A Manual
+on the Practice of Haṭhayoga: An Edition and Translation of the Pune Manuscript
+of the Haṭhābhyāsapaddhati</i> (with Mark Singleton and James Mallinson),
+<i>Āsanas of the Yogacintāmaṇi: The Largest Premodern Compilation on Postural
+Practice</i>, and <i>The Amaraugha and Amaraughaprabodha of Gorakṣanātha: The
+Genesis of Haṭha and Rājayoga</i>. He is also a co-author of the
+<a href="{{ROOT}}hp/reader/">digital critical edition of the Haṭhapradīpikā</a>,
+one of the main outputs of the Light on Haṭha Project.</p>
+<p>Jason Birch received his bachelor’s degree in Sanskrit and Hindi from the
+University of Sydney. He was awarded a Clarendon Scholarship to pursue doctoral
+studies at Balliol College, Oxford, under Alexis Sanderson. He completed his
+DPhil in 2013. In 2014, he was a Research Fellow at the Oxford Centre for Hindu
+Studies, and in 2015 he joined AyurYog, an ERC-funded Project at the University
+of Vienna. Later that year he joined the five-year Haṭha Yoga Project at SOAS
+University of London, where he translated and edited Sanskrit texts on Haṭha
+and Rājayoga. He is a founding member of SOAS’s Centre for Yoga Studies and of
+the diamond open-access Journal of Yoga Studies.</p>
+"""
+
 OVERRIDES = {
     "JAMES MALLINSON": {
         "name": "PROFESSOR JAMES MALLINSON",
         "role": "Principal Investigator",
         "bio_html": MALLINSON_BIO,
+    },
+    "JASON BIRCH": {
+        "name": "DR JASON BIRCH",
+        "role": "Post-Doctoral Researcher",
+        "bio_html": BIRCH_BIO,
+        "photo": "jason-birch-2026.jpg",
     },
 }
