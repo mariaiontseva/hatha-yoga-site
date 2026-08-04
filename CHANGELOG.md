@@ -12,6 +12,9 @@ bio/photo) predates this log — see `git log` for that history.
   a 2017 entry in both Jim's and Mark's book lists (chronological order),
   each linking to the book's page, which still exists at its old address —
   nothing breaks, incl. the "Publication of Roots of Yoga" link on Events.
+- **Gallery: film placeholder removed** (PI request). The "Coming soon" film
+  card and the section headings are gone — the gallery is photos-only again;
+  the film now lives solely under Films. A gallery redesign is planned.
 - **Nav: Gallery moved after Publications; new FILMS section** (PI request).
   Menu order is now Home, Team, Publications, Gallery, Films, Events,
   Resources, Libraries, Blog. New page `hyp/films/` says "Coming soon." —
