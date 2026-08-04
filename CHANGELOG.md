@@ -12,6 +12,10 @@ bio/photo) predates this log — see `git log` for that history.
   a 2017 entry in both Jim's and Mark's book lists (chronological order),
   each linking to the book's page, which still exists at its old address —
   nothing breaks, incl. the "Publication of Roots of Yoga" link on Events.
+- **Nav: Gallery moved after Publications; new FILMS section** (PI request).
+  Menu order is now Home, Team, Publications, Gallery, Films, Events,
+  Resources, Libraries, Blog. New page `hyp/films/` says "Coming soon." —
+  wired to list the films from `build/films.py` once the embeds exist.
 - **Publications: Daniela's section moved above Gupta's** (PI request).
   Order is now Birch, Mallinson, Singleton, Bevilacqua, Gupta.
 - **Events: all verbs to past tense** (PI request). The 2019 entries were

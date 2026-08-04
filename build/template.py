@@ -14,11 +14,12 @@ NAVS = {
         ("Home",          "hyp/"),
         ("Team",          "hyp/team/"),
         ("Publications",  "hyp/publications/"),
+        ("Gallery",       "hyp/gallery/"),
+        ("Films",         "hyp/films/"),
         ("Events",        "hyp/events/"),
         ("Resources",     "hyp/resources/"),
         ("Libraries",     "hyp/libraries/"),
         ("Blog",          "hyp/blog/"),
-        ("Gallery",       "hyp/gallery/"),
     ],
     "hp": [
         ("Home",            "hp/"),
