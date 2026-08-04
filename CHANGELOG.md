@@ -7,6 +7,11 @@ bio/photo) predates this log — see `git log` for that history.
 
 ## 2026-08-04
 
+- **Roots of Yoga: out of the nav menu, into the bibliographies** (PI
+  request). The menu item is gone from all HYP pages; the book itself is now
+  a 2017 entry in both Jim's and Mark's book lists (chronological order),
+  each linking to the book's page, which still exists at its old address —
+  nothing breaks, incl. the "Publication of Roots of Yoga" link on Events.
 - **Events: all verbs to past tense** (PI request). The 2019 entries were
   written before the events happened ("is presenting", "will be holding", …);
   all 12 phrases now read as past ("presented", "held", "were at", "hosted").

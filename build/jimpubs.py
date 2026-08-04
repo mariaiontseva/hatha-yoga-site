@@ -21,6 +21,12 @@ BOOKS = [
          "Earliest_Texts_of_the_Ha%E1%B9%ADhayoga_Tradition",
      "<i>The Amṛtasiddhi and Amṛtasiddhimūla: The Earliest Texts of the Haṭhayoga</i>",
      "."),
+    # added Aug 2026 when Roots of Yoga left the nav menu — the book now
+    # lives in the bibliographies (Jim + Mark), linking to its own page
+    ("2017",
+     "{{ROOT}}hyp/roots-of-yoga/",
+     "<i>Roots of Yoga</i>",
+     " (co-authored with Mark Singleton). London: Penguin Classics."),
 ]
 
 ARTICLES = [

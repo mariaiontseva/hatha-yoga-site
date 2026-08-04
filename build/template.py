@@ -19,7 +19,6 @@ NAVS = {
         ("Libraries",     "hyp/libraries/"),
         ("Blog",          "hyp/blog/"),
         ("Gallery",       "hyp/gallery/"),
-        ("Roots of Yoga", "hyp/roots-of-yoga/"),
     ],
     "hp": [
         ("Home",            "hp/"),

@@ -15,7 +15,7 @@ OUT = "/Users/mariaiontseva/hatha-yoga-local/hyp"
 IMG = os.path.join(OUT, "assets", "img")
 
 # nav keys that should be highlighted when their page is the active one
-NAV_ACTIVE = {"team","publications","roots-of-yoga","resources","libraries",
+NAV_ACTIVE = {"team","publications","resources","libraries",
               "events","blog","gallery"}
 SKIP = {"index"}  # home handled separately; "roots-of-yoga.html" dup ignored via dirs only
 
