@@ -1,59 +1,149 @@
-"""Films shown in the Gallery — build-time data, same pattern as *pubs.py.
+"""The Films page — YouTube videos curated by the PI (email 'YouTube videos',
+4 Aug 2026) + the project's own Haṭhābhyāsapaddhati film (6 parts, currently
+on Google Drive; MI uploads them to YouTube — decided with the PI — and fills
+in the ids here).
 
-Each film: dict(slug, title, blurb, embed).
+Display titles were editorially normalised from the real YouTube titles
+(fetched via oEmbed 4 Aug 2026); every id was verified alive that day.
+Cards are click-to-play: films.js swaps the thumbnail for a youtube-nocookie
+embed on click, so no YouTube cookies land before the visitor chooses to
+play. Without JS the card is a plain link to youtube.com.
 
-embed=None  -> the gallery shows a non-clickable 'Coming soon' card.
-embed="..." -> set it to the hosted player URL (Oxford media / Vimeo /
-youtube-nocookie — NOT a plain YouTube embed, which sets cookies on a
-University domain) and rerun the build: hyp/film/<slug>/ appears with the
-player and the card becomes a link to it.
+Item = (youtube_id_or_None, title, source). id=None -> 'Coming soon' card.
 
-The video file itself can never live in this repository: GitHub Pages caps
-files at 100 MB and the repo at 1 GB. Hosting is external, always.
+Known gaps, reported to MI 4 Aug 2026: five links in the PI's email arrived
+corrupted (encoding ate characters after '?v') and one id (r9rl5gM9S8o) is
+dead/private — the PI may want to resend those; 'Part 2' of Keen on Yoga's
+Haṭhapradīpikā interview is here, Part 1 is likely among the corrupted ones.
 """
 
-FILMS = [
-    dict(
-        slug="hatha-yoga-project-film",
-        title="The Haṭha Yoga Project Film",
-        blurb="Filmed during the project’s fieldwork in India.",
-        embed=None,
-    ),
+CHANNEL = ("SOAS Centre of Yoga Studies",
+           "https://www.youtube.com/@soascentreofyogastudies6694")
+
+SECTIONS = [
+    ("The Haṭha Yoga Project", [
+        ("6PWk-ZywGis",
+         "The Haṭha Yoga Project: Final Symposium",
+         "SOAS University of London"),
+        ("GenKUMqRfqc",
+         "The Haṭha Yoga Project at the British Museum",
+         "Dr Jason Birch"),
+    ]),
+    ("The Haṭhābhyāsapaddhati Film", [
+        (None, "Introduction", "The Haṭha Yoga Project"),
+        (None, "Supine Poses", "The Haṭha Yoga Project"),
+        (None, "Prone Poses", "The Haṭha Yoga Project"),
+        (None, "Stationary Poses", "The Haṭha Yoga Project"),
+        (None, "Standing Poses", "The Haṭha Yoga Project"),
+        (None, "Piercing Poses", "The Haṭha Yoga Project"),
+    ]),
+    ("Roots of Yoga", [
+        ("_3hPjoPXA6Y",
+         "James Mallinson and Mark Singleton in Conversation",
+         "The New York Society Library"),
+        ("_3jYJWmHwr8",
+         "Roots of Yoga at the Jaipur Literature Festival (excerpts)",
+         "Jaipur Literature Festival"),
+        ("oJTrTNoyLHM", "Roots of Yoga", "lecture"),
+        ("1W-uZUAQqOk", "The Reading of Roots of Haṭha Yoga", "ERCcOMICS"),
+    ]),
+    ("James Mallinson", [
+        ("wl_ZXBMpKXU",
+         "From Tapas to Hard Yoga: The History of the Āsanas of Haṭha Yoga",
+         "Smithsonian Museum"),
+        ("oz3napMhU0c", "Tantra’s Influence on Yoga", "The British Museum"),
+        ("hFWj-geACgU", "Haṭha Yoga: An Illustrated History",
+         "Loyola Marymount University"),
+        ("eUD2ni2U890", "Tantric Traditions and Haṭhayoga", "Brown University"),
+        ("w46keD8nS44", "A Very Brief History of Yoga",
+         "Balliol College, Oxford"),
+        ("9JEQtwPgj1g", "Haṭhayoga’s Tantric Buddhist Roots", "ELTE, Budapest"),
+        ("wJo6YY-VdLk", "The Ascetic Roots of Yoga", "advaya"),
+        ("mBb1u5S_vFE", "The History and Practices of Haṭha Yoga",
+         "Wise Studies"),
+        ("woAjrHT-Hx0", "Alchemy Reader: Untangling Traditions", "AyurYog"),
+        ("wWGhnU579Ps", "The Origins of Yoga", "The Know Show"),
+        ("APfR0UTDTbs", "Haṭha Yoga Traditions", "Somatic Primer Podcast"),
+        ("1VJNrxL7pfM", "Haṭha Yoga Project Interview", "YogaLite"),
+    ]),
+    ("Jason Birch", [
+        ("3nDUnvYA6Kw", "The Amaraugha: The Genesis of Haṭha and Rājayoga",
+         "SOAS Centre of Yoga Studies"),
+        ("hO2t0rFmhHA",
+         "Āsanas of the Yogacintāmaṇi &amp; The Dattātreyayogaśāstra "
+         "(with James Mallinson)",
+         "SOAS Centre of Yoga Studies"),
+        ("6lR2jJF-D2I", "The Dawn of Physical Yoga (with Giacomella Orofino)",
+         "SOAS Centre of Yoga Studies"),
+        ("8JH4nC-cGj4", "Yoga on the Eve of Colonialism", "Embodied Philosophy"),
+        ("azyX_d2VfaE", "The Lineage of Immortals", "Embodied Philosophy"),
+        ("h8yV7SFQISQ", "The Amaraughaprabodha: Haṭha and Rāja Yoga",
+         "Buddhist Yoga"),
+        ("jgzpD4nqgsk",
+         "How Does the Practice of Physical Yoga Result in Liberation?",
+         "university lecture"),
+        ("QfRf8vMPgm8", "The Complex Āsanas of Mohanadās", "Yoga Vidya"),
+        ("wfItonGTgw0", "The Haṭhapradīpikā, Part 2", "Keen on Yoga"),
+        ("lr53OBNbX8o", "Manuscript Hunting and the History of Medieval Yogas",
+         "Yogic Studies Podcast"),
+    ]),
+    ("Mark Singleton", [
+        ("xyO2chklfdM",
+         "Yoga As We Know It: The Development of the Physical Practices of Yoga",
+         "advaya"),
+        ("gAXiDm-okLY", "Yoga Body, 10 Years Later", "Yogic Studies Podcast"),
+        ("UiRfEQ_MkEk", "On Yoga Body", "Embodied Philosophy"),
+        ("WW83KlIFtRw", "Lecture at Brown University", "Brown University"),
+        ("bImz0pP1D3s",
+         "Vivekananda, Ling, Reich: Confluences of Modern Posture Practice",
+         "Wise Studies"),
+    ]),
+    ("Daniela Bevilacqua", [
+        ("mDdTkGx4gkE", "Yoga and Tapasyā in the Ascetic World",
+         "SOAS Centre of Yoga Studies"),
+        ("xmU4JW597ms", "Hindu Asceticism and Haṭha Yoga",
+         "Yogic Studies Podcast"),
+        ("UIifWTzC0RE", "Sādhus and Siddhis", "Keen on Yoga"),
+        ("HmRK6_XE670", "Haṭha Yoga Project Interview", "Keen on Yoga"),
+        ("CuYqBnyXNEI", "Haṭha Yoga Project Interview", "YogaLite"),
+    ]),
+    ("Further Viewing", [
+        ("ct9bvUkOx9I", "A History of Yoga: Latest Research and Scholarship",
+         "Yogacampus"),
+        ("i_KDbsRuNO0",
+         "Yoga and the Traditional Physical Practices of South Asia (workshop)",
+         "SOAS"),
+        ("6-PNG0u3ku8", "Elements and Chakras", "Heather Elton"),
+    ]),
 ]
 
 _PLAY = ('<svg viewBox="0 0 24 24" aria-hidden="true">'
          '<path d="M8 5v14l11-7z" fill="currentColor"/></svg>')
 
 
-def section_html():
-    """The 'Film' section appended to the gallery index."""
-    cards = []
-    for f in FILMS:
-        if f["embed"]:
-            cards.append(
-                f'<a class="galcard" href="{{{{ROOT}}}}hyp/film/{f["slug"]}/">'
-                f'<span class="galcard-img galcard-play">{_PLAY}</span>'
-                f'<span class="galcard-label">{f["title"]}</span></a>')
-        else:
-            cards.append(
-                f'<div class="galcard galcard-soon">'
-                f'<span class="galcard-img galcard-play">{_PLAY}'
-                f'<span class="soon-badge">Coming soon</span></span>'
-                f'<span class="galcard-label">{f["title"]}</span></div>')
-    return ('<h2 class="galsec">Film</h2>'
-            '<div class="galindex">' + "".join(cards) + '</div>')
+def _card(vid, title, source):
+    src = f'<span class="ytcard-src">{source}</span>' if source else ""
+    if vid:
+        return (f'<a class="ytcard" href="https://www.youtube.com/watch?v={vid}"'
+                f' data-yt="{vid}" target="_blank" rel="noopener">'
+                f'<span class="ytcard-img">'
+                f'<img src="https://i.ytimg.com/vi/{vid}/hqdefault.jpg" alt=""'
+                f' loading="lazy"><span class="ytcard-play">{_PLAY}</span></span>'
+                f'<span class="ytcard-title">{title}</span>{src}</a>')
+    return (f'<div class="ytcard ytcard-soon">'
+            f'<span class="ytcard-img ytcard-blank">{_PLAY}'
+            f'<span class="soon-badge">Coming soon</span></span>'
+            f'<span class="ytcard-title">{title}</span>{src}</div>')
 
 
-def pages():
-    """(slug, title, html) for each released film — empty while embed=None."""
-    out = []
-    for f in FILMS:
-        if not f["embed"]:
-            continue
-        out.append((f["slug"], f["title"],
-            '<p class="crumb"><a href="{{ROOT}}hyp/gallery/">&#8592; Gallery</a></p>'
-            f'<h1>{f["title"]}</h1>'
-            f'<div class="filmwrap"><iframe src="{f["embed"]}" title="{f["title"]}" '
-            'allowfullscreen loading="lazy"></iframe></div>'
-            f'<p>{f["blurb"]}</p>'))
-    return out
+def page_html():
+    out = ["<h1>Films</h1>",
+           "<p>Talks, lectures and interviews by the project team, and the "
+           "project’s own films.</p>"]
+    for heading, items in SECTIONS:
+        cards = "".join(_card(*it) for it in items)
+        out.append(f'<h2 class="galsec">{heading}</h2>'
+                   f'<div class="ytgrid">{cards}</div>')
+    out.append(f'<p>More recordings on the <a href="{CHANNEL[1]}">{CHANNEL[0]}'
+               f' YouTube channel</a>.</p>')
+    return "".join(out)

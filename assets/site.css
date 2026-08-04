@@ -201,6 +201,34 @@ body.reader-page{height:100vh;display:flex;flex-direction:column;overflow:hidden
 .filmwrap{position:relative;aspect-ratio:16/9;margin:1.5em 0;background:var(--paper-2)}
 .filmwrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
+/* ---- films page: YouTube cards (build/films.py + assets/films.js) ---- */
+.ytgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:1.1rem;margin:1.2em 0 2em}
+.ytcard{display:block;text-decoration:none;border:1px solid var(--rule);
+  overflow:hidden;transition:border-color .2s ease,box-shadow .2s ease}
+a.ytcard:hover{border-color:var(--oxblue);
+  box-shadow:0 6px 20px -14px rgba(0,33,71,.55)}
+.ytcard-img{display:block;position:relative;aspect-ratio:16/9;overflow:hidden;
+  background:var(--oxblue)}
+.ytcard-img img{width:100%;height:100%;object-fit:cover;margin:0;display:block}
+.ytcard-img iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ytcard-play{position:absolute;inset:0;display:flex;align-items:center;
+  justify-content:center;color:#fff;background:rgba(0,13,35,.25);
+  transition:background .2s ease}
+a.ytcard:hover .ytcard-play{background:rgba(0,13,35,.45)}
+.ytcard-play svg,.ytcard-blank svg{width:46px;height:46px;
+  filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+.ytcard-blank{display:flex;align-items:center;justify-content:center;
+  position:relative;color:#fff}
+.ytcard-soon{cursor:default}
+.ytcard-title{display:block;padding:.6rem .85rem .1rem;
+  font-family:var(--font-serif);font-weight:700;font-size:.98rem;
+  line-height:1.3;color:var(--ink)}
+a.ytcard .ytcard-title{color:var(--oxblue)}
+.ytcard-src{display:block;padding:.15rem .85rem .7rem;
+  font-family:var(--font-sans);font-size:.7rem;font-weight:600;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+
 /* ---- field-site pages: breadcrumb back to the gallery ---- */
 .crumb{font-family:var(--font-sans);font-size:.85rem;letter-spacing:.04em;
   text-transform:uppercase;margin:0 0 1.2rem}

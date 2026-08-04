@@ -125,25 +125,14 @@ def build():
         if os.path.isfile(alias) and _emit(slug, alias, "", "../../", all_used):
             n += 1; built.add(slug)
             print(f"    (from alias p={nn})")
-    # Films section page (nav item added Aug 2026, PI request) — plain
-    # 'Coming soon' until the film embeds land in build/films.py, at which
-    # point this page should list them
-    films_html = "<h1>Films</h1><p>Coming soon.</p>"
+    # Films page (nav section added Aug 2026, PI request): the PI's curated
+    # YouTube list + the Haṭhābhyāsapaddhati film placeholders (build/films.py)
     dest = os.path.join(OUT, "films")
     os.makedirs(dest, exist_ok=True)
     open(os.path.join(dest, "index.html"), "w", encoding="utf-8").write(
-        template.render_page("Films", films_html, site="hyp",
+        template.render_page("Films", films.page_html(), site="hyp",
                              active="hyp/films/", root="../../"))
     print("  hyp/films"); n += 1
-    # released films get their own pages (no-op while every embed is None)
-    for slug, title, html in films.pages():
-        dest = os.path.join(OUT, "film", slug)
-        os.makedirs(dest, exist_ok=True)
-        page = template.render_page(title, html, site="hyp",
-                                    active="hyp/gallery/", root="../../../")
-        open(os.path.join(dest, "index.html"), "w", encoding="utf-8").write(page)
-        print(f"  hyp/film/{slug}")
-        n += 1
     for p in all_used:
         clean = unquote(os.path.basename(p)).split("?")[0]
         try:
