@@ -7,4 +7,9 @@ bio/photo) predates this log — see `git log` for that history.
 
 ## 2026-08-04
 
-- Changelog started. Awaiting the new batch of requests from the PI.
+- **Events: all verbs to past tense** (PI request). The 2019 entries were
+  written before the events happened ("is presenting", "will be holding", …);
+  all 12 phrases now read as past ("presented", "held", "were at", "hosted").
+  Also fixes the original site's typo "is presentation the paper".
+  Done in `build/events.py` so it survives rebuilds.
+- Changelog started.
