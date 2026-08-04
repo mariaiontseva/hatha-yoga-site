@@ -113,7 +113,8 @@ def restructure(content_html):
         if gtable:
             new_table = BeautifulSoup(danielapubs.section_html(), "lxml").find("table")
             dnote = BeautifulSoup(_academia_note("Daniela Bevilacqua"), "lxml").find("p")
-            gtable.insert_after(new_table)
+            # Daniela's section goes ABOVE Gupta's (PI request, Aug 2026)
+            gtable.insert_before(new_table)
             new_table.insert_after(dnote)
 
     for t in soup.find_all("table"):

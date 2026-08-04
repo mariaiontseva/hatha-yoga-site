@@ -12,6 +12,8 @@ bio/photo) predates this log — see `git log` for that history.
   a 2017 entry in both Jim's and Mark's book lists (chronological order),
   each linking to the book's page, which still exists at its old address —
   nothing breaks, incl. the "Publication of Roots of Yoga" link on Events.
+- **Publications: Daniela's section moved above Gupta's** (PI request).
+  Order is now Birch, Mallinson, Singleton, Bevilacqua, Gupta.
 - **Events: all verbs to past tense** (PI request). The 2019 entries were
   written before the events happened ("is presenting", "will be holding", …);
   all 12 phrases now read as past ("presented", "held", "were at", "hosted").
