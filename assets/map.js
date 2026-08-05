@@ -170,6 +170,24 @@
         offset: L.point(0, flip ? h + gap : -gap),
         maxWidth: 336, minWidth: 336
       }).setLatLng(latlng).setContent(build(compact)).openOn(map);
+      // the estimate above is only an estimate — nudge the card by however
+      // much it actually overhangs, so it is always fully on the map
+      requestAnimationFrame(function () {
+        if (!tip) return;
+        var node = tip.getElement();
+        if (!node) return;
+        var card = node.getBoundingClientRect();
+        var box = map.getContainer().getBoundingClientRect();
+        var lowLimit = box.bottom -
+          (host.classList.contains('has-strip') ? STRIP_H : 0);
+        var shift = 0;
+        if (card.top < box.top + 8) shift = box.top + 8 - card.top;
+        else if (card.bottom > lowLimit - 8) shift = lowLimit - 8 - card.bottom;
+        if (shift) {
+          node.style.transform += ' translateY(' + Math.round(shift) + 'px)';
+          node.classList.add('is-nudged');   // hides the now-misplaced tip
+        }
+      });
     }, 90);
   }
   function hideTip() {
@@ -191,8 +209,11 @@
       return '<span class="fm-tip-cell"><img src="' + img(ph.file) +
         '" alt="">' + veil + '</span>';
     }).join('');
-    return '<span class="fm-tip-grid' + (max === 4 ? ' is-quad' : '') + '">' +
-      cells + '</span>';
+    // columns follow the number of thumbnails, so the grid never leaves a
+    // blank cell when a cluster holds fewer places than the row is wide
+    var cols = max === 4 ? Math.min(shown.length, 2) : Math.min(shown.length, 3);
+    return '<span class="fm-tip-grid" style="grid-template-columns:repeat(' +
+      cols + ',1fr)">' + cells + '</span>';
   }
 
   /** The last line is a hint, not a link: this card follows the cursor and

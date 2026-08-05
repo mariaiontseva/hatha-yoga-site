@@ -270,6 +270,8 @@ a.ytcard .ytcard-title{color:var(--oxblue)}
 /* opened below the marker (no room above): tip points up, out of the grid */
 .fm-tip.is-below .leaflet-popup-tip-container{top:-11px;bottom:auto}
 .fm-tip.is-below .leaflet-popup-tip{background:#fff}
+/* nudged back onto the map: the tip no longer lines up with the marker */
+.fm-tip.is-nudged .leaflet-popup-tip-container{display:none}
 /* the marker must stay visible and above the card it belongs to */
 .leaflet-marker-icon.fm-cluster,.leaflet-marker-icon.fm-site,
 .leaflet-marker-icon.fm-dot{z-index:640!important}
