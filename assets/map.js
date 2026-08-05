@@ -142,35 +142,66 @@
   }
 
   // ------------------------------------------------------------ hover cards
-  var tip = null;
+  var tip = null, tipTimer = null;
   function showTip(latlng, html) {
     if (MOBILE.matches) return;               // touch taps straight through
-    hideTip();
-    tip = L.popup({
-      className: 'fm-tip', closeButton: false, autoPan: false,
-      offset: L.point(0, -14), maxWidth: 320
-    }).setLatLng(latlng).setContent(html).openOn(map);
+    clearTimeout(tipTimer);
+    tipTimer = setTimeout(function () {
+      hideTip();
+      tip = L.popup({
+        className: 'fm-tip', closeButton: false, autoPan: true,
+        autoPanPadding: L.point(12, 12), offset: L.point(0, -16),
+        maxWidth: 336, minWidth: 336
+      }).setLatLng(latlng).setContent(html).openOn(map);
+    }, 90);
   }
-  function hideTip() { if (tip) { map.closePopup(tip); tip = null; } }
+  function hideTip() {
+    clearTimeout(tipTimer);
+    if (tip) { map.closePopup(tip); tip = null; }
+  }
+
+  /** Grid of up to 6 thumbnails; the 6th carries a "+N" veil when there
+      are more. Four or fewer photographs use a roomier 2×2. */
+  function tipGrid(photos, total) {
+    var max = photos.length <= 4 ? 4 : 6;
+    var shown = photos.slice(0, max);
+    var extra = total - shown.length;
+    var cells = shown.map(function (ph, i) {
+      var veil = (extra > 0 && i === shown.length - 1)
+        ? '<span class="fm-tip-more">+' + extra + '</span>' : '';
+      return '<span class="fm-tip-cell"><img src="' + img(ph.file) +
+        '" alt="" loading="lazy">' + veil + '</span>';
+    }).join('');
+    return '<span class="fm-tip-grid' + (max === 4 ? ' is-quad' : '') + '">' +
+      cells + '</span>';
+  }
+
+  function tipBody(name, lines, allLabel) {
+    return '<span class="fm-tip-body">' +
+      '<span class="fm-tip-name">' + esc(name) + '</span>' +
+      lines.filter(Boolean).map(function (l, i) {
+        return '<span class="fm-tip-line' + (i ? ' is-dim' : '') + '">' +
+          esc(l) + '</span>';
+      }).join('') +
+      '<span class="fm-tip-all">' + esc(allLabel) + '<span>&rarr;</span></span>' +
+      '</span>';
+  }
 
   function tipSite(p) {
-    var meta = [plural(p.count, 'photograph', 'photographs'), dateRange(p.dates)]
-      .filter(Boolean).join(' · ');
-    return '<span class="fm-tip-shot"><img src="' + img(p.thumb) + '" alt=""></span>' +
-      '<span class="fm-tip-name">' + esc(p.name) + '</span>' +
-      '<span class="fm-tip-meta">' + esc(meta) + '</span>';
+    return tipGrid(p.photos, p.count) +
+      tipBody(p.name, [p.region, dateRange(p.dates)],
+              'All ' + plural(p.count, 'photograph', 'photographs'));
   }
 
   function tipCluster(sites) {
-    var shots = sites.slice(0, 3).map(function (s) {
-      return '<img src="' + img(s.thumb) + '" alt="">';
-    }).join('');
     var photos = sites.reduce(function (n, s) { return n + s.count; }, 0);
-    var names = sites.map(function (s) { return s.name; }).join(', ');
-    return '<span class="fm-tip-row">' + shots + '</span>' +
-      '<span class="fm-tip-name">' + plural(sites.length, 'place', 'places') + '</span>' +
-      '<span class="fm-tip-meta">' +
-      esc(plural(photos, 'photograph', 'photographs') + ' · ' + names) + '</span>';
+    // one thumbnail per place, so the grid shows what is actually grouped
+    var lead = sites.map(function (s) { return s.photos[0]; });
+    return tipGrid(lead, photos) +
+      tipBody(plural(sites.length, 'place', 'places'),
+              [sites.map(function (s) { return s.name; }).join(' · '),
+               plural(photos, 'photograph', 'photographs')],
+              'Browse these places');
   }
 
   // ----------------------------------------------------------------- strip
