@@ -176,21 +176,23 @@
       cells + '</span>';
   }
 
-  function tipBody(name, lines, allLabel) {
+  /** The last line is a hint, not a link: this card follows the cursor and
+      cannot be clicked, so it says what clicking the marker will do. */
+  function tipBody(name, lines, hint) {
     return '<span class="fm-tip-body">' +
       '<span class="fm-tip-name">' + esc(name) + '</span>' +
       lines.filter(Boolean).map(function (l, i) {
         return '<span class="fm-tip-line' + (i ? ' is-dim' : '') + '">' +
           esc(l) + '</span>';
       }).join('') +
-      '<span class="fm-tip-all">' + esc(allLabel) + '<span>&rarr;</span></span>' +
+      '<span class="fm-tip-hint">' + esc(hint) + '</span>' +
       '</span>';
   }
 
   function tipSite(p) {
     return tipGrid(p.photos, p.count) +
       tipBody(p.name, [p.region, dateRange(p.dates)],
-              'All ' + plural(p.count, 'photograph', 'photographs'));
+              'Click for all ' + plural(p.count, 'photograph', 'photographs'));
   }
 
   function tipCluster(sites) {
@@ -201,7 +203,7 @@
       tipBody(plural(sites.length, 'place', 'places'),
               [sites.map(function (s) { return s.name; }).join(' · '),
                plural(photos, 'photograph', 'photographs')],
-              'Browse these places');
+              'Click to browse these places');
   }
 
   // ----------------------------------------------------------------- strip
