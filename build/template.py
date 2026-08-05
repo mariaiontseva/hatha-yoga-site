@@ -50,10 +50,20 @@ def _nav(site, active, root):
     return "\n      ".join(out)
 
 
+MAP_ASSETS = (
+    '<link rel="stylesheet" href="{root}assets/vendor/leaflet.css">\n'
+    '<link rel="stylesheet" href="{root}assets/vendor/MarkerCluster.css">\n'
+    '<script defer src="{root}assets/vendor/leaflet.js"></script>\n'
+    '<script defer src="{root}assets/vendor/leaflet.markercluster.js"></script>\n'
+    '<script defer src="{root}assets/map.js"></script>\n')
+
+
 def render_page(title, content_html, site, active="", root="../../"):
     site_title = TITLES[site]
     nav = _nav(site, active, root)
     footer = FOOTERS[site].format(root=root)
+    # Leaflet only ships on the page that actually has a map
+    mapassets = MAP_ASSETS.format(root=root) if 'id="fieldmap"' in content_html else ""
     # substitute content placeholders per page depth
     content_html = (content_html
                     .replace("{{IMG}}", f"{root}{site}/assets/img")
@@ -69,7 +79,7 @@ def render_page(title, content_html, site, active="", root="../../"):
 <link rel="stylesheet" href="{root}assets/{site}.css">
 <script defer src="{root}assets/lightbox.js"></script>
 <script defer src="{root}assets/films.js"></script>
-</head>
+{mapassets}</head>
 <body class="site-{site}">
 <header class="site-header">
   <div class="site-topbar"><div class="site-topbar-inner">

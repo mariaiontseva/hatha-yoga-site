@@ -6,7 +6,7 @@ skipping permalink aliases (?p=) and nggallery slideshow helpers.
 import os, re, glob, json, shutil, sys
 from urllib.parse import unquote
 sys.path.insert(0, os.path.dirname(__file__))
-import extract, template, teams, pubs, gallery, libraries, blog, contact, homepage, events, films
+import extract, template, teams, pubs, gallery, libraries, blog, contact, homepage, events, films, places
 
 PMAP = json.load(open(os.path.join(os.path.dirname(__file__), "pmap_hyp.json")))
 
@@ -40,6 +40,8 @@ def discover():
         f = os.path.join(MIRROR, f"{slug}.html")
         if os.path.isfile(f):
             pages.append((slug, f, "hyp/gallery/"))
+    # the gallery's map reads the field-site pages, so it must be built last
+    pages.sort(key=lambda p: p[0] == "gallery")
     return pages
 
 
@@ -67,6 +69,43 @@ def _hero(src, all_used):
     return f'<div class="hero" data-count="{len(imgs)}">{tags}</div>'
 
 
+def _site_photos():
+    """{slug: [image file name, ...]} from the already-built field-site pages."""
+    from bs4 import BeautifulSoup
+    out = {}
+    for site in places.SITES:
+        page = os.path.join(OUT, site["slug"], "index.html")
+        if not os.path.isfile(page):
+            out[site["slug"]] = []
+            continue
+        s = BeautifulSoup(open(page, encoding="utf-8").read(), "lxml")
+        files = []
+        for a in s.select('main a[href*="assets/img"]'):
+            h = a.get("href", "")
+            if re.search(r"\.(jpg|jpeg|png)$", h, re.I):
+                files.append(unquote(os.path.basename(h)))
+        out[site["slug"]] = sorted(set(files))
+    return out
+
+
+def _map_block():
+    """Click-to-load fieldwork map + its data, for the gallery index."""
+    data = places.collect(OUT, _site_photos())
+    total = sum(p["count"] for p in data)
+    return (
+        '<div class="fieldmap" id="fieldmap" data-root="{{ROOT}}">'
+        '<div class="fieldmap-cover">'
+        '<h3>Fieldwork map</h3>'
+        f'<p>{total} photographs from {len([p for p in data if p["count"]])} '
+        'sites across India. The map is served by OpenStreetMap and CARTO, so '
+        'it loads only when you ask for it.</p>'
+        '<button type="button" class="fieldmap-load">Show map</button>'
+        '</div></div>'
+        '<script type="application/json" id="map-data">'
+        + json.dumps(data, ensure_ascii=False) +
+        '</script>')
+
+
 def _emit(slug, src, active, root, all_used):
     title, html, used = extract.extract_content(src, "fusion", site="hyp", pmap=PMAP)
     if len(html) < 20:
@@ -87,9 +126,9 @@ def _emit(slug, src, active, root, all_used):
         html = ('<p class="crumb"><a href="{{ROOT}}hyp/gallery/">&#8592; Gallery</a></p>'
                 + html)
     if slug == "gallery":
-        # photos only — the film moved to its own Films section (Aug 2026);
-        # gallery redesign is planned, keep this plain until then
-        html = gallery.index(html)
+        # the fieldwork map sits above the site cards; both list the same
+        # places, the map is the browsable view, the cards are the index
+        html = _map_block() + gallery.index(html)
     elif slug == "roots-of-yoga":
         html = gallery.book(html)
     elif slug not in ("team", "blog"):

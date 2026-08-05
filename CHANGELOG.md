@@ -7,6 +7,25 @@ bio/photo) predates this log — see `git log` for that history.
 
 ## 2026-08-05
 
+- **Fieldwork map on the Gallery page** (PI request). An interactive map of
+  India above the site cards: every photograph is a point, points cluster as
+  they overlap, and a pin opens a card with a thumbnail, the site, the region,
+  the date of the shoot and a link into that site's folder. The map
+  *complements* the folders, it does not replace them.
+  - **Click-to-load** — nothing is fetched from the tile server until the
+    visitor presses "Show map", so the page makes no third-party request on
+    its own. Same principle as the video embeds.
+  - **Self-hosted** Leaflet + MarkerCluster in `assets/vendor/` (204 KB), our
+    own markers, no CDN — the site stays a set of plain static folders.
+    Leaflet is only linked on the page that actually has a map.
+  - **Tiles**: CARTO Positron over OpenStreetMap data, attributed as required.
+  - **Dates come from the photographs' own EXIF** (Kadri 6–8 March 2016,
+    Hampi 11–14 March, Panhale Kaji 17 March). No photograph carries GPS — the
+    Sony A7 used for the fieldwork has no GPS module — so each one currently
+    sits on its site's point. `build/places.py` already reads per-photo GPS
+    and honours a manual `PHOTO_COORDS` override, so genuine per-photograph
+    clusters appear as soon as located photographs arrive.
+
 - **Films now play in a large lightbox, not inside the small card.** Clicking
   a card opens a full-width 16:9 player (up to 1100px) over a dimmed page,
   with the title and source on two lines beneath it and an n/m counter.
