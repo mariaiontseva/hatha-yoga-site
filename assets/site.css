@@ -260,7 +260,11 @@ a.ytcard .ytcard-title{color:var(--oxblue)}
 .leaflet-marker-icon.fm-cluster.is-big{font-size:15px}
 .fm-site span,.fm-cluster span{display:block;transform:translateY(.5px)}
 
-/* ---- hover preview card: thumbnail grid over a navy caption block ---- */
+/* ---- hover preview card: thumbnail grid over a navy caption block ----
+   pointer-events:none is load-bearing — if the card can take the cursor it
+   steals it from the marker, the marker fires mouseout, the card closes and
+   the whole thing flickers. It is a label; it is never clicked. */
+.fm-tip,.fm-tip *{pointer-events:none}
 .fm-tip .leaflet-popup-content-wrapper{border-radius:0;padding:0;background:#fff;
   box-shadow:0 10px 34px rgba(10,20,40,.35)}
 .fm-tip .leaflet-popup-content{margin:0;width:336px!important;display:block}
