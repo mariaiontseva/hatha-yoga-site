@@ -90,8 +90,8 @@
       openStrip(sites, 0, 'cluster');
     });
     cluster.on('clustermouseover', function (e) {
-      showTip(e.layer.getLatLng(), tipCluster(
-        e.layer.getAllChildMarkers().map(function (m) { return m.__place; })));
+      var sites = e.layer.getAllChildMarkers().map(function (m) { return m.__place; });
+      showTip(e.layer.getLatLng(), tipCluster(sites), sites.length);
     });
     cluster.on('clustermouseout', hideTip);
 
@@ -100,7 +100,7 @@
       var m = L.marker([p.lat, p.lon], { icon: siteIcon(p), title: p.name });
       m.__place = p;
       m.on('click', function () { openStrip([p], 0, 'single'); });
-      m.on('mouseover', function () { showTip(m.getLatLng(), tipSite(p)); });
+      m.on('mouseover', function () { showTip(m.getLatLng(), tipSite(p), p.count); });
       m.on('mouseout', hideTip);
       cluster.addLayer(m);
       bounds.push([p.lat, p.lon]);
@@ -143,14 +143,26 @@
 
   // ------------------------------------------------------------ hover cards
   var tip = null, tipTimer = null;
-  function showTip(latlng, html) {
+  function showTip(latlng, html, photoCount) {
     if (MOBILE.matches) return;               // touch taps straight through
+    // while the strip is open the photographs are already on screen, and a
+    // card over the map would only fight with it
+    if (host.classList.contains('has-strip')) return;
     clearTimeout(tipTimer);
     tipTimer = setTimeout(function () {
       hideTip();
+      // never pan the map on hover — instead flip the card below the marker
+      // when there isn't room above it
+      var tall = photoCount > 4 ? 320 : 300;
+      var y = map.latLngToContainerPoint(latlng).y;
+      var below = y < tall + 12;
+      // clear of the marker itself: a cluster is 48px across, so the card
+      // has to start ~30px from the anchor or it sits on top of the pin
+      var gap = 30;
       tip = L.popup({
-        className: 'fm-tip', closeButton: false, autoPan: true,
-        autoPanPadding: L.point(12, 12), offset: L.point(0, -16),
+        className: 'fm-tip' + (below ? ' is-below' : ''),
+        closeButton: false, autoPan: false,
+        offset: L.point(0, below ? tall + gap : -gap),
         maxWidth: 336, minWidth: 336
       }).setLatLng(latlng).setContent(html).openOn(map);
     }, 90);
@@ -169,8 +181,10 @@
     var cells = shown.map(function (ph, i) {
       var veil = (extra > 0 && i === shown.length - 1)
         ? '<span class="fm-tip-more">+' + extra + '</span>' : '';
+      // not lazy: the card is only ever built on hover, and empty cells
+      // while it fades in look broken
       return '<span class="fm-tip-cell"><img src="' + img(ph.file) +
-        '" alt="" loading="lazy">' + veil + '</span>';
+        '" alt="">' + veil + '</span>';
     }).join('');
     return '<span class="fm-tip-grid' + (max === 4 ? ' is-quad' : '') + '">' +
       cells + '</span>';

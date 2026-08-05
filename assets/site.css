@@ -267,6 +267,12 @@ a.ytcard .ytcard-title{color:var(--oxblue)}
 .fm-tip .leaflet-popup-tip-container{width:20px;height:11px;margin-left:-10px}
 .fm-tip .leaflet-popup-tip{width:14px;height:14px;margin:-8px auto 0;padding:0;
   background:var(--oxblue);box-shadow:none}
+/* opened below the marker (no room above): tip points up, out of the grid */
+.fm-tip.is-below .leaflet-popup-tip-container{top:-11px;bottom:auto}
+.fm-tip.is-below .leaflet-popup-tip{background:#fff}
+/* the marker must stay visible and above the card it belongs to */
+.leaflet-marker-icon.fm-cluster,.leaflet-marker-icon.fm-site,
+.leaflet-marker-icon.fm-dot{z-index:640!important}
 .fm-tip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:2px;
   background:#fff}
 .fm-tip-grid.is-quad{grid-template-columns:repeat(2,1fr)}
