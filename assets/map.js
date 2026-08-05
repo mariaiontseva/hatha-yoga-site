@@ -79,8 +79,8 @@
       '<strong>' + p.name + '</strong>' +
       '<span class="fm-pop-region">' + p.region + '</span>' +
       (when ? '<span class="fm-pop-date">' + when + '</span>' : '') +
-      '<a href="' + root + 'hyp/' + p.slug + '/">All ' + p.count +
-      ' photographs &rarr;</a></div>';
+      '<a href="' + root + 'hyp/' + p.slug + '/"><span>All ' + p.count +
+      ' photographs</span></a></div>';
   }
 
   function formatDate(iso) {

@@ -258,18 +258,34 @@ a.ytcard .ytcard-title{color:var(--oxblue)}
   font-weight:700;font-size:.88rem;line-height:1;text-align:center}
 .fm-cluster span{display:block}
 .leaflet-container{font-family:var(--font-sans);background:var(--paper-2)}
-.leaflet-popup-content-wrapper{border-radius:2px}
-.leaflet-popup-content{margin:0;width:auto!important}
-.fm-pop{display:flex;flex-direction:column;width:210px}
-.fm-pop img{width:210px;height:118px;object-fit:cover;margin:0;display:block}
-.fm-pop strong{font-family:var(--font-serif);font-size:1.05rem;
-  color:var(--oxblue);padding:.55rem .8rem 0}
-.fm-pop-region,.fm-pop-date{font-size:.72rem;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--ink-soft);padding:.15rem .8rem 0}
-.fm-pop a{margin:.6rem .8rem .7rem;font-family:var(--font-sans);
-  font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
-  color:var(--oxblue);text-decoration:none}
-.fm-pop a:hover{text-decoration:underline}
+
+/* the popup is ours, not Leaflet's: square corners, image edge to edge,
+   dark card against the pale basemap. Selectors are doubled up because
+   leaflet.css loads after this file and would otherwise win on order. */
+.leaflet-popup .leaflet-popup-content-wrapper{border-radius:0;padding:0;
+  background:var(--oxblue);box-shadow:0 16px 42px -16px rgba(0,20,50,.75)}
+.leaflet-popup .leaflet-popup-content{margin:0;width:auto!important;line-height:1.4}
+.leaflet-popup .leaflet-popup-tip{background:var(--oxblue);box-shadow:none}
+.leaflet-popup a.leaflet-popup-close-button{top:7px;right:7px;width:26px;height:26px;
+  font:400 19px/26px var(--font-sans);color:#fff;background:rgba(0,13,35,.72);
+  border-radius:50%;padding:0;text-align:center}
+.leaflet-popup a.leaflet-popup-close-button:hover{background:rgba(0,13,35,.8);
+  color:#fff}
+
+.fm-pop{display:flex;flex-direction:column;width:236px;color:#fff}
+.fm-pop img{width:236px;height:133px;object-fit:cover;margin:0;display:block}
+.fm-pop strong{font-family:var(--font-serif);font-weight:700;font-size:1.15rem;
+  line-height:1.2;color:#fff;padding:.75rem .9rem .2rem}
+.fm-pop-region,.fm-pop-date{font-size:.68rem;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:rgba(255,255,255,.62);padding:0 .9rem}
+.fm-pop-date{padding-top:.2rem}
+.leaflet-popup .fm-pop a{display:flex;align-items:center;
+  justify-content:space-between;margin:.85rem 0 0;padding:.6rem .9rem;
+  border-top:1px solid rgba(255,255,255,.18);font-family:var(--font-sans);
+  font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:#fff;text-decoration:none}
+.leaflet-popup .fm-pop a:hover{background:rgba(255,255,255,.1);color:#fff}
+.leaflet-popup .fm-pop a::after{content:"→";font-size:.95rem;opacity:.7}
 
 /* ---- films: video lightbox (assets/films.js) ---- */
 .vlb{position:fixed;inset:0;z-index:1000;background:rgba(0,13,35,.94);
