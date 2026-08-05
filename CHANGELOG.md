@@ -5,6 +5,16 @@ change, newest first. Earlier work (July 2026: Project Publications heading,
 gallery lightbox, Film section, Jason's and Mark's publication lists, Jason's
 bio/photo) predates this log — see `git log` for that history.
 
+## 2026-08-05
+
+- **The Haṭhābhyāsapaddhati film is live on the Films page.** All six parts
+  uploaded to the project's own YouTube channel
+  ([@lightonhathayoga](https://www.youtube.com/@lightonhathayoga), a Brand
+  Account so ownership can be handed on) as **unlisted**: they play from the
+  site but are not listed on YouTube. The "Coming soon" placeholders are gone;
+  every card is click-to-play through youtube-nocookie like the rest.
+  Original numbering kept (1–5, 7) — part 6 is still missing.
+
 ## 2026-08-04
 
 - **Roots of Yoga: out of the nav menu, into the bibliographies** (PI

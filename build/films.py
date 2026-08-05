@@ -1,7 +1,8 @@
 """The Films page — YouTube videos curated by the PI (email 'YouTube videos',
-4 Aug 2026) + the project's own Haṭhābhyāsapaddhati film (6 parts, currently
-on Google Drive; MI uploads them to YouTube — decided with the PI — and fills
-in the ids here).
+4 Aug 2026) + the project's own Haṭhābhyāsapaddhati film, uploaded 5 Aug 2026
+to the project's own channel, youtube.com/@lightonhathayoga (a Brand Account,
+so ownership can be handed on later).  The six parts are unlisted: they play
+from this site but are not listed on YouTube itself.
 
 Display titles were editorially normalised from the real YouTube titles
 (fetched via oEmbed 4 Aug 2026); every id was verified alive that day.
@@ -29,13 +30,16 @@ SECTIONS = [
          "The Haṭha Yoga Project at the British Museum",
          "Dr Jason Birch"),
     ]),
+    # uploaded to the project's own channel (youtube.com/@lightonhathayoga)
+    # 5 Aug 2026, unlisted; part 6 was never shot / is still missing, hence
+    # the jump from 5 to 7 — keep the original numbering
     ("The Haṭhābhyāsapaddhati Film", [
-        (None, "Introduction", "The Haṭha Yoga Project"),
-        (None, "Supine Poses", "The Haṭha Yoga Project"),
-        (None, "Prone Poses", "The Haṭha Yoga Project"),
-        (None, "Stationary Poses", "The Haṭha Yoga Project"),
-        (None, "Standing Poses", "The Haṭha Yoga Project"),
-        (None, "Piercing Poses", "The Haṭha Yoga Project"),
+        ("DnEp-4FRaqo", "1. Introduction", "The Haṭha Yoga Project"),
+        ("kfTLG3SZiRI", "2. Supine Poses", "The Haṭha Yoga Project"),
+        ("MCRBO7T4YvU", "3. Prone Poses", "The Haṭha Yoga Project"),
+        ("0y4WAkw51Cs", "4. Stationary Poses", "The Haṭha Yoga Project"),
+        ("_tBcQv-4etQ", "5. Standing Poses", "The Haṭha Yoga Project"),
+        ("Zh4iZrTlCew", "7. Piercing Poses", "The Haṭha Yoga Project"),
     ]),
     ("Roots of Yoga", [
         ("_3hPjoPXA6Y",
