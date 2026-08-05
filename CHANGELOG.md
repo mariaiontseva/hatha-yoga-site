@@ -8,13 +8,14 @@ bio/photo) predates this log — see `git log` for that history.
 ## 2026-08-05
 
 - **Fieldwork map on the Gallery page** (PI request). An interactive map of
-  India above the site cards: every photograph is a point, points cluster as
-  they overlap, and a pin opens a card with a thumbnail, the site, the region,
-  the date of the shoot and a link into that site's folder. The map
-  *complements* the folders, it does not replace them.
-  - **Click-to-load** — nothing is fetched from the tile server until the
-    visitor presses "Show map", so the page makes no third-party request on
-    its own. Same principle as the video embeds.
+  India above the site cards, under a "Fieldwork map" heading, with
+  "Photographs by site" heading the folders below it: every photograph is a
+  point, points cluster as they overlap, and a pin opens a card with a
+  thumbnail, the site, the region, the date of the shoot and a link into that
+  site's folder. The map *complements* the folders, it does not replace them.
+  - **Draws on load**, with retina (@2x) tiles so the basemap stays crisp.
+    Note this means the tile server sees a visitor's IP as soon as the gallery
+    opens — worth a line in the site's privacy notice before handover.
   - **Self-hosted** Leaflet + MarkerCluster in `assets/vendor/` (204 KB), our
     own markers, no CDN — the site stays a set of plain static folders.
     Leaflet is only linked on the page that actually has a map.

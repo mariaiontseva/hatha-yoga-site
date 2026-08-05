@@ -1,11 +1,11 @@
 /* Fieldwork map (Gallery) — Leaflet + MarkerCluster, both self-hosted.
 
-   Click-to-load: nothing is fetched from the tile server until the visitor
-   presses "Show map", so no third-party request leaves this page on its own.
-   Data comes from a <script type="application/json" id="map-data"> block that
-   the build writes; each photograph carries its own point, so real clusters
-   appear as soon as photographs have their own coordinates — until then they
-   sit on their site's point and cluster into one pin per site. */
+   The map draws as soon as the page loads. Tiles are retina (@2x), so the
+   basemap stays crisp on high-density screens. Data comes from a
+   <script type="application/json" id="map-data"> block that the build writes;
+   each photograph carries its own point, so real clusters appear as soon as
+   photographs have their own coordinates — until then they sit on their
+   site's point and cluster into one pin per site. */
 (function () {
   'use strict';
 
@@ -16,21 +16,24 @@
   var places = JSON.parse(dataEl.textContent);
   var root = host.dataset.root || '../../';
 
-  var TILES = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+  var TILES = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png';
   var ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
              ' contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
-  host.querySelector('.fieldmap-load').addEventListener('click', start);
+  // the container must have its size before fitBounds, or the map lands at
+  // max zoom with every marker outside the viewport
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start);
 
   function start() {
-    host.classList.add('is-live');
-    host.querySelector('.fieldmap-cover').remove();
     var el = document.createElement('div');
     el.className = 'fieldmap-canvas';
     host.appendChild(el);
 
     var map = L.map(el, { scrollWheelZoom: false, attributionControl: true });
-    L.tileLayer(TILES, { attribution: ATTR, maxZoom: 19, subdomains: 'abcd' }).addTo(map);
+    L.tileLayer(TILES, {
+      attribution: ATTR, maxZoom: 20, subdomains: 'abcd', tileSize: 256
+    }).addTo(map);
 
     var cluster = L.markerClusterGroup({
       showCoverageOnHover: false,
@@ -63,6 +66,7 @@
       });
     });
     map.addLayer(cluster);
+    map.invalidateSize();
     map.fitBounds(bounds, { padding: [40, 40] });
 
     // scroll-zoom only once the map has focus, so the page still scrolls

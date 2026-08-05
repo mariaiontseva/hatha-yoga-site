@@ -89,18 +89,15 @@ def _site_photos():
 
 
 def _map_block():
-    """Click-to-load fieldwork map + its data, for the gallery index."""
+    """The fieldwork map + its data, for the top of the gallery index."""
     data = places.collect(OUT, _site_photos())
     total = sum(p["count"] for p in data)
+    sites = len([p for p in data if p["count"]])
     return (
-        '<div class="fieldmap" id="fieldmap" data-root="{{ROOT}}">'
-        '<div class="fieldmap-cover">'
-        '<h3>Fieldwork map</h3>'
-        f'<p>{total} photographs from {len([p for p in data if p["count"]])} '
-        'sites across India. The map is served by OpenStreetMap and CARTO, so '
-        'it loads only when you ask for it.</p>'
-        '<button type="button" class="fieldmap-load">Show map</button>'
-        '</div></div>'
+        '<h2 class="galsec">Fieldwork map</h2>'
+        f'<p class="galsec-lead">{total} photographs from {sites} sites across '
+        'India. Zoom in to break the clusters apart; a point opens its site.</p>'
+        '<div class="fieldmap" id="fieldmap" data-root="{{ROOT}}"></div>'
         '<script type="application/json" id="map-data">'
         + json.dumps(data, ensure_ascii=False) +
         '</script>')
@@ -128,7 +125,9 @@ def _emit(slug, src, active, root, all_used):
     if slug == "gallery":
         # the fieldwork map sits above the site cards; both list the same
         # places, the map is the browsable view, the cards are the index
-        html = _map_block() + gallery.index(html)
+        html = (_map_block()
+                + '<h2 class="galsec">Photographs by site</h2>'
+                + gallery.index(html))
     elif slug == "roots-of-yoga":
         html = gallery.book(html)
     elif slug not in ("team", "blog"):

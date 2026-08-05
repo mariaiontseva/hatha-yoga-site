@@ -230,20 +230,11 @@ a.ytcard .ytcard-title{color:var(--oxblue)}
   letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
 
 /* ---- fieldwork map (assets/map.js + build/places.py) ---- */
-.fieldmap{position:relative;margin:1.4em 0 2em;border:1px solid var(--rule);
+.galsec-lead{font-family:var(--font-sans);font-size:.92rem;color:var(--ink-soft);
+  margin:.4em 0 1.1em;max-width:60ch}
+.fieldmap{position:relative;margin:0 0 2.2em;border:1px solid var(--rule);
   background:var(--paper-2)}
-.fieldmap-canvas{height:min(66vh,540px)}
-.fieldmap-cover{position:relative;height:min(52vh,420px);display:flex;
-  flex-direction:column;align-items:center;justify-content:center;gap:.9rem;
-  text-align:center;padding:1.5rem;background:var(--oxblue);color:#fff}
-.fieldmap-cover p{max-width:38ch;margin:0;font-family:var(--font-sans);
-  font-size:.92rem;line-height:1.5;opacity:.85;color:#fff}
-.fieldmap-cover h3{margin:0;color:#fff;font-size:1.35rem}
-.fieldmap-load{font-family:var(--font-sans);font-weight:700;font-size:.82rem;
-  letter-spacing:.06em;text-transform:uppercase;color:var(--oxblue);
-  background:#fff;border:0;padding:.7em 1.5em;cursor:pointer}
-.fieldmap-load:hover{opacity:.88}
-.fieldmap-load:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.fieldmap-canvas{height:min(70vh,560px)}
 
 /* markers: our own, so Leaflet's default sprites are never requested.
    box-sizing matters — Leaflet positions the icon by its declared iconSize,
