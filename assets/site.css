@@ -252,11 +252,11 @@ a.ytcard .ytcard-title{color:var(--oxblue)}
 .fm-pin span{display:block;box-sizing:border-box;width:16px;height:16px;
   border-radius:50%;background:var(--oxblue);border:2.5px solid #fff;
   box-shadow:0 1px 5px rgba(0,20,50,.45)}
-.fm-cluster{display:flex;align-items:center;justify-content:center;
-  background:var(--oxblue);color:#fff;border:3px solid #fff;border-radius:50%;
-  box-shadow:0 2px 9px rgba(0,20,50,.4);font-family:var(--font-sans);
-  font-weight:700;font-size:.88rem;line-height:1;text-align:center}
-.fm-cluster span{display:block}
+.leaflet-marker-icon.fm-cluster{display:flex;align-items:center;
+  justify-content:center;background:var(--oxblue);color:#fff;
+  border:3px solid #fff;border-radius:50%;box-shadow:0 2px 9px rgba(0,20,50,.4);
+  font-family:var(--font-sans);font-weight:700;font-size:.88rem;line-height:1}
+.fm-cluster span{display:block;transform:translateY(.5px)}
 .leaflet-container{font-family:var(--font-sans);background:var(--paper-2)}
 
 /* the popup is ours, not Leaflet's: square corners, image edge to edge,
