@@ -7,6 +7,12 @@ bio/photo) predates this log — see `git log` for that history.
 
 ## 2026-08-05
 
+- **Films now play in a large lightbox, not inside the small card.** Clicking
+  a card opens a full-width 16:9 player (up to 1100px) over a dimmed page,
+  with the title and source on two lines beneath it and an n/m counter.
+  Arrows step through the videos of that section, Esc closes and stops
+  playback, focus is trapped and returns to the card. Same behaviour as the
+  photo gallery, so the site works one way throughout.
 - **The Haṭhābhyāsapaddhati film is live on the Films page.** All six parts
   uploaded to the project's own YouTube channel
   ([@lightonhathayoga](https://www.youtube.com/@lightonhathayoga), a Brand
