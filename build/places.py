@@ -64,16 +64,20 @@ def _exif(path):
 
 
 def collect(out_root, photos_by_site):
-    """Build the map's data: one entry per photograph, carrying its point.
+    """Build the map's data: one entry per site, carrying its photographs.
 
-    photos_by_site: {slug: [file name, ...]} as found on the site's page.
+    photos_by_site: {slug: [(file name, alt text), ...]} from the site's page.
+
+    One marker per site is what the map draws — a photograph that carries its
+    own coordinates keeps them here, ready for the day the map splits a site
+    into several points.
     """
     img_dir = os.path.join(out_root, "assets", "img")
-    places = []
+    out = []
     for site in SITES:
         files = photos_by_site.get(site["slug"], [])
         photos, dates = [], []
-        for fn in files:
+        for fn, alt in files:
             path = os.path.join(img_dir, fn)
             date, camera, lat, lon = _exif(path) if os.path.isfile(path) else (None,) * 4
             own = PHOTO_COORDS.get(fn)
@@ -81,11 +85,11 @@ def collect(out_root, photos_by_site):
                 lat, lon = own["lat"], own["lon"]
             if date:
                 dates.append(date)
-            photos.append(dict(file=fn, date=date, camera=camera,
+            photos.append(dict(file=fn, alt=alt, date=date, camera=camera,
                                lat=lat if lat is not None else site["lat"],
                                lon=lon if lon is not None else site["lon"],
                                located=lat is not None))
-        places.append(dict(site, photos=photos, count=len(photos),
-                           dates=sorted(set(dates)),
-                           thumb=files[0] if files else None))
-    return places
+        out.append(dict(site, photos=photos, count=len(photos),
+                        dates=sorted(set(dates)),
+                        thumb=files[0][0] if files else None))
+    return out

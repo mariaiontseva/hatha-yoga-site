@@ -70,7 +70,7 @@ def _hero(src, all_used):
 
 
 def _site_photos():
-    """{slug: [image file name, ...]} from the already-built field-site pages."""
+    """{slug: [(file name, alt text), ...]} from the built field-site pages."""
     from bs4 import BeautifulSoup
     out = {}
     for site in places.SITES:
@@ -79,12 +79,18 @@ def _site_photos():
             out[site["slug"]] = []
             continue
         s = BeautifulSoup(open(page, encoding="utf-8").read(), "lxml")
-        files = []
+        seen, files = set(), []
         for a in s.select('main a[href*="assets/img"]'):
             h = a.get("href", "")
-            if re.search(r"\.(jpg|jpeg|png)$", h, re.I):
-                files.append(unquote(os.path.basename(h)))
-        out[site["slug"]] = sorted(set(files))
+            if not re.search(r"\.(jpg|jpeg|png)$", h, re.I):
+                continue
+            fn = unquote(os.path.basename(h))
+            if fn in seen:
+                continue
+            seen.add(fn)
+            im = a.find("img")
+            files.append((fn, (im.get("alt") or "").strip() if im else ""))
+        out[site["slug"]] = files
     return out
 
 
