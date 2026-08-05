@@ -99,7 +99,7 @@ code{font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:var(--pa
 
 /* ---- shell ---- */
 .site-header{border-bottom:1px solid var(--rule);background:var(--paper);
-  position:sticky;top:0;z-index:10}
+  position:sticky;top:0;z-index:100}
 .site-topbar{background:var(--oxblue)}
 .site-topbar-inner{max-width:var(--wrap);margin:0 auto;padding:.42rem var(--gutter)}
 .site-over{font-family:var(--font-sans);font-size:.72rem;font-weight:500;text-transform:uppercase;
@@ -232,8 +232,11 @@ a.ytcard .ytcard-title{color:var(--oxblue)}
 /* ---- fieldwork map (assets/map.js + build/places.py) ---- */
 .galsec-lead{font-family:var(--font-sans);font-size:.92rem;color:var(--ink-soft);
   margin:.4em 0 1.1em;max-width:60ch}
-.fieldmap{position:relative;margin:0 0 2.2em;border:1px solid var(--rule);
-  background:var(--paper-2);overflow:hidden}
+/* isolate: Leaflet's own panes, controls and our strip run up to z-index
+   1000. Without a stacking context of its own the map would compete with
+   the sticky site header and scroll over the top of it. */
+.fieldmap{position:relative;z-index:0;isolation:isolate;margin:0 0 2.2em;
+  border:1px solid var(--rule);background:var(--paper-2);overflow:hidden}
 .fieldmap-canvas{height:min(70vh,560px)}
 .fieldmap.is-fs{border:0}
 .fieldmap.is-fs .fieldmap-canvas{height:100vh}
