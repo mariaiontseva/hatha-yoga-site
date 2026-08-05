@@ -91,7 +91,7 @@
     });
     cluster.on('clustermouseover', function (e) {
       var sites = e.layer.getAllChildMarkers().map(function (m) { return m.__place; });
-      showTip(e.layer.getLatLng(), tipCluster(sites), sites.length);
+      showTip(e.layer.getLatLng(), tipCluster(sites));
     });
     cluster.on('clustermouseout', hideTip);
 
@@ -100,7 +100,7 @@
       var m = L.marker([p.lat, p.lon], { icon: siteIcon(p), title: p.name });
       m.__place = p;
       m.on('click', function () { openStrip([p], 0, 'single'); });
-      m.on('mouseover', function () { showTip(m.getLatLng(), tipSite(p), p.count); });
+      m.on('mouseover', function () { showTip(m.getLatLng(), tipSite(p)); });
       m.on('mouseout', hideTip);
       cluster.addLayer(m);
       bounds.push([p.lat, p.lon]);
@@ -142,29 +142,34 @@
   }
 
   // ------------------------------------------------------------ hover cards
+  var STRIP_H = 172;
   var tip = null, tipTimer = null;
-  function showTip(latlng, html, photoCount) {
+
+  /** build(compact) returns the card's html; compact drops the grid to a
+      single row so the card still fits where the tall one would not. */
+  function showTip(latlng, build) {
     if (MOBILE.matches) return;               // touch taps straight through
-    // while the strip is open the photographs are already on screen, and a
-    // card over the map would only fight with it
-    if (host.classList.contains('has-strip')) return;
     clearTimeout(tipTimer);
     tipTimer = setTimeout(function () {
       hideTip();
-      // never pan the map on hover — instead flip the card below the marker
-      // when there isn't room above it
-      var tall = photoCount > 4 ? 320 : 300;
+      var TALL = 322, SHORT = 232, gap = 30;
+      var mapH = map.getSize().y;
       var y = map.latLngToContainerPoint(latlng).y;
-      var below = y < tall + 12;
-      // clear of the marker itself: a cluster is 48px across, so the card
-      // has to start ~30px from the anchor or it sits on top of the pin
-      var gap = 30;
+      // the strip covers the foot of the map, so room below a marker ends
+      // where the strip begins
+      var floor = mapH - (host.classList.contains('has-strip') ? STRIP_H : 0);
+      var above = y - gap, below = floor - y - gap;
+      var room = Math.max(above, below);
+      var compact = room < TALL;
+      var h = compact ? SHORT : TALL;
+      // above by preference; flip only when the card fits below and not above
+      var flip = above < h && below >= h;
       tip = L.popup({
-        className: 'fm-tip' + (below ? ' is-below' : ''),
-        closeButton: false, autoPan: false,
-        offset: L.point(0, below ? tall + gap : -gap),
+        className: 'fm-tip' + (flip ? ' is-below' : ''),
+        closeButton: false, autoPan: false, keepInView: false,
+        offset: L.point(0, flip ? h + gap : -gap),
         maxWidth: 336, minWidth: 336
-      }).setLatLng(latlng).setContent(html).openOn(map);
+      }).setLatLng(latlng).setContent(build(compact)).openOn(map);
     }, 90);
   }
   function hideTip() {
@@ -174,8 +179,8 @@
 
   /** Grid of up to 6 thumbnails; the 6th carries a "+N" veil when there
       are more. Four or fewer photographs use a roomier 2×2. */
-  function tipGrid(photos, total) {
-    var max = photos.length <= 4 ? 4 : 6;
+  function tipGrid(photos, total, compact) {
+    var max = compact ? 3 : (photos.length <= 4 ? 4 : 6);
     var shown = photos.slice(0, max);
     var extra = total - shown.length;
     var cells = shown.map(function (ph, i) {
@@ -204,20 +209,24 @@
   }
 
   function tipSite(p) {
-    return tipGrid(p.photos, p.count) +
-      tipBody(p.name, [p.region, dateRange(p.dates)],
-              'Click for all ' + plural(p.count, 'photograph', 'photographs'));
+    return function (compact) {
+      return tipGrid(p.photos, p.count, compact) +
+        tipBody(p.name, [p.region, dateRange(p.dates)],
+                'Click for all ' + plural(p.count, 'photograph', 'photographs'));
+    };
   }
 
   function tipCluster(sites) {
     var photos = sites.reduce(function (n, s) { return n + s.count; }, 0);
     // one thumbnail per place, so the grid shows what is actually grouped
     var lead = sites.map(function (s) { return s.photos[0]; });
-    return tipGrid(lead, photos) +
-      tipBody(plural(sites.length, 'place', 'places'),
-              [sites.map(function (s) { return s.name; }).join(' · '),
-               plural(photos, 'photograph', 'photographs')],
-              'Click to browse these places');
+    return function (compact) {
+      return tipGrid(lead, photos, compact) +
+        tipBody(plural(sites.length, 'place', 'places'),
+                [sites.map(function (s) { return s.name; }).join(' · '),
+                 plural(photos, 'photograph', 'photographs')],
+                'Click to browse these places');
+    };
   }
 
   // ----------------------------------------------------------------- strip
@@ -263,13 +272,17 @@
     hideTip();
     state.list = list; state.pos = pos; state.mode = mode;
     var p = list[pos];
-    if (mode === 'single') map.panTo([p.lat, p.lon], { animate: true });
     host.classList.add('has-strip');
     renderStrip(false);
+    // lift the marker clear of the strip — panInside moves the map the least
+    // it can, and only if the marker would otherwise be hidden under it
     setTimeout(function () {
-      map.invalidateSize();
-      map.panBy([0, MOBILE.matches ? 0 : 90], { animate: true });
-    }, 60);
+      var pad = MOBILE.matches ? host.clientHeight * 0.55 : STRIP_H + 40;
+      map.panInside(L.latLng(p.lat, p.lon), {
+        paddingTopLeft: L.point(30, 30),
+        paddingBottomRight: L.point(30, pad)
+      });
+    }, 80);
   }
 
   function closeStrip() {
