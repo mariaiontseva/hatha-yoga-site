@@ -50,7 +50,14 @@ body{
   background:var(--paper);
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
+  /* short pages (printed edition, imprint…) must still put the footer on
+     the floor rather than leave it stranded mid-screen */
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
 }
+.site-main{flex:1 0 auto}
+.site-footer{flex:none}
 
 /* ---- typography ---- */
 h1,h2,h3,h4{font-family:var(--font-serif);font-weight:700;line-height:1.18;color:var(--ink);
