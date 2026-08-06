@@ -141,10 +141,7 @@ PEOPLE = [
 
 def panel_html():
     """The podcasts tab of the Films page."""
-    total = sum(len(items) for _, items in PEOPLE)
-    out = [f'<p class="tab-lead">{total} conversations with members of the '
-           "project, from 2014 to the present. Each links out to the "
-           "episode.</p>"]
+    out = []
     for name, items in PEOPLE:
         rows = []
         for year, date, show, title, url, note in items:

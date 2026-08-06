@@ -2,6 +2,9 @@
 
 ## 2026-08-06 (later)
 
+- **Podcasts tab: the standfirst removed.** The line counting the
+  episodes and their span went; the list speaks for itself.
+
 - **Podcasts, as a second tab on the Films page** (PI asked whether we could
   gather the team's podcast appearances — we can). 35 audio episodes,
   2014–2026, grouped by person with Jim first, laid out like the
