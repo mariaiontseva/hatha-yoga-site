@@ -1,5 +1,20 @@
 # Changelog — Light on Haṭha Yoga site
 
+## 2026-08-06 (later)
+
+- **Podcasts, as a second tab on the Films page** (PI asked whether we could
+  gather the team's podcast appearances — we can). 35 audio episodes,
+  2014–2026, grouped by person with Jim first, laid out like the
+  publications page: year on the left, episode linked, show and date beneath.
+  Films stays the default tab; `/hyp/films/#podcasts` links straight to the
+  other one. Keyboard-operable, and without JS both panels simply show.
+  - Excluded: two paragliding interviews with Jim (not about the project),
+    one Singleton episode whose host site is gone (Wayback only), and Gupta,
+    who has no podcast appearances.
+  - Two episodes are not in English and say so in the line (Spanish, Italian).
+  - Every URL was fetched and confirmed; the six keenonyoga.com links answer
+    403 to scripts but load fine in a browser.
+
 ## 2026-08-06
 
 - **Films: "Final" dropped from the symposium video's title** (PI: it was

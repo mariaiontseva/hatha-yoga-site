@@ -142,14 +142,29 @@ def _card(vid, title, source):
             f'<span class="ytcard-title">{title}</span>{src}</div>')
 
 
-def page_html():
-    out = ["<h1>Films</h1>",
-           "<p>Talks, lectures and interviews by the project team, and the "
-           "project’s own films.</p>"]
+def page_html(podcasts_html=""):
+    """Films, with podcasts on a second tab of the same page."""
+    films = ['<p class="tab-lead">Talks, lectures and interviews by the '
+             'project team, and the project’s own films.</p>']
     for heading, items in SECTIONS:
         cards = "".join(_card(*it) for it in items)
-        out.append(f'<h2 class="galsec">{heading}</h2>'
-                   f'<div class="ytgrid">{cards}</div>')
-    out.append(f'<p>More recordings on the <a href="{CHANNEL[1]}">{CHANNEL[0]}'
-               f' YouTube channel</a>.</p>')
-    return "".join(out)
+        films.append(f'<h2 class="galsec">{heading}</h2>'
+                     f'<div class="ytgrid">{cards}</div>')
+    films.append(f'<p>More recordings on the <a href="{CHANNEL[1]}">{CHANNEL[0]}'
+                 f' YouTube channel</a>.</p>')
+
+    if not podcasts_html:
+        return "<h1>Films</h1>" + "".join(films)
+
+    return (
+        '<h1>Films &amp; Podcasts</h1>'
+        '<div class="tabs" role="tablist" aria-label="Films and podcasts">'
+        '  <button type="button" class="tab is-on" role="tab" id="tab-films"'
+        '   aria-controls="panel-films" aria-selected="true">Films</button>'
+        '  <button type="button" class="tab" role="tab" id="tab-podcasts"'
+        '   aria-controls="panel-podcasts" aria-selected="false">Podcasts</button>'
+        '</div>'
+        '<section class="tabpanel is-on" id="panel-films" role="tabpanel"'
+        ' aria-labelledby="tab-films">' + "".join(films) + '</section>'
+        '<section class="tabpanel" id="panel-podcasts" role="tabpanel"'
+        ' aria-labelledby="tab-podcasts" hidden>' + podcasts_html + '</section>')

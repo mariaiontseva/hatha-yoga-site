@@ -99,6 +99,25 @@ tr:last-child td,tr:last-child th{border-bottom:0}
    plain bold at body size, exactly what the old inline <strong> gave */
 .pub-list td.pub-sub{font-weight:700;color:var(--ink);padding-top:1.4em}
 .pub-academia{font-size:.92rem;color:var(--ink-soft);margin:.7em 0 2.4em}
+
+/* ---- tabs (Films / Podcasts) ---- */
+.tabs{display:flex;gap:.15rem;margin:.4em 0 1.6em;border-bottom:1px solid var(--rule)}
+.tab{position:relative;bottom:-1px;padding:.6em 1.1em;border:0;background:none;
+  font-family:var(--font-sans);font-size:.8rem;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-soft);cursor:pointer;
+  border-bottom:2px solid transparent}
+.tab:hover{color:var(--oxblue)}
+.tab.is-on{color:var(--oxblue);border-bottom-color:var(--oxblue)}
+.tab:focus-visible{outline:2px solid var(--oxblue);outline-offset:-4px}
+.tab-lead{color:var(--ink-soft);margin-bottom:1.6em}
+.tabpanel[hidden]{display:none}
+
+/* podcasts: same table as the bibliography, with the show and date on a
+   second line under the episode title */
+.pod-list td a{font-weight:500}
+.pod-show{display:block;font-family:var(--font-sans);font-size:.78rem;
+  letter-spacing:.02em;color:var(--ink-soft);margin-top:.15em}
+.pod-note{font-family:var(--font-sans);font-size:.78rem;color:var(--ink-soft)}
 hr{border:0;border-top:1px solid var(--rule);margin:2.4em 0}
 code{font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:var(--paper-2);
   padding:.1em .35em;border-radius:3px}

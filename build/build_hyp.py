@@ -6,7 +6,7 @@ skipping permalink aliases (?p=) and nggallery slideshow helpers.
 import os, re, glob, json, shutil, sys
 from urllib.parse import unquote
 sys.path.insert(0, os.path.dirname(__file__))
-import extract, template, teams, pubs, gallery, libraries, blog, contact, homepage, events, films, places
+import extract, template, teams, pubs, gallery, libraries, blog, contact, homepage, events, films, places, podcasts
 
 PMAP = json.load(open(os.path.join(os.path.dirname(__file__), "pmap_hyp.json")))
 
@@ -171,12 +171,14 @@ def build():
             print(f"    (from alias p={nn})")
     # Films page (nav section added Aug 2026, PI request): the PI's curated
     # YouTube list + the Haṭhābhyāsapaddhati film placeholders (build/films.py)
+    # one page, two tabs: films (default) and the team's podcast appearances
     dest = os.path.join(OUT, "films")
     os.makedirs(dest, exist_ok=True)
     open(os.path.join(dest, "index.html"), "w", encoding="utf-8").write(
-        template.render_page("Films", films.page_html(), site="hyp",
-                             active="hyp/films/", root="../../"))
-    print("  hyp/films"); n += 1
+        template.render_page("Films & Podcasts",
+                             films.page_html(podcasts.panel_html()),
+                             site="hyp", active="hyp/films/", root="../../"))
+    print("  hyp/films (+ podcasts tab)"); n += 1
     for p in all_used:
         clean = unquote(os.path.basename(p)).split("?")[0]
         try:
