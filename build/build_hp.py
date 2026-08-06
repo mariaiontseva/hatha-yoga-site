@@ -1,5 +1,5 @@
 """Build the HP sub-site (hp/<slug>/index.html) from the Enfold mirror."""
-import os, json, shutil, sys
+import os, re, json, shutil, sys
 from urllib.parse import unquote
 sys.path.insert(0, os.path.dirname(__file__))
 import extract, template, teams, gallery
@@ -36,6 +36,15 @@ def build():
             html = teams.restructure(html, "hp")
         else:
             html = gallery.wrap(html)
+        if out_slug == "printed-edition":
+            # PI, 6 Aug 2026: launch plan superseded — replace the paragraph
+            html = re.sub(
+                r"We plan to launch the printed edition.*?later this year\.",
+                "A book version of the edition of the text, together with "
+                "four extensive introductory chapters, has been accepted for "
+                "publication by the EFEO in Pondicherry and should be "
+                "available by the end of 2026.",
+                html, flags=re.S)
         all_used |= used
         root = "../" if out_slug == "" else "../../"
         page = template.render_page(title, html, site="hp", active=active, root=root)

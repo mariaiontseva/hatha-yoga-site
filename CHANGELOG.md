@@ -1,5 +1,15 @@
 # Changelog — Light on Haṭha Yoga site
 
+## 2026-08-06
+
+- **Films: "Final" dropped from the symposium video's title** (PI: it was
+  filmed near the start of the project, not at its end).
+- **HP printed edition: text replaced with the PI's wording** — the book has
+  been accepted by the EFEO in Pondicherry and is due by the end of 2026
+  (the old paragraph promised a 2026 Paris launch that has been superseded).
+- Podcasts: the PI asks whether we can gather the team's podcast
+  appearances — parked for a separate conversation with MI.
+
 Kept by Maria (with Claude) from 4 Aug 2026 onwards; one entry per shipped
 change, newest first. Earlier work (July 2026: Project Publications heading,
 gallery lightbox, Film section, Jason's and Mark's publication lists, Jason's
