@@ -14,6 +14,7 @@ its own point (real clustering rather than one pin per site), give it a
 `lat`/`lon` in PHOTO_COORDS, or upload photographs whose EXIF has GPS — the
 build reads that automatically.
 """
+import json
 import os
 from PIL import Image
 from PIL.ExifTags import TAGS, GPSTAGS
@@ -34,6 +35,23 @@ SITES = [
 # photographs with their own coordinates, keyed by file name — empty for now;
 # fill in as fieldwork photographs with known locations arrive
 PHOTO_COORDS = {}
+
+# Photographs sent through the upload page live here rather than in a mirror
+# page. The file is written by the intake workflow, and the upload page reads
+# it back so the team can see what they have sent, retitle it or remove it.
+UPLOADS = os.path.join(os.path.dirname(__file__), "uploads.json")
+
+
+def uploaded():
+    """[{file, caption, location, photographer, added, batch}, …]"""
+    try:
+        with open(UPLOADS, encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
+    except (ValueError, OSError) as e:
+        print(f"  !! build/uploads.json unreadable ({e}) — treated as empty")
+        return []
 
 
 def _exif(path):
@@ -92,4 +110,37 @@ def collect(out_root, photos_by_site):
         out.append(dict(site, photos=photos, count=len(photos),
                         dates=sorted(set(dates)),
                         thumb=files[0][0] if files else None))
+
+    out.extend(_uploaded_places(img_dir))
     return out
+
+
+def _uploaded_places(img_dir):
+    """Photographs sent through the upload page, grouped into map points by
+    the place the sender typed. The intake workflow geocodes each place once
+    and stores lat/lon here, so the build never calls out to a geocoder."""
+    groups = {}
+    for rec in uploaded():
+        if rec.get("lat") is None or rec.get("lon") is None:
+            continue                      # not placed yet — skip, don't guess
+        key = rec.get("location", "").strip()
+        groups.setdefault(key, []).append(rec)
+
+    places = []
+    for name, recs in sorted(groups.items()):
+        photos, dates = [], []
+        for r in recs:
+            path = os.path.join(img_dir, r["file"])
+            date = r.get("date") or (_exif(path)[0] if os.path.isfile(path) else None)
+            if date:
+                dates.append(date)
+            photos.append(dict(file=r["file"], alt=r.get("caption", ""),
+                               date=date, camera=r.get("photographer"),
+                               lat=r["lat"], lon=r["lon"], located=True))
+        head = recs[0]
+        places.append(dict(
+            slug="", name=name.split(",")[0].strip() or name,
+            region=name, lat=head["lat"], lon=head["lon"],
+            photos=photos, count=len(photos), dates=sorted(set(dates)),
+            thumb=photos[0]["file"] if photos else None))
+    return places

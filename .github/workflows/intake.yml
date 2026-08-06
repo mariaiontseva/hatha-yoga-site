@@ -1,0 +1,46 @@
+name: Photograph intake
+
+# A batch lands as uploads/pending/<batch>.json (written by the upload page).
+# This fetches each photograph out of Blob, shrinks it into the site's image
+# folder, geocodes the place once, and appends the entries to
+# build/uploads.json. Pages rebuilds on the resulting commit.
+
+on:
+  push:
+    paths:
+      - 'uploads/pending/*.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: intake
+  cancel-in-progress: false
+
+jobs:
+  intake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install --quiet pillow
+
+      - name: Process pending batches
+        run: python3 build/intake.py
+
+      - name: Commit
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git config user.name  "photograph intake"
+          git config user.email "intake@users.noreply.github.com"
+          git add -A
+          git commit -m "Intake: photographs added to the gallery and map"
+          git push
