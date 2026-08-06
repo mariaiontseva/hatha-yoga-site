@@ -23,10 +23,10 @@ CHANNEL = ("SOAS Centre of Yoga Studies",
 
 SECTIONS = [
     ("The Haṭha Yoga Project", [
-        # not the final symposium — it was filmed near the start of the
-        # project (PI, 6 Aug 2026)
+        # "final" dropped — it was filmed near the start of the project,
+        # but it is still the symposium (PI, 6 Aug 2026)
         ("6PWk-ZywGis",
-         "The Haṭha Yoga Project",
+         "The Haṭha Yoga Project: Symposium",
          "SOAS University of London"),
         ("GenKUMqRfqc",
          "The Haṭha Yoga Project at the British Museum",
