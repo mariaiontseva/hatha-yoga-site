@@ -1,1 +1,12 @@
-[]
+[
+ {
+  "file": "race-test.jpg",
+  "caption": "",
+  "location": "Varanasi, Uttar Pradesh",
+  "lat": 25.3356491,
+  "lon": 83.0076292,
+  "photographer": "Race test",
+  "added": "2026-08-07",
+  "batch": "2026-08-07T15-35-42-159Z"
+ }
+]

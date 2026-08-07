@@ -13,5 +13,10 @@
   "lat": 30.1086537,
   "lon": 78.2916193,
   "matched": "Rishikesh, Dehradun, Uttarakhand, 249201, India"
+ },
+ "varanasi, uttar pradesh": {
+  "lat": 25.3356491,
+  "lon": 83.0076292,
+  "matched": "Varanasi, Sadar, Varanasi, Uttar Pradesh, 221001, India"
  }
 }
