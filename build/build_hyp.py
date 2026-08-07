@@ -187,6 +187,8 @@ def build():
             shutil.copy2(p, os.path.join(IMG, clean))
         except Exception as e:
             print("  img fail", clean, e)
+    for slug in places.write_upload_pages(OUT):
+        print(f"  hyp/{slug}  (uploaded place)")
     print(f"built {n} pages, copied {len(all_used)} images -> hyp/assets/img/")
 
 

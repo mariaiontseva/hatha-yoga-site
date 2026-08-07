@@ -2,6 +2,15 @@
 
 ## 2026-08-07
 
+- **An uploaded place now gets its own page**, like Hampi or Shringeri:
+  breadcrumb back to the Gallery, the place as a heading, how many
+  photographs and who sent them, and the same thumbnail grid and
+  lightbox. The card under “Photographs by site” opens it, and the map's
+  “All N photographs” link works again. Written by the intake workflow
+  from build/uploads.json, because the site's own pages come from a
+  WordPress mirror that a workflow cannot reach; when the last
+  photograph of a place goes, its page goes with it.
+
 - **Uploaded places now appear under “Photographs by site” too**, not
   only on the map. They have no page of their own, so the card opens the
   place on the map instead; the strip's “All N photographs” link, which

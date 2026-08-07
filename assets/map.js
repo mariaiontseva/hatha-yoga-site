@@ -109,20 +109,6 @@
     map.invalidateSize();
     map.fitBounds(bounds, { padding: [46, 46] });
 
-    // a card in "Photographs by site" links to #place-<anchor>
-    function openFromHash() {
-      var want = (location.hash || '').replace('#place-', '');
-      if (!want) return;
-      for (var i = 0; i < places.length; i++) {
-        if (places[i].anchor === want) {
-          host.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          openStrip([places[i]], 0, 'single');
-          return;
-        }
-      }
-    }
-    window.addEventListener('hashchange', openFromHash);
-    openFromHash();
 
     map.on('click', closeStrip);
     map.on('focus', function () { map.scrollWheelZoom.enable(); });

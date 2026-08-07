@@ -102,8 +102,9 @@ def refresh_map():
 
     The site is generated from a WordPress mirror that lives on Maria's
     machine, so a workflow cannot rebuild it. It does not need to: the map
-    reads one JSON block, and every uploaded place is marked by an empty slug,
-    so the block can be rewritten from build/uploads.json alone. A later full
+    reads one JSON block, and every uploaded place carries a mark, so the
+    block — and the cards and pages beside it — can be rewritten from
+    build/uploads.json alone. A later full
     rebuild produces exactly this, so the two never drift apart.
     """
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -124,7 +125,8 @@ def refresh_map():
         print("  gallery page has no map data — skipped")
         return
 
-    data = [p for p in json.loads(block.group(2)) if p.get("slug")]
+    # uploaded places are marked, and are the only ones rewritten here
+    data = [p for p in json.loads(block.group(2)) if not p.get("uploaded")]
     data.extend(places._uploaded_places(IMG))
     total = sum(p["count"] for p in data)
     sites = len([p for p in data if p["count"]])
@@ -137,11 +139,13 @@ def refresh_map():
         rf'\g<1>{total} photographs from {sites} sites', html, count=1)
 
     # the cards below the map: drop the uploaded ones and lay them out again
-    html = re.sub(r'<a class="galcard" href="#place-.*?</a>', "", html, flags=re.S)
+    html = re.sub(r'<a class="galcard galcard-up".*?</a>', "", html, flags=re.S)
     html = places.upload_cards(html, IMG, "../../")
 
     with open(page, "w", encoding="utf-8") as f:
         f.write(html)
+
+    places.write_upload_pages(os.path.join(ROOT, "hyp"))
     print(f"  gallery map now shows {total} photographs from {sites} sites")
 
 
