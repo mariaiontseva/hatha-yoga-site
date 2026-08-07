@@ -8,7 +8,8 @@ name: Photograph intake
 on:
   push:
     paths:
-      - 'uploads/pending/*.json'
+      - 'uploads/pending/*.json'    # a new batch from the upload page
+      - 'build/uploads.json'        # a caption edited, or a photograph removed
   workflow_dispatch:
 
 permissions:
