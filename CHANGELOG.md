@@ -2,6 +2,13 @@
 
 ## 2026-08-07
 
+- **The intake workflow no longer loses a change when two land at once.**
+  Deleting two photographs in a row made the second run push onto a
+  remote that had already moved; git refused and the run failed. It now
+  starts again from the current remote and redoes the work, up to five
+  times. Everything it does is derived from build/uploads.json and the
+  pending batches, so redoing it is safe.
+
 - **An uploaded place now gets its own page**, like Hampi or Shringeri:
   breadcrumb back to the Gallery, the place as a heading, how many
   photographs and who sent them, and the same thumbnail grid and

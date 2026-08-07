@@ -34,14 +34,32 @@ jobs:
       - name: Process pending batches
         run: python3 build/intake.py
 
-      - name: Commit
+      # Two people acting within the same minute — or one person deleting two
+      # photographs in a row — used to lose the second change: the push was
+      # rejected because the remote had moved, and the run simply failed. The
+      # work is derived entirely from build/uploads.json and the pending
+      # batches, so the honest recovery is to start again from wherever the
+      # remote now is and redo it.
+      - name: Commit, and start again if the remote moved
         run: |
-          if [ -z "$(git status --porcelain)" ]; then
-            echo "Nothing to commit."
-            exit 0
-          fi
           git config user.name  "photograph intake"
           git config user.email "intake@users.noreply.github.com"
-          git add -A
-          git commit -m "Intake: photographs added to the gallery and map"
-          git push
+          for try in 1 2 3 4 5; do
+            if [ -z "$(git status --porcelain)" ]; then
+              echo "Nothing to commit — someone else got there first."
+              exit 0
+            fi
+            git add -A
+            git commit -m "Intake: photographs added to the gallery and map"
+            if git push; then
+              exit 0
+            fi
+            echo "The remote moved while we worked; redoing it from there (try $try)."
+            sleep $((try * 5))
+            git fetch origin main
+            git reset --hard origin/main
+            python3 build/intake.py
+          done
+          echo "Gave up after five tries. Nothing is lost: the batch is still in"
+          echo "uploads/pending/ and this can be run again from the Actions tab."
+          exit 1
