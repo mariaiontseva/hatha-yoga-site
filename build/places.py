@@ -15,6 +15,9 @@ its own point (real clustering rather than one pin per site), give it a
 build reads that automatically.
 """
 import json
+import re
+from html import escape
+from urllib.parse import quote
 import os
 from PIL import Image
 from PIL.ExifTags import TAGS, GPSTAGS
@@ -139,8 +142,34 @@ def _uploaded_places(img_dir):
                                lat=r["lat"], lon=r["lon"], located=True))
         head = recs[0]
         places.append(dict(
-            slug="", name=name.split(",")[0].strip() or name,
+            slug="", uploaded=True,
+            anchor=re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-") or "place",
+            name=name.split(",")[0].strip() or name,
             region=name, lat=head["lat"], lon=head["lon"],
             photos=photos, count=len(photos), dates=sorted(set(dates)),
             thumb=photos[0]["file"] if photos else None))
     return places
+
+
+def upload_cards(html, img_dir, root):
+    """Add the uploaded places to the gallery's "Photographs by site" grid.
+
+    The other cards open a field site's own page; an uploaded place has none,
+    so its card opens that place on the map instead. Written here rather than
+    in the build because the intake workflow has to produce exactly the same
+    thing without being able to rebuild the site.
+    """
+    cards = []
+    for pl in _uploaded_places(img_dir):
+        if not pl["count"]:
+            continue
+        cards.append(
+            f'<a class="galcard" href="#place-{pl["anchor"]}">'
+            f'<span class="galcard-img"><img alt="" loading="lazy" '
+            f'src="{root}hyp/assets/img/{quote(pl["thumb"])}"/></span>'
+            f'<span class="galcard-label">{escape(pl["name"])}</span></a>')
+    if not cards:
+        return html
+    return re.sub(r'(<div class="galindex">.*?)(</div>)',
+                  lambda m: m.group(1) + "".join(cards) + m.group(2),
+                  html, count=1, flags=re.S)

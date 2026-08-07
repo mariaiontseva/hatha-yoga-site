@@ -109,6 +109,21 @@
     map.invalidateSize();
     map.fitBounds(bounds, { padding: [46, 46] });
 
+    // a card in "Photographs by site" links to #place-<anchor>
+    function openFromHash() {
+      var want = (location.hash || '').replace('#place-', '');
+      if (!want) return;
+      for (var i = 0; i < places.length; i++) {
+        if (places[i].anchor === want) {
+          host.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          openStrip([places[i]], 0, 'single');
+          return;
+        }
+      }
+    }
+    window.addEventListener('hashchange', openFromHash);
+    openFromHash();
+
     map.on('click', closeStrip);
     map.on('focus', function () { map.scrollWheelZoom.enable(); });
     map.on('blur', function () { map.scrollWheelZoom.disable(); });
@@ -329,7 +344,8 @@
     strip.querySelector('.fm-strip-meta').innerHTML =
       esc(p.region) + (dateRange(p.dates) ? '<br>' + esc(dateRange(p.dates)) : '');
     var all = strip.querySelector('.fm-strip-all');
-    all.href = root + 'hyp/' + p.slug + '/';
+    all.hidden = !p.slug;                      // uploaded places have no page
+    all.href = p.slug ? root + 'hyp/' + p.slug + '/' : '';
     all.querySelector('.fm-all-short').textContent = 'All ' + p.count;
     all.querySelector('.fm-all-long').textContent =
       'All ' + plural(p.count, 'photograph', 'photographs');

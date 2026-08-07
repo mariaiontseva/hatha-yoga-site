@@ -1,5 +1,14 @@
 # Changelog — Light on Haṭha Yoga site
 
+## 2026-08-07
+
+- **Uploaded places now appear under “Photographs by site” too**, not
+  only on the map. They have no page of their own, so the card opens the
+  place on the map instead; the strip's “All N photographs” link, which
+  used to point at a page that does not exist, is hidden for them.
+- The intake workflow rewrites the cards as well as the map data, and the
+  result is byte-identical to a full local rebuild.
+
 ## 2026-08-06 (later)
 
 - **Podcasts tab: the standfirst removed.** The line counting the

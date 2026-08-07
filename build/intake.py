@@ -136,6 +136,10 @@ def refresh_map():
         r'(<p class="galsec-lead">)\d+ photographs from \d+ sites',
         rf'\g<1>{total} photographs from {sites} sites', html, count=1)
 
+    # the cards below the map: drop the uploaded ones and lay them out again
+    html = re.sub(r'<a class="galcard" href="#place-.*?</a>', "", html, flags=re.S)
+    html = places.upload_cards(html, IMG, "../../")
+
     with open(page, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"  gallery map now shows {total} photographs from {sites} sites")

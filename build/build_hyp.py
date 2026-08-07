@@ -133,7 +133,9 @@ def _emit(slug, src, active, root, all_used):
         # places, the map is the browsable view, the cards are the index
         html = (_map_block()
                 + '<h2 class="galsec">Photographs by site</h2>'
-                + gallery.index(html))
+                + places.upload_cards(gallery.index(html),
+                                      os.path.join(OUT, "assets", "img"),
+                                      "{{ROOT}}"))
     elif slug == "roots-of-yoga":
         html = gallery.book(html)
     elif slug not in ("team", "blog"):
