@@ -8,15 +8,5 @@
   "photographer": "End-to-end test",
   "added": "2026-08-07",
   "batch": "2026-08-07T15-16-36-047Z"
- },
- {
-  "file": "test-two.jpg",
-  "caption": "",
-  "location": "Rishikesh, Uttarakhand",
-  "lat": 30.1086537,
-  "lon": 78.2916193,
-  "photographer": "End-to-end test",
-  "added": "2026-08-07",
-  "batch": "2026-08-07T15-16-36-047Z"
  }
 ]
