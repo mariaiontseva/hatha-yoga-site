@@ -8,5 +8,10 @@
   "lat": 15.3004543,
   "lon": 74.0855134,
   "matched": "Goa, India"
+ },
+ "rishikesh, uttarakhand": {
+  "lat": 30.1086537,
+  "lon": 78.2916193,
+  "matched": "Rishikesh, Dehradun, Uttarakhand, 249201, India"
  }
 }
