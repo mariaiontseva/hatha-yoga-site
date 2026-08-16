@@ -1,3 +1,12 @@
+## 2026-08-16
+
+- **The Haṭhābhyāsapaddhati film is off the site**, at the PI's request
+  (14 August: "Please take the Haṭhābhyāsapaddhati films off the website.
+  It may only be temporary."), after Jason Birch reported that the files
+  are unedited footage. The entry is kept in build/films.py as WITHHELD,
+  so putting it back is moving one block. The YouTube uploads themselves
+  are untouched and still unlisted.
+
 # Changelog — Light on Haṭha Yoga site
 
 ## 2026-08-07

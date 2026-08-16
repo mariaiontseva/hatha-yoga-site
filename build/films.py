@@ -1,8 +1,10 @@
 """The Films page — YouTube videos curated by the PI (email 'YouTube videos',
-4 Aug 2026) + the project's own Haṭhābhyāsapaddhati film, uploaded 5 Aug 2026
-to the project's own channel, youtube.com/@lightonhathayoga (a Brand Account,
-so ownership can be handed on later).  The six parts are unlisted: they play
-from this site but are not listed on YouTube itself.
+4 Aug 2026).
+
+The project's own Haṭhābhyāsapaddhati film was here too, uploaded 5 Aug 2026
+to youtube.com/@lightonhathayoga (a Brand Account, so ownership can be handed
+on later), but it came off the site on 14 Aug at the PI's request — see
+WITHHELD below.
 
 Display titles were editorially normalised from the real YouTube titles
 (fetched via oEmbed 4 Aug 2026); every id was verified alive that day.
@@ -21,6 +23,24 @@ Haṭhapradīpikā interview is here, Part 1 is likely among the corrupted ones.
 CHANNEL = ("SOAS Centre of Yoga Studies",
            "https://www.youtube.com/@soascentreofyogastudies6694")
 
+# Off the site since 14 Aug 2026, at the PI's request ("Please take the
+# Haṭhābhyāsapaddhati films off the website. It may only be temporary."), after
+# Jason Birch reported that the files are unedited footage. Kept here rather
+# than deleted: to put the film back, move this entry into SECTIONS, where it
+# belongs after "The Haṭha Yoga Project".
+#
+# Uploaded to the project's own channel (youtube.com/@lightonhathayoga) on
+# 5 Aug 2026, unlisted. Part 6 is missing, hence the jump from 5 to 7 — the
+# original numbering is kept.
+WITHHELD = ("The Haṭhābhyāsapaddhati Film", [
+    ("DnEp-4FRaqo", "1. Introduction", "The Haṭha Yoga Project"),
+    ("kfTLG3SZiRI", "2. Supine Poses", "The Haṭha Yoga Project"),
+    ("MCRBO7T4YvU", "3. Prone Poses", "The Haṭha Yoga Project"),
+    ("0y4WAkw51Cs", "4. Stationary Poses", "The Haṭha Yoga Project"),
+    ("_tBcQv-4etQ", "5. Standing Poses", "The Haṭha Yoga Project"),
+    ("Zh4iZrTlCew", "7. Piercing Poses", "The Haṭha Yoga Project"),
+])
+
 SECTIONS = [
     ("The Haṭha Yoga Project", [
         # "final" dropped — it was filmed near the start of the project,
@@ -31,17 +51,6 @@ SECTIONS = [
         ("GenKUMqRfqc",
          "The Haṭha Yoga Project at the British Museum",
          "Dr Jason Birch"),
-    ]),
-    # uploaded to the project's own channel (youtube.com/@lightonhathayoga)
-    # 5 Aug 2026, unlisted; part 6 was never shot / is still missing, hence
-    # the jump from 5 to 7 — keep the original numbering
-    ("The Haṭhābhyāsapaddhati Film", [
-        ("DnEp-4FRaqo", "1. Introduction", "The Haṭha Yoga Project"),
-        ("kfTLG3SZiRI", "2. Supine Poses", "The Haṭha Yoga Project"),
-        ("MCRBO7T4YvU", "3. Prone Poses", "The Haṭha Yoga Project"),
-        ("0y4WAkw51Cs", "4. Stationary Poses", "The Haṭha Yoga Project"),
-        ("_tBcQv-4etQ", "5. Standing Poses", "The Haṭha Yoga Project"),
-        ("Zh4iZrTlCew", "7. Piercing Poses", "The Haṭha Yoga Project"),
     ]),
     ("Roots of Yoga", [
         ("_3hPjoPXA6Y",
