@@ -1,3 +1,12 @@
+## 2026-09-02
+
+- **The map's tiles come from Esri now, not CARTO.** CARTO began
+  stamping "API KEY REQUIRED" across its free Positron tiles, and did
+  it inside the image while still answering 200, so nothing failed and
+  the map simply looked broken. Esri's Light Gray Canvas needs no key
+  and no account: land and place names as two layers, sharpened on
+  high-density screens with detectRetina since it has no @2x tiles.
+
 ## 2026-08-16
 
 - **The Haṭhābhyāsapaddhati film is off the site**, at the PI's request

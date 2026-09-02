@@ -20,9 +20,18 @@
   var root = host.dataset.root || '../../';
   var MOBILE = window.matchMedia('(max-width: 700px)');
 
-  var TILES = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png';
-  var ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
-             ' contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>';
+  // CARTO's free Positron tiles started arriving stamped "API KEY REQUIRED"
+  // in September 2026 — served with a plain 200, so nothing failed, the map
+  // simply looked broken. Esri's Light Gray Canvas needs no key and is the
+  // same kind of pale base: one layer for the land, one for the place names.
+  // detectRetina asks for a zoom level deeper on high-density screens, which
+  // is how these get their sharpness (they have no @2x).
+  var ESRI = 'https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/';
+  var BASE = ESRI + 'World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+  var LABELS = ESRI + 'World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}';
+  var ATTR = 'Tiles &copy; <a href="https://www.esri.com">Esri</a>, ' +
+             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
+             ' contributors';
 
   var map, cluster, strip, lightbox;
   var state = { list: [], pos: 0, mode: 'single', lightbox: null };
@@ -72,9 +81,15 @@
     map = L.map(canvas, {
       scrollWheelZoom: false, attributionControl: true, zoomControl: true
     });
-    L.tileLayer(TILES, {
-      attribution: ATTR, maxZoom: 20, subdomains: 'abcd', tileSize: 256
+    L.tileLayer(BASE, {
+      attribution: ATTR, maxZoom: 16, detectRetina: true
     }).addTo(map);
+    // place names ride above the land but below everything of ours
+    map.createPane('labels');
+    map.getPane('labels').style.zIndex = 350;
+    map.getPane('labels').style.pointerEvents = 'none';
+    L.tileLayer(LABELS, { maxZoom: 16, detectRetina: true, pane: 'labels' })
+      .addTo(map);
 
     cluster = L.markerClusterGroup({
       showCoverageOnHover: false,
