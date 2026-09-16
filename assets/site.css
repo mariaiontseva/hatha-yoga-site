@@ -145,7 +145,12 @@ code{font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:var(--pa
 .site-nav a:hover{color:var(--oxblue)}
 .site-nav a[aria-current="page"]{color:var(--oxblue);border-bottom-color:var(--oxblue)}
 
-.site-main{max-width:var(--wrap);margin:0 auto;padding:clamp(30px,5vw,60px) var(--gutter)}
+/* Sanskrit compounds such as Pāṇinīyavyākaraṇodāharaṇakośa are wider than
+   a phone screen and have nowhere to break. "anywhere" lets them wrap when
+   they have to, and, unlike break-word, it also stops them dictating the
+   page's minimum width, which is what used to push the whole layout sideways. */
+.site-main{max-width:var(--wrap);margin:0 auto;
+  padding:clamp(30px,5vw,60px) var(--gutter);overflow-wrap:anywhere}
 .site-main.narrow{max-width:800px}
 /* consistent gap between a leading banner image / hero and the first heading */
 .site-main>:first-child{margin-top:0}
@@ -541,6 +546,7 @@ a.btn:hover{background:var(--oxblue-hover);color:#fff}
 .member-photo{flex:0 0 auto;width:150px;height:190px;object-fit:cover;object-position:top center;
   border:1px solid var(--rule);background:var(--paper-2)}
 .member-body{flex:1 1 0;min-width:0}
+.member-head{margin-bottom:.75rem}
 .member-body>*{max-width:none}
 .member-name{margin:0 0 .1rem;font-size:1.2rem;line-height:1.2;text-transform:uppercase}
 .member-role{font-family:var(--font-sans);text-transform:uppercase;letter-spacing:.1em;
@@ -548,8 +554,16 @@ a.btn:hover{background:var(--oxblue-hover);color:#fff}
 .member-body p{margin:0 0 .7rem}
 .member-body p:last-child{margin-bottom:0}
 @media (max-width:640px){
-  .member{gap:1.1rem}
-  .member-photo{width:104px;height:132px}
+  /* photograph and name side by side, the biography full width beneath:
+     at 375px a text column beside a photograph is only ~210px wide, which
+     reads badly for paragraphs this long */
+  .member{display:grid;grid-template-columns:96px 1fr;
+    column-gap:1rem;row-gap:.75rem;align-items:start;padding:1.4rem 0}
+  .member-photo{width:96px;height:122px;grid-row:1}
+  .member-body{display:contents}
+  .member-head{grid-column:2;grid-row:1;align-self:center;margin:0}
+  .member-body>*:not(.member-head){grid-column:1/-1}
+  .member-name{font-size:1.05rem}
 }
 
 /* ---- contact block ---- */
@@ -581,7 +595,10 @@ a.btn:hover{background:var(--oxblue-hover);color:#fff}
 
 /* ---- institution / source list (libraries page) ---- */
 .inst-list{list-style:none;margin:.6em 0 2em;padding:0;
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:.45em 2.2rem}
+  display:grid;gap:.45em 2.2rem;
+  grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+/* two 290px columns need 655px of page: below that, one column */
+@media (max-width:700px){.inst-list{grid-template-columns:1fr}}
 .inst-list li{position:relative;padding-left:1.1em;font-size:.97em;line-height:1.4;
   max-width:none}
 .inst-list li::before{content:"";position:absolute;left:0;top:.6em;width:5px;height:5px;

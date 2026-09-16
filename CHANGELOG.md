@@ -1,3 +1,22 @@
+## 2026-09-16 (later)
+
+- **The site fits a phone again.** Two pages scrolled sideways.
+  On Team it was a single word: Pāṇinīyavyākaraṇodāharaṇakośa is about
+  370px wide and has nowhere to break, so it set the page's minimum
+  width and pushed everything across. `overflow-wrap: anywhere` on the
+  main column fixes the whole class of problem, Sanskrit compounds being
+  everywhere here; `break-word` does not, because it leaves the minimum
+  width alone. On Libraries the institution grid asked for 290px columns
+  whatever the screen, so two of them needed 655px. One column below
+  700px.
+- **Team cards are laid out for a phone properly**, not merely made to
+  fit: the photograph and the name sit side by side, and the biography
+  runs the full width beneath. It used to be a ~210px column of text
+  beside the photograph, which was unreadable at this length. Name and
+  role are wrapped in `.member-head` to make that possible.
+- All twenty pages of both sites were measured at 375px: none scrolls
+  sideways now.
+
 ## 2026-09-16
 
 - **The HP imprint no longer carries a colleague's private details.**

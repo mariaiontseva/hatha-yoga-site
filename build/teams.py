@@ -6,8 +6,10 @@ Each member becomes:
   <article class="member">
     <img class="member-photo" ...>            (optional)
     <div class="member-body">
-      <h3 class="member-name">Name</h3>
-      <p class="member-role">Role</p>          (optional)
+      <div class="member-head">
+        <h3 class="member-name">Name</h3>
+        <p class="member-role">Role</p>        (optional)
+      </div>
       ...bio nodes...
     </div>
   </article>
@@ -60,14 +62,19 @@ def _card(soup, photo, name, role, bio):
         photo["class"] = "member-photo"
         art.append(photo)
     body = soup.new_tag("div", **{"class": "member-body"})
+    # name and role live in their own wrapper so that on a phone they can sit
+    # beside the photograph while the biography runs the full width below
+    head = soup.new_tag("div", **{"class": "member-head"})
     if name:
         h = soup.new_tag("h3", **{"class": "member-name"})
         h.string = name
-        body.append(h)
+        head.append(h)
     if role:
         r = soup.new_tag("p", **{"class": "member-role"})
         r.string = role
-        body.append(r)
+        head.append(r)
+    if head.contents:
+        body.append(head)
     for b in bio:
         body.append(b)
     art.append(body)
