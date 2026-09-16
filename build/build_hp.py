@@ -45,7 +45,9 @@ def build():
             # superseded by § 18 MStV in 2020, and a German imprint is not
             # required of a site run from Oxford in any case.
             html = (
-                "<p><strong>Website operator:</strong></p><p>Maria Iontseva</p>"
+                "<p><strong>Website operator:</strong></p>"
+                "<p>Maria Iontseva<br/>\n"
+                "maria.iontseva@wolfson.ox.ac.uk</p>"
                 "<p><strong>Responsible for the content:</strong></p>"
                 "<p>Professor James Mallinson<br/>\n"
                 "Faculty of Asian and Middle Eastern Studies<br/>\n"
