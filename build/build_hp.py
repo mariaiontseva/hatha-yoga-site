@@ -47,13 +47,15 @@ def build():
             html = (
                 "<p><strong>Website operator:</strong></p>"
                 "<p>Maria Iontseva<br/>\n"
-                "maria.iontseva@wolfson.ox.ac.uk</p>"
+                '<a href="mailto:maria.iontseva@wolfson.ox.ac.uk">'
+                "maria.iontseva@wolfson.ox.ac.uk</a></p>"
                 "<p><strong>Responsible for the content:</strong></p>"
                 "<p>Professor James Mallinson<br/>\n"
                 "Faculty of Asian and Middle Eastern Studies<br/>\n"
                 "University of Oxford</p>"
                 "<p><strong>Contact:</strong></p>"
-                "<p>jim.mallinson@ames.ox.ac.uk</p>"
+                '<p><a href="mailto:jim.mallinson@ames.ox.ac.uk">'
+                "jim.mallinson@ames.ox.ac.uk</a></p>"
                 "<p>Light on Haṭha Yoga is a joint project of the University "
                 "of Oxford and Philipps-Universität Marburg, funded by the "
                 "AHRC and the DFG.</p>")
@@ -66,7 +68,8 @@ def build():
                 "Professor James Mallinson<br/>\n"
                 "Faculty of Asian and Middle Eastern Studies, "
                 "University of Oxford<br/>\n"
-                "E-mail address: jim.mallinson@ames.ox.ac.uk<br/>\n"
+                'E-mail address: <a href="mailto:jim.mallinson@ames.ox.ac.uk">'
+                "jim.mallinson@ames.ox.ac.uk</a><br/>\n"
                 'Link to the imprint: <a href="{{ROOT}}hp/imprint/">'
                 "https://yoga.ames.ox.ac.uk/hp/imprint/</a></p>",
                 html, count=1, flags=re.S)
