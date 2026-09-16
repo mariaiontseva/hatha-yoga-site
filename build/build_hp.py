@@ -36,6 +36,38 @@ def build():
             html = teams.restructure(html, "hp")
         else:
             html = gallery.wrap(html)
+        if out_slug == "imprint":
+            # PI, 16 Sep 2026: Nils Liersch asked for his details to come off
+            # the site. The mirror's page is a German Impressum made out to him
+            # personally, with his home address, tax number and mobile number.
+            # Replaced wholesale, per the PI: him as the contact, no telephone,
+            # Maria named as operator. The § 55 RStV citation goes too: it was
+            # superseded by § 18 MStV in 2020, and a German imprint is not
+            # required of a site run from Oxford in any case.
+            html = (
+                "<p><strong>Website operator:</strong></p><p>Maria Iontseva</p>"
+                "<p><strong>Responsible for the content:</strong></p>"
+                "<p>Professor James Mallinson<br/>\n"
+                "Faculty of Asian and Middle Eastern Studies<br/>\n"
+                "University of Oxford</p>"
+                "<p><strong>Contact:</strong></p>"
+                "<p>jim.mallinson@ames.ox.ac.uk</p>"
+                "<p>Light on Haṭha Yoga is a joint project of the University "
+                "of Oxford and Philipps-Universität Marburg, funded by the "
+                "AHRC and the DFG.</p>")
+        if out_slug == "privacy-policy-2":
+            # same request: the data controller block named him personally,
+            # with the same home address and a student e-mail address
+            html = re.sub(
+                r"<p><strong>Data controller</strong></p><p>.*?</p>",
+                "<p><strong>Data controller</strong></p><p>"
+                "Professor James Mallinson<br/>\n"
+                "Faculty of Asian and Middle Eastern Studies, "
+                "University of Oxford<br/>\n"
+                "E-mail address: jim.mallinson@ames.ox.ac.uk<br/>\n"
+                'Link to the imprint: <a href="{{ROOT}}hp/imprint/">'
+                "https://yoga.ames.ox.ac.uk/hp/imprint/</a></p>",
+                html, count=1, flags=re.S)
         if out_slug == "printed-edition":
             # PI, 6 Aug 2026: launch plan superseded — replace the paragraph
             html = re.sub(

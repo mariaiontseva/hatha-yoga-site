@@ -1,3 +1,18 @@
+## 2026-09-16
+
+- **The HP imprint no longer carries a colleague's private details.**
+  Nils Liersch asked, through the PI, to be taken off it: the page was a
+  German Impressum made out to him personally, with his home address,
+  tax number and mobile number, sitting on an Oxford domain. It now
+  names Maria Iontseva as website operator and Professor Mallinson as
+  responsible for the content, with his Oxford e-mail and no telephone.
+  The § 55 Abs. 2 RStV citation went with it, superseded by § 18 MStV in
+  2020 and not required of a site run from Oxford.
+- The privacy policy carried the same address and a student e-mail in
+  its data controller block, which the PI had not noticed. Changed to
+  match. He stays named as a project member on the home and team pages,
+  which is as it should be.
+
 ## 2026-09-02
 
 - **The map's tiles come from Esri now, not CARTO.** CARTO began
