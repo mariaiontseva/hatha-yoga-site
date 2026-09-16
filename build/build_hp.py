@@ -55,10 +55,7 @@ def build():
                 "University of Oxford</p>"
                 "<p><strong>Contact:</strong></p>"
                 '<p><a href="mailto:jim.mallinson@ames.ox.ac.uk">'
-                "jim.mallinson@ames.ox.ac.uk</a></p>"
-                "<p>Light on Haṭha Yoga is a joint project of the University "
-                "of Oxford and Philipps-Universität Marburg, funded by the "
-                "AHRC and the DFG.</p>")
+                "jim.mallinson@ames.ox.ac.uk</a></p>")
         if out_slug == "privacy-policy-2":
             # same request: the data controller block named him personally,
             # with the same home address and a student e-mail address
